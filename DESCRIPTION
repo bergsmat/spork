@@ -1,0 +1,22 @@
+Package: spork
+Type: Package
+Title: Presentation-Neutral Label Descriptions
+Version: 0.1.1
+Author: Tim Bergsma
+Maintainer: Tim Bergsma <bergsmat@gmail.com>
+Description: The 'spork' syntax describes
+ labels and symbols concisely, supporting
+ mixed nesting of subscripts and superscripts
+ to arbitrary depth. It intends to be easy
+ to read and write in plain text, and easy
+ to convert to equivalent presentations
+ in 'plotmath' and 'latex'.  Greek symbols
+ and a multiplication symbol are explicitly
+ supported. See ?as_spork and ?as_previews.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Imports: ggplot2, png, latexpdf
+RoxygenNote: 7.0.2
+VignetteBuilder: knitr
+Suggests: testthat (>= 2.1.0), magrittr
