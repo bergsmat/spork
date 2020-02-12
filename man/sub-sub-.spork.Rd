@@ -34,8 +34,7 @@ Other util:
 \code{\link{[.plotmath}()},
 \code{\link{[.spork}()},
 \code{\link{[[.latex}()},
-\code{\link{[[.plotmath}()},
-\code{\link{as_spork.symbolic_units}()}
+\code{\link{[[.plotmath}()}
 }
 \concept{util}
 \keyword{internal}

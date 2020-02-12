@@ -4,7 +4,7 @@
 \alias{latexToken}
 \title{Process Latex Token}
 \usage{
-latexToken(x, unrecognized, math, italics, ...)
+latexToken(x, unrecognized = latexToken, math = TRUE, italics = FALSE, ...)
 }
 \arguments{
 \item{x}{character}

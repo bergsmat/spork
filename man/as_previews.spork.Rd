@@ -30,11 +30,12 @@ latex above plotmath.
 \examples{
 library(magrittr)
 specials <- '& \% $ # \\\\_ { } ~ \\\\^ \\\\'
+\donttest{
 specials \%>\% as_spork \%>\% as_previews
 specials \%>\% gsub(' ','',.) \%>\% as_spork \%>\% as_previews
 'one joule (Omega) ~ 1 kg*m^2./s^2' \%>\% as_spork \%>\% as_previews
 
-# possible mismatches between plotmath and latex:
+# disambiguation for plotmath and latex (see \code{\link[grDevices]{plotmath}}):
 
 'epsilon.varepsilon' \%>\% as_spork \%>\% as_previews
 'rho.varrho' \%>\% as_spork \%>\% as_previews
@@ -43,6 +44,7 @@ specials \%>\% gsub(' ','',.) \%>\% as_spork \%>\% as_previews
 'sigma.sigma1.varsigma.stigma' \%>\% as_spork \%>\% as_previews
 'theta.vartheta.theta1' \%>\% as_spork \%>\% as_previews
 'omega.omega1.pi.varpi' \%>\% as_spork \%>\% as_previews
+}
 }
 \seealso{
 Other preview: 

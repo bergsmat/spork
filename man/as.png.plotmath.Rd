@@ -37,6 +37,7 @@ Converts plotmath to png.
 }
 \examples{
 library(magrittr)
+library(latexpdf)
 'one joule (Omega) ~ 1 kg*m^2./s^2' \%>\% as_spork \%>\% as_plotmath \%>\% as.png -> file
 file
 }

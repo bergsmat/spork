@@ -4,14 +4,18 @@
 \alias{ggplot.plotmath}
 \title{Plot Plotmath}
 \usage{
-\method{ggplot}{plotmath}(x, blank = TRUE, ...)
+\method{ggplot}{plotmath}(data, mapping = aes(), ..., environment = parent.frame(), blank = TRUE)
 }
 \arguments{
-\item{x}{length-one plotmath; see \code{\link{as_plotmath}}}
+\item{data}{length-one plotmath; see \code{\link{as_plotmath}}}
 
-\item{blank}{whether to use a blank plot area}
+\item{mapping}{ignored}
 
 \item{...}{ignored arguments}
+
+\item{environment}{ignored}
+
+\item{blank}{whether to use a blank plot area}
 }
 \value{
 gg

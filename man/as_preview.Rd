@@ -21,11 +21,11 @@ Generic, with methods for latex and plotmath.
 \examples{
 library(magrittr)
 'V_c./F' \%>\% as_spork \%>\% as_plotmath \%>\% as_preview
-\dontrun{
+\donttest{
 'V_c./F' \%>\% as_spork \%>\% as_latex \%>\% as_preview
 }
 'one joule (Omega) ~ 1 kg*m^2./s^2' \%>\% as_spork \%>\% as_plotmath \%>\% as_preview
-\dontrun{
+\donttest{
 'one joule (Omega) ~ 1 kg*m^2./s^2' \%>\% as_spork \%>\% as_latex \%>\% as_preview
 }
 }
@@ -41,3 +41,4 @@ Other preview:
 \code{\link{ggplot.spork}()}
 }
 \concept{preview}
+\keyword{internal}

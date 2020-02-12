@@ -362,6 +362,7 @@ expect_identical(plotmathToken('foo'),"foo")
 })
 
 test_that('as_previews is stable',{
+  skip_on_cran()
   library(magrittr)
   #'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_plotmath %>% as_preview
   #'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_latex %>% as_preview

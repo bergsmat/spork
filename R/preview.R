@@ -1,3 +1,4 @@
+globalVariables('label')
 #' Preview Something
 #'
 #' Creates a preview.
@@ -5,16 +6,17 @@
 #' @param x object
 #' @param ... passed arguments
 #' @export
+#' @keywords internal
 #' @family preview
 #' @return see methods
 #' @examples
 #' library(magrittr)
 #' 'V_c./F' %>% as_spork %>% as_plotmath %>% as_preview
-#' \dontrun{
+#' \donttest{
 #' 'V_c./F' %>% as_spork %>% as_latex %>% as_preview
 #' }
 #' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_plotmath %>% as_preview
-#' \dontrun{
+#' \donttest{
 #' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_latex %>% as_preview
 #' }
 as_preview <- function(x, ...)UseMethod('as_preview')
@@ -28,7 +30,7 @@ as_preview <- function(x, ...)UseMethod('as_preview')
 #' @param wide nominal page width
 #' @param long nominal page length
 #' @param dir a working directory; see \code{\link[latexpdf]{as.pdf}}
-#' @param gs_cmd ghostscript command; see \code{\link[latexpdf]{ghostscript}}
+#' @param gs_cmd ghostscript command; see \code{\link[latexpdf]{ghostconvert}}
 # @param preamble passed to \code{\link[latexpdf]{as.document}}
 #' @param prolog passed to \code{\link[latexpdf]{as.document}}
 #' @param epilog passed to \code{\link[latexpdf]{as.document}}
@@ -44,7 +46,7 @@ as_preview <- function(x, ...)UseMethod('as_preview')
 #' @importFrom grid grid.raster
 #' @return invisible filepath
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(magrittr)
 #' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>%
 #' as_spork %>%
@@ -88,6 +90,7 @@ as_preview.latex <- function(
 #' @param x object
 #' @param ... passed arguments
 #' @export
+#' @keywords internal
 #' @return see methods
 #' @family preview
 #' @examples
@@ -113,11 +116,12 @@ as_previews <- function(x,...)UseMethod('as_previews')
 #' @examples
 #' library(magrittr)
 #' specials <- '& % $ # \\_ { } ~ \\^ \\'
+#' \donttest{
 #' specials %>% as_spork %>% as_previews
 #' specials %>% gsub(' ','',.) %>% as_spork %>% as_previews
 #' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_previews
 #'
-#' # possible mismatches between plotmath and latex (see ?plotmath):
+#' # disambiguation for plotmath and latex (see \code{\link[grDevices]{plotmath}}):
 #'
 #' 'epsilon.varepsilon' %>% as_spork %>% as_previews
 #' 'rho.varrho' %>% as_spork %>% as_previews
@@ -126,7 +130,7 @@ as_previews <- function(x,...)UseMethod('as_previews')
 #' 'sigma.sigma1.varsigma.stigma' %>% as_spork %>% as_previews
 #' 'theta.vartheta.theta1' %>% as_spork %>% as_previews
 #' 'omega.omega1.pi.varpi' %>% as_spork %>% as_previews
-
+#' }
 
 as_previews.spork <- function(x, wide = 70, long = 20, width = 3, height = 1,...){
   stopifnot(length(x) == 1)
@@ -172,9 +176,11 @@ as_preview.plotmath <- function(x, stem = 'plotmath_preview',width = 3, height =
 #' Plot Spork
 #'
 #' Render spork in a ggplot.
-#' @param x length-one spork; see \code{\link{as_spork}}
-#' @param blank whether to use a blank plot area
+#' @param data length-one spork; see \code{\link{as_spork}}
+#' @param mapping ignored
 #' @param ... ignored arguments
+#' @param environment ignored
+#' @param blank whether to use a blank plot area
 #' @export
 #' @family preview
 #' @keywords internal
@@ -182,19 +188,26 @@ as_preview.plotmath <- function(x, stem = 'plotmath_preview',width = 3, height =
 #' @importFrom ggplot2 ggplot
 #' @return gg
 #' @examples
+#' library(magrittr)
 #' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% ggplot
-ggplot.spork <- function(x, blank = TRUE, ...){
+ggplot.spork <- function(data, mapping = aes(), ..., environment = parent.frame(), blank = TRUE){
+  x <- data
   stopifnot(length(x) == 1)
   y <- as_plotmath(x)
   ggplot(y, blank = blank, ...)
 }
 
+#' @export
+ggplot2::ggplot
+
 #' Plot Plotmath
 #'
 #' Render plotmath in a ggplot.
-#' @param x length-one plotmath; see \code{\link{as_plotmath}}
-#' @param blank whether to use a blank plot area
+#' @param data length-one plotmath; see \code{\link{as_plotmath}}
+#' @param mapping ignored
 #' @param ... ignored arguments
+#' @param environment ignored
+#' @param blank whether to use a blank plot area
 #' @export
 #' @family preview
 #' @keywords internal
@@ -212,10 +225,11 @@ ggplot.spork <- function(x, blank = TRUE, ...){
 #' @examples
 #' library(magrittr)
 #' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_plotmath %>% ggplot
-ggplot.plotmath <- function(x, blank = TRUE, ...){
+ggplot.plotmath <- function(data, mapping= aes(), ..., environment = parent.frame(), blank = TRUE){
+  x <- data
   stopifnot(length(x)==1)
   p <- ggplot(data.frame(x = 1,y = 1,label = (x)))
-  p <- p + geom_text(aes(x = 1,y = 1,label=label), parse = TRUE)
+  p <- p + geom_text(aes(x = 1,y = 1,label = label), parse = TRUE)
   if(blank){
     p <- p +
       scale_x_continuous(expand=c(0,0)) +
@@ -246,10 +260,12 @@ ggplot.plotmath <- function(x, blank = TRUE, ...){
 #' @keywords internal
 #' @method as.png spork
 #' @importFrom grDevices png
+#' @importFrom grDevices dev.off
 #' @importFrom latexpdf as.png
 #' @return invisible filepath
 #' @examples
 #' library(magrittr)
+#' library(latexpdf)
 #' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as.png -> file
 #' file
 as.png.spork <- function(x, filename = tempfile(), width = 3, height = 1, units = 'in', res = 150, ...){
@@ -281,6 +297,7 @@ as.png.spork <- function(x, filename = tempfile(), width = 3, height = 1, units 
 #' @return invisible filepath
 #' @examples
 #' library(magrittr)
+#' library(latexpdf)
 #' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_plotmath %>% as.png -> file
 #' file
 as.png.plotmath <- function(x, filename = tempfile(), width = 3, height = 1, units = 'in', res = 150, ...){

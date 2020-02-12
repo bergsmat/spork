@@ -33,3 +33,4 @@ Other preview:
 \code{\link{ggplot.spork}()}
 }
 \concept{preview}
+\keyword{internal}

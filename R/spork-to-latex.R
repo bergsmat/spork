@@ -225,7 +225,7 @@ spork_to_latex <- function(
 #' latexToken('foo')
 #' latexToken('alpha')
 #' latexToken('Alpha')
-latexToken <- function(x, unrecognized, math, italics, ...){
+latexToken <- function(x, unrecognized = latexToken, math = TRUE, italics = FALSE, ...){
   special <- c(  '&',  '%',  '$',  '#',  '_',  '{',  '}','~',                '^',               '\\'             ) # special in latex
   replace <- c('\\&','\\%','\\$','\\#','\\_','\\{','\\}','${\\sim}$','{\\textasciicircum}','{\\textbackslash}')      # use in latex
   greek <- c(

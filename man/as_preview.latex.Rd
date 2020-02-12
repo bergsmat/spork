@@ -25,7 +25,7 @@
 
 \item{dir}{a working directory; see \code{\link[latexpdf]{as.pdf}}}
 
-\item{gs_cmd}{ghostscript command; see \code{\link[latexpdf]{ghostscript}}}
+\item{gs_cmd}{ghostscript command; see \code{\link[latexpdf]{ghostconvert}}}
 
 \item{prolog}{passed to \code{\link[latexpdf]{as.document}}}
 
@@ -42,7 +42,7 @@ Creates and displays a temporary png file, after
 conversion from pdf using \code{\link[latexpdf]{ghostconvert}}.
 }
 \examples{
-\dontrun{
+\donttest{
 library(magrittr)
 'one joule (Omega) ~ 1 kg*m^2./s^2' \%>\%
 as_spork \%>\%

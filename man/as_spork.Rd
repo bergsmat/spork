@@ -24,58 +24,29 @@ and superscripts (\code{x^y^z}). A dot
 a group. An asterisk (\code{*}) suggests
 multiplication. Special characters
 may be escaped with a backslash.
-Convert to plotmath with\code{\link{as_plotmath}}
+Convert to plotmath with \code{\link{as_plotmath}}
 and to latex with \code{\link{as_latex}}.
+Both plotmath and latex names of Greek
+letters are supported; see \code{\link{as_previews.spork}}
+and examples there for disambiguation.
 }
 \examples{
-library(magrittr)
-library(dplyr)
-library(latexpdf)
+library(ggplot2)
+label <- 'one joule (Omega) ~ 1 kg*m^2./s^2'
+label <- as_spork(label)
+label <- as_plotmath(label)
+label <- as.expression(label)
+x <- data.frame(y=1:10, x=1:10)
+p <- ggplot(x, aes(x, y))
+p$labels$x <- label
 
-'j^*' \%>\% as_spork \%>\% as_plotmath \%>\% as.character
-as_spork \%>\%
-as_plotmath #\%>\%
-as_expression
-data.frame(y=1:10, x=1:10) \%>\%
-decorate("x: one joule (Omega) ~ 1 kg*m^2./s^2") \%>\%
-mutate(
- x = structure(x, label = x \%>\% attr('label') \%>\%
- as_spork \%>\%
- as_plotmath \%>\%
- as.expression)
-) \%>\%
- ggplot(aes(x, y))
-
-data.frame(y=1:10, x=1:10) \%>\%
-decorate("x: gravitational force - gamma (kg\\\\.m/s^2.)") \%>\%
-mutate(x = structure(x, label = x \%>\% attr('label') \%>\%
-as_spork \%>\%
-as_plotmath \%>\%
-as.expression)) \%>\%
-ggplot(aes(x, y))
-
-path <- tempfile()
-data.frame(
- stringsAsFactors = FALSE,
- spork = c(
-   'one joule (Omega) ~ 1 kg*m^2./s^2',
-   'gravitational force - gamma (kg\\\\.m/s^2.)'
- )
-) \%>\%
- transmute(
-   latex = spork \%>\%
-   as_spork \%>\%
-   as_latex
- ) \%>\%
- as.pdf(reserve = FALSE, wider = -70)
+print(p)
 }
 \seealso{
 Other spork: 
 \code{\link{as.expression.plotmath}()},
 \code{\link{as_spork.character}()},
-\code{\link{as_spork.factor}()},
-\code{\link{as_spork.unit_string}()},
-\code{\link{as_spork.units}()}
+\code{\link{as_spork.factor}()}
 }
 \concept{spork}
 \keyword{internal}

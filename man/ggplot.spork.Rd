@@ -4,14 +4,18 @@
 \alias{ggplot.spork}
 \title{Plot Spork}
 \usage{
-\method{ggplot}{spork}(x, blank = TRUE, ...)
+\method{ggplot}{spork}(data, mapping = aes(), ..., environment = parent.frame(), blank = TRUE)
 }
 \arguments{
-\item{x}{length-one spork; see \code{\link{as_spork}}}
+\item{data}{length-one spork; see \code{\link{as_spork}}}
 
-\item{blank}{whether to use a blank plot area}
+\item{mapping}{ignored}
 
 \item{...}{ignored arguments}
+
+\item{environment}{ignored}
+
+\item{blank}{whether to use a blank plot area}
 }
 \value{
 gg
@@ -20,6 +24,7 @@ gg
 Render spork in a ggplot.
 }
 \examples{
+library(magrittr)
 'one joule (Omega) ~ 1 kg*m^2./s^2' \%>\% as_spork \%>\% ggplot
 }
 \seealso{

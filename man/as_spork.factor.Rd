@@ -26,8 +26,6 @@ as_spork(as.factor('V_c./F'))
 Other spork: 
 \code{\link{as.expression.plotmath}()},
 \code{\link{as_spork.character}()},
-\code{\link{as_spork.unit_string}()},
-\code{\link{as_spork.units}()},
 \code{\link{as_spork}()}
 }
 \concept{spork}

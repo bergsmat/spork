@@ -44,8 +44,6 @@ library(magrittr)
 Other spork: 
 \code{\link{as_spork.character}()},
 \code{\link{as_spork.factor}()},
-\code{\link{as_spork.unit_string}()},
-\code{\link{as_spork.units}()},
 \code{\link{as_spork}()}
 }
 \concept{spork}

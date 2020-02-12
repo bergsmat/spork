@@ -15,16 +15,16 @@
 plotmath
 }
 \description{
-Converts spork to plotmath. See '?plotmath'.
+Converts spork to plotmath. See \code{\link[grDevices]{plotmath}}.
 Vectorized version of \code{\link{spork_to_plotmath}}.
 }
 \examples{
 library(magrittr)
-'V_c./F' \%>\% as_plotmath
-'AUC_ss' \%>\% as_plotmath
-'C_max_ss' \%>\% as_plotmath
-'var^eta_j' \%>\% as_plotmath
-as_plotmath(as_spork('one joule (Omega) ~ 1 kg*m^2./s^2'))
+'V_c./F' \%>\% as_spork \%>\% as_plotmath
+'AUC_ss' \%>\% as_spork \%>\% as_plotmath
+'C_max_ss' \%>\% as_spork \%>\% as_plotmath
+'var^eta_j' \%>\% as_spork \%>\% as_plotmath
+'one joule (Omega) ~ 1 kg*m^2./s^2' \%>\% as_spork \%>\% as_plotmath
 }
 \seealso{
 Other plotmath: 
