@@ -41,10 +41,8 @@ library(magrittr)
   label
 }
 \seealso{
-Other spork: 
-\code{\link{as_spork.character}()},
-\code{\link{as_spork.factor}()},
-\code{\link{as_spork}()}
+Other spork: \code{\link{as_spork.character}},
+  \code{\link{as_spork.factor}}, \code{\link{as_spork}}
 }
 \concept{spork}
 \keyword{internal}

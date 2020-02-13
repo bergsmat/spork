@@ -4,12 +4,8 @@
 \alias{plotmathToken}
 \title{Quote a Token}
 \usage{
-plotmathToken(
-  x,
-  conditional = getOption("plotmath_conditional_quote", TRUE),
-  unescape = getOption("plotmath_unescape", TRUE),
-  ...
-)
+plotmathToken(x, conditional = getOption("plotmath_conditional_quote",
+  TRUE), unescape = getOption("plotmath_unescape", TRUE), ...)
 }
 \arguments{
 \item{x}{(length-one) character}
@@ -32,11 +28,9 @@ likewise 'varrho' maps to 'rho' and 'varpi' maps to 'omega1'.
 plotmathToken("can't")
 }
 \seealso{
-Other plotmath: 
-\code{\link{as_plotmath.spork}()},
-\code{\link{as_plotmath}()},
-\code{\link{goodToken}()},
-\code{\link{spork_to_plotmath}()}
+Other plotmath: \code{\link{as_plotmath.spork}},
+  \code{\link{as_plotmath}}, \code{\link{goodToken}},
+  \code{\link{spork_to_plotmath}}
 }
 \concept{plotmath}
 \keyword{internal}

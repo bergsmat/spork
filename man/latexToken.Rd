@@ -4,7 +4,8 @@
 \alias{latexToken}
 \title{Process Latex Token}
 \usage{
-latexToken(x, unrecognized = latexToken, math = TRUE, italics = FALSE, ...)
+latexToken(x, unrecognized = latexToken, math = TRUE,
+  italics = FALSE, ...)
 }
 \arguments{
 \item{x}{character}
@@ -31,10 +32,8 @@ latexToken('alpha')
 latexToken('Alpha')
 }
 \seealso{
-Other latex: 
-\code{\link{as_latex.spork}()},
-\code{\link{as_latex}()},
-\code{\link{spork_to_latex}()}
+Other latex: \code{\link{as_latex.spork}},
+  \code{\link{as_latex}}, \code{\link{spork_to_latex}}
 }
 \concept{latex}
 \keyword{internal}

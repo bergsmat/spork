@@ -43,10 +43,9 @@ p$labels$x <- label
 print(p)
 }
 \seealso{
-Other spork: 
-\code{\link{as.expression.plotmath}()},
-\code{\link{as_spork.character}()},
-\code{\link{as_spork.factor}()}
+Other spork: \code{\link{as.expression.plotmath}},
+  \code{\link{as_spork.character}},
+  \code{\link{as_spork.factor}}
 }
 \concept{spork}
 \keyword{internal}

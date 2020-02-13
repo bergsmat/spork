@@ -30,9 +30,7 @@ as_latex(x)
 as_latex(as_spork('gravitational force (kg\\\\.m/s^2.)'))
 }
 \seealso{
-Other latex: 
-\code{\link{as_latex}()},
-\code{\link{latexToken}()},
-\code{\link{spork_to_latex}()}
+Other latex: \code{\link{as_latex}},
+  \code{\link{latexToken}}, \code{\link{spork_to_latex}}
 }
 \concept{latex}

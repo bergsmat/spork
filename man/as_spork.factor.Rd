@@ -23,10 +23,8 @@ by converting to character and calling
 as_spork(as.factor('V_c./F'))
 }
 \seealso{
-Other spork: 
-\code{\link{as.expression.plotmath}()},
-\code{\link{as_spork.character}()},
-\code{\link{as_spork}()}
+Other spork: \code{\link{as.expression.plotmath}},
+  \code{\link{as_spork.character}}, \code{\link{as_spork}}
 }
 \concept{spork}
 \keyword{internal}

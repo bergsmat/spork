@@ -1,7 +1,7 @@
 Package: spork
 Type: Package
 Title: Generalized Label Formatting
-Version: 0.1.0
+Version: 0.1.1
 Author: Tim Bergsma
 Maintainer: Tim Bergsma <bergsmat@gmail.com>
 Description: The 'spork' syntax describes
@@ -18,5 +18,4 @@ Encoding: UTF-8
 LazyData: true
 Imports: ggplot2, png, latexpdf, knitr
 RoxygenNote: 7.0.2
-VignetteBuilder: knitr
 Suggests: testthat (>= 2.1.0), magrittr, dplyr

@@ -29,12 +29,9 @@ class(x)
 class(x[[1]])
 }
 \seealso{
-Other util: 
-\code{\link{[.latex}()},
-\code{\link{[.plotmath}()},
-\code{\link{[.spork}()},
-\code{\link{[[.plotmath}()},
-\code{\link{[[.spork}()}
+Other util: \code{\link{[.latex}},
+  \code{\link{[.plotmath}}, \code{\link{[.spork}},
+  \code{\link{[[.plotmath}}, \code{\link{[[.spork}}
 }
 \concept{util}
 \keyword{internal}

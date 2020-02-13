@@ -22,9 +22,7 @@ See description for \code{\link{as_spork}}.
 as_spork('V_c./F')
 }
 \seealso{
-Other spork: 
-\code{\link{as.expression.plotmath}()},
-\code{\link{as_spork.factor}()},
-\code{\link{as_spork}()}
+Other spork: \code{\link{as.expression.plotmath}},
+  \code{\link{as_spork.factor}}, \code{\link{as_spork}}
 }
 \concept{spork}
