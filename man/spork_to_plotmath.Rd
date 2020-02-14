@@ -4,8 +4,11 @@
 \alias{spork_to_plotmath}
 \title{Convert One Spork to Plotmath}
 \usage{
-spork_to_plotmath(x, unrecognized = getOption("plotmath_unrecognized",
-  "plotmathToken"), ...)
+spork_to_plotmath(
+  x,
+  unrecognized = getOption("plotmath_unrecognized", "plotmathToken"),
+  ...
+)
 }
 \arguments{
 \item{x}{character}
@@ -34,9 +37,11 @@ library(magrittr)
 'var^eta_j' \%>\% spork_to_plotmath
 }
 \seealso{
-Other plotmath: \code{\link{as_plotmath.spork}},
-  \code{\link{as_plotmath}}, \code{\link{goodToken}},
-  \code{\link{plotmathToken}}
+Other plotmath: 
+\code{\link{as_plotmath.spork}()},
+\code{\link{as_plotmath}()},
+\code{\link{goodToken}()},
+\code{\link{plotmathToken}()}
 }
 \concept{plotmath}
 \keyword{internal}

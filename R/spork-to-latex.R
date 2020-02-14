@@ -346,7 +346,7 @@ latexToken <- function(x, unrecognized = latexToken, math = TRUE, italics = FALS
   x <- output
 
   x <- paste0('\\textrm{',x, '}')
-
+  class(x) <- union('latex', class(x))
   x
 }
 

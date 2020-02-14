@@ -12,7 +12,7 @@ sporklet(x, ...)
 \item{...}{ignored arguments}
 }
 \value{
-character
+sporklet (character vector)
 }
 \description{
 Parses spork.  Converts length-one character

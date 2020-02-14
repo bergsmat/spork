@@ -22,9 +22,11 @@ Coerce to plotmath.  Generic, with method
 example(as_plotmath.spork)
 }
 \seealso{
-Other plotmath: \code{\link{as_plotmath.spork}},
-  \code{\link{goodToken}}, \code{\link{plotmathToken}},
-  \code{\link{spork_to_plotmath}}
+Other plotmath: 
+\code{\link{as_plotmath.spork}()},
+\code{\link{goodToken}()},
+\code{\link{plotmathToken}()},
+\code{\link{spork_to_plotmath}()}
 }
 \concept{plotmath}
 \keyword{internal}

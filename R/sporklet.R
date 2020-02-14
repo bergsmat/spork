@@ -14,7 +14,7 @@
 #' @param ... ignored arguments
 #' @export
 #' @keywords internal
-#' @return character
+#' @return sporklet (character vector)
 #' @family parse
 #' @examples
 #' sporklet('one joule (Omega) ~ 1 kg*m^2./s^2')
@@ -48,6 +48,7 @@ sporklet <- function(x, ...){
       input <- ''
     }
   }
+  class(output) <- union('sporklet', class(output))
   return(output)
 }
 

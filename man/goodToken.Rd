@@ -23,9 +23,11 @@ goodToken('foo')
 goodToken('\\\\$')
 }
 \seealso{
-Other plotmath: \code{\link{as_plotmath.spork}},
-  \code{\link{as_plotmath}}, \code{\link{plotmathToken}},
-  \code{\link{spork_to_plotmath}}
+Other plotmath: 
+\code{\link{as_plotmath.spork}()},
+\code{\link{as_plotmath}()},
+\code{\link{plotmathToken}()},
+\code{\link{spork_to_plotmath}()}
 }
 \concept{plotmath}
 \keyword{internal}

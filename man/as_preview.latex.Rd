@@ -4,10 +4,17 @@
 \alias{as_preview.latex}
 \title{Preview Spork as Latex}
 \usage{
-\method{as_preview}{latex}(x, wide = 70, long = 20,
-  stem = "latex_preview", dir = tempdir(),
-  gs_cmd = getOption("gs_cmd", "mgs"), prolog = "\\\\begin{center}",
-  epilog = "\\\\end{center}", ...)
+\method{as_preview}{latex}(
+  x,
+  wide = 70,
+  long = 20,
+  stem = "latex_preview",
+  dir = tempdir(),
+  gs_cmd = getOption("gs_cmd", "mgs"),
+  prolog = "\\\\begin{center}",
+  epilog = "\\\\end{center}",
+  ...
+)
 }
 \arguments{
 \item{x}{spork; see \code{\link{as_spork}}}
@@ -44,12 +51,15 @@ as_preview
 }
 }
 \seealso{
-Other preview: \code{\link{as.png.plotmath}},
-  \code{\link{as.png.spork}},
-  \code{\link{as_preview.plotmath}},
-  \code{\link{as_previews.spork}},
-  \code{\link{as_previews}}, \code{\link{as_preview}},
-  \code{\link{ggplot.plotmath}}, \code{\link{ggplot.spork}}
+Other preview: 
+\code{\link{as.png.plotmath}()},
+\code{\link{as.png.spork}()},
+\code{\link{as_preview.plotmath}()},
+\code{\link{as_previews.spork}()},
+\code{\link{as_previews}()},
+\code{\link{as_preview}()},
+\code{\link{ggplot.plotmath}()},
+\code{\link{ggplot.spork}()}
 }
 \concept{preview}
 \keyword{internal}

@@ -4,8 +4,7 @@
 \alias{ggplot.plotmath}
 \title{Plot Plotmath}
 \usage{
-\method{ggplot}{plotmath}(data, mapping = aes(), ...,
-  environment = parent.frame(), blank = TRUE)
+\method{ggplot}{plotmath}(data, mapping = aes(), ..., environment = parent.frame(), blank = TRUE)
 }
 \arguments{
 \item{data}{length-one plotmath; see \code{\link{as_plotmath}}}
@@ -29,13 +28,15 @@ library(magrittr)
 'one joule (Omega) ~ 1 kg*m^2./s^2' \%>\% as_spork \%>\% as_plotmath \%>\% ggplot
 }
 \seealso{
-Other preview: \code{\link{as.png.plotmath}},
-  \code{\link{as.png.spork}},
-  \code{\link{as_preview.latex}},
-  \code{\link{as_preview.plotmath}},
-  \code{\link{as_previews.spork}},
-  \code{\link{as_previews}}, \code{\link{as_preview}},
-  \code{\link{ggplot.spork}}
+Other preview: 
+\code{\link{as.png.plotmath}()},
+\code{\link{as.png.spork}()},
+\code{\link{as_preview.latex}()},
+\code{\link{as_preview.plotmath}()},
+\code{\link{as_previews.spork}()},
+\code{\link{as_previews}()},
+\code{\link{as_preview}()},
+\code{\link{ggplot.spork}()}
 }
 \concept{preview}
 \keyword{internal}

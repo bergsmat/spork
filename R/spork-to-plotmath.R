@@ -208,6 +208,7 @@ spork_to_plotmath <- function(
       }
     }
   }
+  class(base) <- union('plotmath', class(base))
   return(base)
 }
 

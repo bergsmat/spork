@@ -4,8 +4,13 @@
 \alias{spork_to_latex}
 \title{Convert One Spork to Latex}
 \usage{
-spork_to_latex(x, unrecognized = getOption("latex_unrecognized",
-  "latexToken"), italics = FALSE, math = TRUE, ...)
+spork_to_latex(
+  x,
+  unrecognized = getOption("latex_unrecognized", "latexToken"),
+  italics = FALSE,
+  math = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{character}
@@ -39,8 +44,10 @@ library(magrittr)
 'one joule (Omega) ~ 1 kg*m^2./s^2' \%>\% spork_to_latex
 }
 \seealso{
-Other latex: \code{\link{as_latex.spork}},
-  \code{\link{as_latex}}, \code{\link{latexToken}}
+Other latex: 
+\code{\link{as_latex.spork}()},
+\code{\link{as_latex}()},
+\code{\link{latexToken}()}
 }
 \concept{latex}
 \keyword{internal}

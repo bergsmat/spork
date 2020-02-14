@@ -27,8 +27,10 @@ library(magrittr)
 'one joule (Omega) ~ 1 kg*m^2./s^2' \%>\% as_spork \%>\% as_plotmath
 }
 \seealso{
-Other plotmath: \code{\link{as_plotmath}},
-  \code{\link{goodToken}}, \code{\link{plotmathToken}},
-  \code{\link{spork_to_plotmath}}
+Other plotmath: 
+\code{\link{as_plotmath}()},
+\code{\link{goodToken}()},
+\code{\link{plotmathToken}()},
+\code{\link{spork_to_plotmath}()}
 }
 \concept{plotmath}

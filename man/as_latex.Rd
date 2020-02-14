@@ -22,8 +22,10 @@ Coerce to latex.  Generic, with method
 example(as_latex.spork)
 }
 \seealso{
-Other latex: \code{\link{as_latex.spork}},
-  \code{\link{latexToken}}, \code{\link{spork_to_latex}}
+Other latex: 
+\code{\link{as_latex.spork}()},
+\code{\link{latexToken}()},
+\code{\link{spork_to_latex}()}
 }
 \concept{latex}
 \keyword{internal}
