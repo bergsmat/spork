@@ -55,7 +55,11 @@ as_spar.spork <- function(x, ...){
   )
   while(nchar(input)){
     m <- sapply(explicit, function(pattern)position(input, pattern))
-    if(max(m) == -1)return(c(output, input))
+    if(max(m) == -1){
+      out <- c(output, input)
+      class(out) <- union('spar', class(out))
+      return(out)
+    }
     m <- m[m != -1]
     m <- m[m == min(m)]
     stopifnot(length(m) == 1)

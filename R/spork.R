@@ -98,4 +98,20 @@ as_spork.factor <- function(x, ...)as_spork(as.character(x), ...)
   y
 }
 
-
+#' Coerce Spork to List
+#'
+#' Coerces spork to list.  Each element inherits class.
+#' Supports use of \code{\link{lapply}}.
+#' @param x spork
+#' @param ... ignored
+#' @export
+#' @keywords internal
+#' @return list of spork
+#' @examples
+#' x <- as_spork(letters[1:5])
+#' lapply(x, class)
+as.list.spork <- function(x, ...){
+  y <- as.list(as.character(x))
+  y <- lapply(y, as_spork)
+  y
+}

@@ -33,12 +33,12 @@ as_latex <- function(x, ...)UseMethod('as_latex')
 #' @param ... passed to \code{unrecognized}; see \code{\link{latexToken}}
 #' @examples
 #' library(magrittr)
-#' 'V_c./F' %>% spork_to_latex
-#' 'AUC_ss' %>% spork_to_latex
-#' 'C_max_ss' %>% spork_to_latex
-#' 'var^eta_j' %>% spork_to_latex
-#' '& % $ # \\_ { } ~ \\^ \\' %>% spork_to_latex
-#' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% spork_to_latex
+#' 'V_c./F' %>% as_spork %>% as_latex
+#' 'AUC_ss' %>% as_spork %>% as_latex
+#' 'C_max_ss' %>% as_spork %>% as_latex
+#' 'var^eta_j' %>% as_spork %>% as_latex
+#' '& % $ # \\_ { } ~ \\^ \\' %>% as_spork %>% as_latex
+#' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_latex
 
 as_latex.spar <- function(
   x,
@@ -58,7 +58,7 @@ as_latex.spar <- function(
   # names of Greek letters, but renders other
   # tokens literally.
 
-  x <- sporklet(x,...)
+  #x <- sporklet(x,...)
   closers <- character(0)
   active <- FALSE
   if(length(x)==0)return(x)
@@ -388,7 +388,7 @@ latexToken <- function(x, unrecognized = latexToken, math = TRUE, italics = FALS
 #' as_latex(as_spork('gravitational force (kg\\.m/s^2.)'))
 as_latex.spork <- function(x, ...){
   y <- lapply(x, as_spar, USE.NAMES = F, ...)
-  y <- sapply(x, as_latex, USE.NAMES = F, ...)
+  y <- sapply(y, as_latex, USE.NAMES = F, ...)
   if(length(y) == 0) y <- character(0)
   class(y) <- union('latex', class(y))
   y

@@ -29,15 +29,15 @@ Other spork:
 
 Other interface: 
 \code{\link{as.expression.plotmath}()},
+\code{\link{as_latex.spar}()},
 \code{\link{as_latex.spork}()},
+\code{\link{as_plotmath.spar}()},
 \code{\link{as_plotmath.spork}()},
 \code{\link{concatenate.character}()},
 \code{\link{concatenate.latex}()},
 \code{\link{concatenate.plotmath}()},
 \code{\link{latexToken}()},
-\code{\link{plotmathToken}()},
-\code{\link{spork_to_latex}()},
-\code{\link{spork_to_plotmath}()}
+\code{\link{plotmathToken}()}
 }
 \concept{interface}
 \concept{spork}

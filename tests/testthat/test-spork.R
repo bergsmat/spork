@@ -52,14 +52,14 @@ test_that('as_latex is stable',{
       as_spork %>%
       as_latex %>%
       as.character,
-    "$\\mathrm{ \\textrm{$\\mathrm{\\Omega}$} \\textrm{ } \\textrm{joule}^{ \\textrm{*}} \\textrm{ } \\textrm{${\\sim}$1} \\textrm{ } \\textrm{kg} {\\cdot} \\textrm{m}^{ \\textrm{2}} \\textrm{/s}^{ \\textrm{2}}}$"
+    "$\\mathrm{\\textrm{$\\mathrm{\\Omega}$} \\textrm{ } \\textrm{joule}^{ \\textrm{*}} \\textrm{ } \\textrm{${\\sim}$1} \\textrm{ } \\textrm{kg} {\\cdot} \\textrm{m}^{\\textrm{2}} \\textrm{/s}^{\\textrm{2}}}$"
   )
   expect_identical(
     'gravitational force gamma (kg\\.m/s^2.)' %>%
       as_spork %>%
       as_latex %>%
       as.character,
-    "$\\mathrm{ \\textrm{gravitational} \\textrm{ } \\textrm{force} \\textrm{ } \\textrm{$\\mathrm{\\gamma}$} \\textrm{ } \\textrm{(kg} \\textrm{.} \\textrm{m/s}^{ \\textrm{2}} \\textrm{)}}$"
+    "$\\mathrm{\\textrm{gravitational} \\textrm{ } \\textrm{force} \\textrm{ } \\textrm{$\\mathrm{\\gamma}$} \\textrm{ } \\textrm{(kg} \\textrm{.} \\textrm{m/s}^{\\textrm{2}} \\textrm{)}}$"
   )
 
 })
@@ -338,26 +338,26 @@ expect_silent( '^\\_' %>% render )
 expect_silent( '\\^' %>% render )
 expect_silent( '^.a' %>% render )
 expect_silent( '\\$' %>% render )
-expect_true( spork_to_plotmath('\\$') %>% goodToken)
-expect_false( spork_to_plotmath('\\$', unescape = FALSE) %>% goodToken)
-expect_false(spork_to_plotmath('\\$', unrecognized = function(x,...)x) %>% goodToken)
+expect_true( as_plotmath(as_spork('\\$')) %>% goodToken)
+expect_false( as_plotmath(as_spork('\\$'), unescape = FALSE) %>% goodToken)
+expect_false(as_plotmath(as_spork('\\$'), unrecognized = function(x,...)x) %>% goodToken)
 options(plotmath_unrecognized = function(x,...)x)
-expect_false(spork_to_plotmath('\\$') %>% goodToken)
+expect_false(as_plotmath(as_spork('\\$')) %>% goodToken)
 options(plotmath_unrecognized = NULL)
-expect_true(spork_to_plotmath('\\$') %>% goodToken)
-expect_identical(plotmathToken("\\$"), "'\\\\$'")
-expect_identical(plotmathToken("\\$", unescape = FALSE),  "'\\$'")
+expect_true(as_plotmath(as_spork('\\$')) %>% goodToken)
+expect_identical(as.character(plotmathToken("\\$")), "'\\\\$'")
+expect_identical(as.character(plotmathToken("\\$", unescape = FALSE)),  "'\\$'")
 expect_true(plotmathToken("\\$") %>% goodToken)
 options(plotmath_unescape = FALSE)
 expect_false(plotmathToken("\\$") %>% goodToken)
 options(plotmath_unescape = NULL)
 expect_false(plotmathToken("\\$", unescape = FALSE) %>% goodToken)
-expect_identical(plotmathToken('foo'), 'foo')
-expect_identical(plotmathToken('foo',conditional = FALSE),"'foo'")
+expect_identical(as.character(plotmathToken('foo')), 'foo')
+expect_identical(as.character(plotmathToken('foo',conditional = FALSE)),"'foo'")
 options('plotmath_conditional_quote' = FALSE)
-expect_identical(plotmathToken('foo'), "'foo'")
+expect_identical(as.character(plotmathToken('foo')), "'foo'")
 options('plotmath_conditional_quote' = NULL)
-expect_identical(plotmathToken('foo'),"foo")
+expect_identical(as.character(plotmathToken('foo')),"foo")
 
 })
 
@@ -412,7 +412,7 @@ test_that('latexToken() responds to top-level arguments',{
   library(magrittr)
   expect_identical(
     '\n' %>% as_spork %>% as_latex(italics = TRUE) %>% as.character,
-    "$ \\textrm{\n}$"
+    "$\\textrm{\n}$"
   )
 })
 test_that('plotmathToken() responds to top-level arguments',{
