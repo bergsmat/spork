@@ -1,3 +1,18 @@
+#' Parse Spork.
+#'
+#' Parses spork.
+#' Generic, with method \code{\link{as_spar.spork}}.
+#' @param x object
+#' @param ... passed arguments
+#' @keywords internal
+#' @export
+#' @family generics
+#' @family spar
+#' @return see methods
+#' @examples
+#' # see methods
+as_spar <- function(x, ...)UseMethod('as_spar')
+
 #' Parse Spork
 #'
 #' Parses spork.  Converts length-one character
@@ -10,20 +25,27 @@
 #' one or more of the above is implicitly
 #' a token as well.
 #'
-#' @param x length-one character using spork syntax; coerced to character
+#' @param x length-one character using spork syntax
 #' @param ... ignored arguments
 #' @export
-#' @keywords internal
-#' @return sporklet (character vector)
-#' @family parse
+#' @keywords manip
+#' @return spar (character vector)
+#' @family spar
 #' @examples
-#' sporklet('one joule (Omega) ~ 1 kg*m^2./s^2')
+#' as_spar(as_spork('one joule (Omega) ~ 1 kg*m^2./s^2'))
 
-sporklet <- function(x, ...){
-  x <- as.character(x)
-#  stopifnot(length(x) >= 1)
-  if(length(x) == 0) return(character(0))
-  if(x == '')return('')
+as_spar.spork <- function(x, ...){
+  if(length(x) == 0) {
+    out <- character(0)
+    class(out) <- union('spar', class(out))
+    return(out)
+  }
+  if(length(x) > 1)stop('expecting length-one character')
+  if(x == ''){
+    out <- ''
+    class(out) <- union('spar', class(out))
+    return(out)
+  }
   input <- x
   output <- character(0)
   explicit <- c(
@@ -48,7 +70,7 @@ sporklet <- function(x, ...){
       input <- ''
     }
   }
-  class(output) <- union('sporklet', class(output))
+  class(output) <- union('spar', class(output))
   return(output)
 }
 

@@ -21,7 +21,7 @@ spork_to_latex(
 
 \item{math}{whether to wrap in math environment (default: yes)}
 
-\item{...}{passed arguments}
+\item{...}{passed to \code{unrecognized}; see \code{\link{latexToken}}}
 }
 \value{
 character
@@ -44,10 +44,22 @@ library(magrittr)
 'one joule (Omega) ~ 1 kg*m^2./s^2' \%>\% spork_to_latex
 }
 \seealso{
+Other interface: 
+\code{\link{as.expression.plotmath}()},
+\code{\link{as_latex.spork}()},
+\code{\link{as_plotmath.spork}()},
+\code{\link{as_spork.character}()},
+\code{\link{concatenate.character}()},
+\code{\link{concatenate.latex}()},
+\code{\link{concatenate.plotmath}()},
+\code{\link{latexToken}()},
+\code{\link{plotmathToken}()},
+\code{\link{spork_to_plotmath}()}
+
 Other latex: 
 \code{\link{as_latex.spork}()},
 \code{\link{as_latex}()},
 \code{\link{latexToken}()}
 }
+\concept{interface}
 \concept{latex}
-\keyword{internal}

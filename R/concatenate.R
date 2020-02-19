@@ -22,7 +22,7 @@ concatenate <- function(x,...)UseMethod('concatenate')
 #' @param sep character
 #' @param ... passed arguments
 #' @export
-#' @keywords manip
+#' @family interface
 #' @family concatenate
 #' @return character
 #' @examples
@@ -41,7 +41,7 @@ concatenate.character <- function(x, sep = '', ...){
 #' @param sep character
 #' @param ... passed arguments
 #' @export
-#' @keywords manip
+#' @family interface
 #' @family concatenate
 #' @return plotmath
 #' @examples
@@ -50,6 +50,7 @@ concatenate.plotmath <- function(x, sep = '*', ...){
   stopifnot(is.character(sep))
   stopifnot(length(sep) == 1)
   res <- paste(x, collapse = sep)
+  class(res) <- union('plotmath', class(res))
   res
 }
 
@@ -60,15 +61,16 @@ concatenate.plotmath <- function(x, sep = '*', ...){
 #' @param sep character
 #' @param ... passed arguments
 #' @export
-#' @keywords manip
+#' @family interface
 #' @family concatenate
 #' @return latex
 #' @examples
-#' concatenate(as_latex(as_spork('BMI_i','kg/m^2')))
-concatenate.latex <- function(x, sep = ' ',...){
+#' concatenate(as_latex(as_spork(c('BMI_i','kg/m^2'))))
+concatenate.latex <- function(x, sep = '{}',...){
   stopifnot(is.character(sep))
   stopifnot(length(sep) == 1)
   res <- paste(x, collapse = sep)
+  class(res) <- union('latex', class(res))
   res
 }
 #' Concatenate NULL
@@ -77,9 +79,9 @@ concatenate.latex <- function(x, sep = ' ',...){
 #' @param x NULL
 #' @param ... passed arguments
 #' @export
-#' @keywords manip
+#' @keywords internal
 #' @family concatenate
-#' @return latex
+#' @return character
 #' @examples
 #' concatenate(NULL)
 concatenate.NULL <- function(x,...)''

@@ -12,7 +12,7 @@
 \item{...}{passed arguments}
 }
 \value{
-latex
+character
 }
 \description{
 Concatenates null. Returns empty string.
@@ -28,4 +28,4 @@ Other concatenate:
 \code{\link{concatenate}()}
 }
 \concept{concatenate}
-\keyword{manip}
+\keyword{internal}

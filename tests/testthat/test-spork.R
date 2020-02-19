@@ -407,3 +407,34 @@ test_that('as_previews is stable',{
   '$\\sigma$ $\\varsigma$ $\\Upsilon$' %>% structure(class = c('latex','character')) %>% as_preview
 
 })
+
+test_that('latexToken() responds to top-level arguments',{
+  library(magrittr)
+  expect_identical(
+    '\n' %>% as_spork %>% as_latex(italics = TRUE) %>% as.character,
+    "$ \\textrm{\n}$"
+  )
+})
+test_that('plotmathToken() responds to top-level arguments',{
+  library(magrittr)
+  expect_identical(
+    '\\' %>% as_spork %>% as_plotmath(unescape = FALSE) %>% as.character,
+    "'\\'"
+  )
+})
+test_that('newline is honored in axis label',{
+  library(magrittr)
+  library(dplyr)
+  library(ggplot2)
+  x <- data.frame(y=1:10, x = 1:10)
+  label <- 'a\nb' %>%
+    as_spork %>%
+    as_plotmath %>%
+    as.expression
+  attr(x, 'label') <- label
+  foo <- ggplot(x,aes(x, y))
+  foo$labels$x <- label
+  print(foo)
+  foo$labels$x
+
+})

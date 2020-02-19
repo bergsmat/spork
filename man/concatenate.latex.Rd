@@ -4,7 +4,7 @@
 \alias{concatenate.latex}
 \title{Concatenate Latex}
 \usage{
-\method{concatenate}{latex}(x, sep = " ", ...)
+\method{concatenate}{latex}(x, sep = "{}", ...)
 }
 \arguments{
 \item{x}{latex}
@@ -20,9 +20,21 @@ latex
 Concatenates latex. Collapses vector using separator.
 }
 \examples{
-concatenate(as_latex(as_spork('BMI_i','kg/m^2')))
+concatenate(as_latex(as_spork(c('BMI_i','kg/m^2'))))
 }
 \seealso{
+Other interface: 
+\code{\link{as.expression.plotmath}()},
+\code{\link{as_latex.spork}()},
+\code{\link{as_plotmath.spork}()},
+\code{\link{as_spork.character}()},
+\code{\link{concatenate.character}()},
+\code{\link{concatenate.plotmath}()},
+\code{\link{latexToken}()},
+\code{\link{plotmathToken}()},
+\code{\link{spork_to_latex}()},
+\code{\link{spork_to_plotmath}()}
+
 Other concatenate: 
 \code{\link{concatenate.NULL}()},
 \code{\link{concatenate.character}()},
@@ -30,4 +42,4 @@ Other concatenate:
 \code{\link{concatenate}()}
 }
 \concept{concatenate}
-\keyword{manip}
+\concept{interface}

@@ -14,14 +14,14 @@ plotmathToken(
 \arguments{
 \item{x}{(length-one) character}
 
-\item{conditional}{if true, return good tokens (parseable) unmodified}
+\item{conditional}{if true, return good tokens (parseable) unmodified; see \code{\link{goodToken}}}
 
 \item{unescape}{whether to escape (unrecognized) backslash}
 
 \item{...}{ignored arguments}
 }
 \value{
-character
+plotmath
 }
 \description{
 Quotes a token. Escapes single-quotes and wraps in single-quotes.
@@ -30,6 +30,10 @@ likewise 'varrho' maps to 'rho' and 'varpi' maps to 'omega1'.
 }
 \examples{
 plotmathToken("can't")
+plotmathToken("\\\\", unescape = TRUE)
+plotmathToken("\\\\", unescape = FALSE)
+plotmathToken("\n", conditional = TRUE)
+plotmathToken("\n", conditional = FALSE)
 }
 \seealso{
 Other plotmath: 
@@ -37,6 +41,18 @@ Other plotmath:
 \code{\link{as_plotmath}()},
 \code{\link{goodToken}()},
 \code{\link{spork_to_plotmath}()}
+
+Other interface: 
+\code{\link{as.expression.plotmath}()},
+\code{\link{as_latex.spork}()},
+\code{\link{as_plotmath.spork}()},
+\code{\link{as_spork.character}()},
+\code{\link{concatenate.character}()},
+\code{\link{concatenate.latex}()},
+\code{\link{concatenate.plotmath}()},
+\code{\link{latexToken}()},
+\code{\link{spork_to_latex}()},
+\code{\link{spork_to_plotmath}()}
 }
+\concept{interface}
 \concept{plotmath}
-\keyword{internal}

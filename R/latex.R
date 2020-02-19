@@ -1,3 +1,18 @@
+#' Coerce to Latex
+#'
+#' Coerce to latex.  Generic, with method
+#' \code{\link{as_latex.spork}}.
+#'
+#' @param x object
+#' @param ... passed arguments
+#' @export
+#' @keywords internal
+#' @family latex
+#' @return latex
+#' @examples
+#' example(as_latex.spork)
+as_latex <- function(x, ...)UseMethod('as_latex')
+
 #' Convert One Spork to Latex
 #'
 #' Converts one spork to latex.
@@ -8,14 +23,14 @@
 #' See \code{\link{latexToken}}.
 #'
 #' @export
-#' @keywords internal
+#' @family interface
 #' @return character
 #' @family latex
 #' @param x character
 #' @param unrecognized function to process unrecognized tokens: default \code{\link{latexToken}}
 #' @param italics whether to use italics or not (default: no)
 #' @param math whether to wrap in math environment (default: yes)
-#' @param ... passed arguments
+#' @param ... passed to \code{unrecognized}; see \code{\link{latexToken}}
 #' @examples
 #' library(magrittr)
 #' 'V_c./F' %>% spork_to_latex
@@ -25,7 +40,7 @@
 #' '& % $ # \\_ { } ~ \\^ \\' %>% spork_to_latex
 #' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% spork_to_latex
 
-spork_to_latex <- function(
+as_latex.spar <- function(
   x,
   unrecognized = getOption('latex_unrecognized','latexToken'),
   italics = FALSE,
@@ -67,7 +82,7 @@ spork_to_latex <- function(
           base <- paste0(base, ' ', token)
           active <- TRUE
         }else{ # empty nest or start of line
-          base <- paste0(base,' ', token)
+          base <- paste0(base, token)
           active <- TRUE
         }
       }
@@ -86,7 +101,7 @@ spork_to_latex <- function(
             base <- paste0(base, ' ', token)
             active <- TRUE
           }else{ # empty nest or start of line
-            base <- paste0(base, ' ', token)
+            base <- paste0(base, token)
             active <- TRUE
           }
         }
@@ -219,8 +234,8 @@ spork_to_latex <- function(
 #' @param ... ignored arguments
 #' @export
 #' @family latex
-#' @keywords internal
-#' @return character
+#' @family interface
+#' @return latex
 #' @examples
 #' latexToken('foo')
 #' latexToken('alpha')
@@ -349,4 +364,86 @@ latexToken <- function(x, unrecognized = latexToken, math = TRUE, italics = FALS
   class(x) <- union('latex', class(x))
   x
 }
+
+#' Convert Spork to Latex
+#'
+#' Converts spork to latex.
+#' Vectorized version of \code{\link{as_latex.spar}}.
+#'
+#' @export
+#' @param x spork
+#' @param ... passed to \code{\link{as_latex.spar}}
+#' @return latex
+#' @family latex
+#' @family interface
+#' @examples
+#' x <- c(
+#'   'V_c./F',
+#'   'AUC_ss',
+#'   'C_max_ss',
+#'   'var^eta_j'
+#' )
+#' x <- as_spork(x)
+#' as_latex(x)
+#' as_latex(as_spork('gravitational force (kg\\.m/s^2.)'))
+as_latex.spork <- function(x, ...){
+  y <- lapply(x, as_spar, USE.NAMES = F, ...)
+  y <- sapply(x, as_latex, USE.NAMES = F, ...)
+  if(length(y) == 0) y <- character(0)
+  class(y) <- union('latex', class(y))
+  y
+}
+#' Subset Latex
+#'
+#' Subsets latex, retaining class.
+#' @param x latex
+#' @param ... passed to next method
+#' @export
+#' @keywords internal
+#' @family util
+#' @return latex
+#' @examples
+#' x <- c(
+#'   'V_c./F',
+#'   'AUC_ss',
+#'   'C_max_ss',
+#'   'var^eta_j'
+#' )
+#' x <- as_latex(as_spork(x))
+#' class(x)
+#' class(x[1])
+`[.latex` <- function(x, ...){
+  y <- NextMethod()
+  # contrasts and levels will have been handled
+  class(y) <- union('latex', class(y))
+  y
+}
+
+#' Element-select Latex
+#'
+#' Element-selects latex, retaining class.
+#' @param x latex
+#' @param ... passed to next method
+#' @export
+#' @keywords internal
+#' @family util
+#' @return latex
+#' @examples
+#' x <- c(
+#'   'V_c./F',
+#'   'AUC_ss',
+#'   'C_max_ss',
+#'   'var^eta_j'
+#' )
+#' x <- as_latex(as_spork(x))
+#' class(x)
+#' class(x[[1]])
+`[[.latex` <- function(x, ...){
+  y <- NextMethod()
+  # contrasts and levels will have been handled
+  class(y) <- union('latex', class(y))
+  y
+}
+
+
 

@@ -23,6 +23,18 @@ Concatenates plotmath. Collapses vector using separator.
 concatenate(as_plotmath(as_spork('BMI_i','kg/m^2')))
 }
 \seealso{
+Other interface: 
+\code{\link{as.expression.plotmath}()},
+\code{\link{as_latex.spork}()},
+\code{\link{as_plotmath.spork}()},
+\code{\link{as_spork.character}()},
+\code{\link{concatenate.character}()},
+\code{\link{concatenate.latex}()},
+\code{\link{latexToken}()},
+\code{\link{plotmathToken}()},
+\code{\link{spork_to_latex}()},
+\code{\link{spork_to_plotmath}()}
+
 Other concatenate: 
 \code{\link{concatenate.NULL}()},
 \code{\link{concatenate.character}()},
@@ -30,4 +42,4 @@ Other concatenate:
 \code{\link{concatenate}()}
 }
 \concept{concatenate}
-\keyword{manip}
+\concept{interface}

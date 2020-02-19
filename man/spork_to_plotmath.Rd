@@ -15,7 +15,7 @@ spork_to_plotmath(
 
 \item{unrecognized}{function to process unrecognized tokens: default \code{\link{plotmathToken}}}
 
-\item{...}{ignored}
+\item{...}{passed to \code{unrecognized}; see \code{\link{plotmathToken}}}
 }
 \value{
 character
@@ -37,11 +37,23 @@ library(magrittr)
 'var^eta_j' \%>\% spork_to_plotmath
 }
 \seealso{
+Other interface: 
+\code{\link{as.expression.plotmath}()},
+\code{\link{as_latex.spork}()},
+\code{\link{as_plotmath.spork}()},
+\code{\link{as_spork.character}()},
+\code{\link{concatenate.character}()},
+\code{\link{concatenate.latex}()},
+\code{\link{concatenate.plotmath}()},
+\code{\link{latexToken}()},
+\code{\link{plotmathToken}()},
+\code{\link{spork_to_latex}()}
+
 Other plotmath: 
 \code{\link{as_plotmath.spork}()},
 \code{\link{as_plotmath}()},
 \code{\link{goodToken}()},
 \code{\link{plotmathToken}()}
 }
+\concept{interface}
 \concept{plotmath}
-\keyword{internal}

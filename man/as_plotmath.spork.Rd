@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{spork}
 
-\item{...}{ignored}
+\item{...}{passed to \code{\link{spork_to_plotmath}}}
 }
 \value{
 plotmath
@@ -32,5 +32,18 @@ Other plotmath:
 \code{\link{goodToken}()},
 \code{\link{plotmathToken}()},
 \code{\link{spork_to_plotmath}()}
+
+Other interface: 
+\code{\link{as.expression.plotmath}()},
+\code{\link{as_latex.spork}()},
+\code{\link{as_spork.character}()},
+\code{\link{concatenate.character}()},
+\code{\link{concatenate.latex}()},
+\code{\link{concatenate.plotmath}()},
+\code{\link{latexToken}()},
+\code{\link{plotmathToken}()},
+\code{\link{spork_to_latex}()},
+\code{\link{spork_to_plotmath}()}
 }
+\concept{interface}
 \concept{plotmath}

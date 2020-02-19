@@ -1,3 +1,18 @@
+#' Coerce to Plotmath
+#'
+#' Coerce to plotmath.  Generic, with method
+#' \code{\link{as_plotmath.spork}}.
+#'
+#' @param x object
+#' @param ... passed arguments
+#' @export
+#' @keywords internal
+#' @family plotmath
+#' @return plotmath
+#' @examples
+#' example(as_plotmath.spork)
+as_plotmath <- function(x, ...)UseMethod('as_plotmath')
+
 #' Convert One Spork to Plotmath
 #'
 #' Converts one spork to plotmath.
@@ -9,19 +24,19 @@
 #' See \code{\link{plotmathToken}}.
 #'
 #' @export
-#' @keywords internal
+#' @family interface
 #' @return character
 #' @family plotmath
 #' @param x character
 #' @param unrecognized function to process unrecognized tokens: default \code{\link{plotmathToken}}
-#' @param ... ignored
+#' @param ... passed to \code{unrecognized}; see \code{\link{plotmathToken}}
 #' @examples
 #' library(magrittr)
-#' 'V_c./F' %>% spork_to_plotmath
-#' 'AUC_ss' %>% spork_to_plotmath
-#' 'C_max_ss' %>% spork_to_plotmath
-#' 'var^eta_j' %>% spork_to_plotmath
-spork_to_plotmath <- function(
+#' 'V_c./F' %>% as_spork %>% as_plotmath
+#' 'AUC_ss' %>% as_spork %>% as_plotmath
+#' 'C_max_ss' %>% as_spork %>% as_plotmath
+#' 'var^eta_j' %>% as_spork %>% as_plotmath
+as_plotmath.spar <- function(
   x,
   unrecognized = getOption('plotmath_unrecognized','plotmathToken'),
   ...
@@ -36,7 +51,7 @@ spork_to_plotmath <- function(
   # unescaped '*' is promoted to %.%.
   # surviving tokens are processed by 'unrecognized'.
 
-  x <- sporklet(x,...)
+  #x <- sporklet(x,...)
   closers <- character(0)
   active <- FALSE
   if(length(x)==0)return(x)
@@ -238,15 +253,19 @@ goodToken <- function(x,...){
 #' Also maps 'varepsilon' to 'epsilon', since plotmath has only the latter;
 #' likewise 'varrho' maps to 'rho' and 'varpi' maps to 'omega1'.
 #' @param x (length-one) character
-#' @param conditional if true, return good tokens (parseable) unmodified
+#' @param conditional if true, return good tokens (parseable) unmodified; see \code{\link{goodToken}}
 #' @param unescape whether to escape (unrecognized) backslash
 #' @param ... ignored arguments
 #' @export
 #' @family plotmath
-#' @keywords internal
-#' @return character
+#' @family interface
+#' @return plotmath
 #' @examples
 #' plotmathToken("can't")
+#' plotmathToken("\\", unescape = TRUE)
+#' plotmathToken("\\", unescape = FALSE)
+#' plotmathToken("\n", conditional = TRUE)
+#' plotmathToken("\n", conditional = FALSE)
 
 plotmathToken <- function(
   x,
@@ -260,13 +279,91 @@ plotmathToken <- function(
   token <- gsub('\\bvarpi\\b','omega1', token)
   if(conditional){
     if(goodToken(token)){
+      class(token) <- union('plotmath', class(token))
       return(token)
     }
   }
   if(unescape) token <- gsub('[\\]','\\\\\\\\', token)
   token <- gsub("'","\\\\'",token)
   token <- paste0("'", token, "'")
+  class(token) <- union('plotmath', class(token))
   token
 }
 
+#' Convert Spork to Plotmath
+#'
+#' Converts spork to plotmath. See \code{\link[grDevices]{plotmath}}.
+#' Vectorized version of \code{\link{as_plotmath.spar}}.
+#'
+#' @export
+#' @param x spork
+#' @param ... passed to \code{\link{as_plotmath.spar}}
+#' @return plotmath
+#' @family plotmath
+#' @family interface
+#' @examples
+#' library(magrittr)
+#' 'V_c./F' %>% as_spork %>% as_plotmath
+#' 'AUC_ss' %>% as_spork %>% as_plotmath
+#' 'C_max_ss' %>% as_spork %>% as_plotmath
+#' 'var^eta_j' %>% as_spork %>% as_plotmath
+#' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_plotmath
+as_plotmath.spork <- function(x, ...){
+  y <- lapply(x, as_spar, USE.NAMES = F, ...)
+  y <- sapply(y, as_plotmath, USE.NAMES = F, ...)
+  if(length(y) == 0) y <- character(0)
+  class(y) <- union('plotmath', class(y))
+  y
+}
+
+#' Subset Plotmath
+#'
+#' Subsets plotmath, retaining class.
+#' @param x plotmath
+#' @param ... passed to next method
+#' @export
+#' @keywords internal
+#' @family util
+#' @return plotmath
+#' @examples
+#' x <- c(
+#'   'V_c./F',
+#'   'AUC_ss',
+#'   'C_max_ss',
+#'   'var^eta_j'
+#' )
+#' x <- as_plotmath(as_spork(x))
+#' class(x)
+#' class(x[1])
+`[.plotmath` <- function(x, ...){
+  y <- NextMethod()
+  # contrasts and levels will have been handled
+  class(y) <- union('plotmath', class(y))
+  y
+}
+#' Element-select Plotmath
+#'
+#' Element-selects plotmath, retaining class.
+#' @param x plotmath
+#' @param ... passed to next method
+#' @export
+#' @keywords internal
+#' @family util
+#' @return plotmath
+#' @examples
+#' x <- c(
+#'   'V_c./F',
+#'   'AUC_ss',
+#'   'C_max_ss',
+#'   'var^eta_j'
+#' )
+#' x <- as_plotmath(as_spork(x))
+#' class(x)
+#' class(x[[1]])
+`[[.plotmath` <- function(x, ...){
+  y <- NextMethod()
+  # contrasts and levels will have been handled
+  class(y) <- union('plotmath', class(y))
+  y
+}
 
