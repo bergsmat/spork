@@ -23,9 +23,17 @@ as_spork('V_c./F')
 }
 \seealso{
 Other spork: 
-\code{\link{as.expression.plotmath}()},
+\code{\link{[.spork}()},
+\code{\link{[[.spork}()},
+\code{\link{as.list.spork}()},
+\code{\link{as.png.spork}()},
+\code{\link{as_latex.spork}()},
+\code{\link{as_plotmath.spork}()},
+\code{\link{as_previews.spork}()},
+\code{\link{as_spar.spork}()},
 \code{\link{as_spork.factor}()},
-\code{\link{as_spork}()}
+\code{\link{as_spork}()},
+\code{\link{ggplot.spork}()}
 
 Other interface: 
 \code{\link{as.expression.plotmath}()},
@@ -33,11 +41,13 @@ Other interface:
 \code{\link{as_latex.spork}()},
 \code{\link{as_plotmath.spar}()},
 \code{\link{as_plotmath.spork}()},
-\code{\link{concatenate.character}()},
-\code{\link{concatenate.latex}()},
-\code{\link{concatenate.plotmath}()},
+\code{\link{as_previews.spork}()},
 \code{\link{latexToken}()},
 \code{\link{plotmathToken}()}
+
+Other character: 
+\code{\link{concatenate.character}()}
 }
+\concept{character}
 \concept{interface}
 \concept{spork}

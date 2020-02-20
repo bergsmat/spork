@@ -29,12 +29,17 @@ class(x)
 class(x[1])
 }
 \seealso{
-Other util: 
-\code{\link{[.latex}()},
-\code{\link{[.spork}()},
-\code{\link{[[.latex}()},
+Other plotmath: 
 \code{\link{[[.plotmath}()},
-\code{\link{[[.spork}()}
+\code{\link{as.expression.plotmath}()},
+\code{\link{as.png.plotmath}()},
+\code{\link{as_plotmath.spar}()},
+\code{\link{as_plotmath.spork}()},
+\code{\link{as_plotmath}()},
+\code{\link{concatenate.plotmath}()},
+\code{\link{ggplot.plotmath}()},
+\code{\link{goodToken}()},
+\code{\link{plotmathToken}()}
 }
-\concept{util}
+\concept{plotmath}
 \keyword{internal}

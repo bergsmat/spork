@@ -15,6 +15,12 @@
 #' letters are supported; see \code{\link{as_previews.spork}}
 #' and examples there for disambiguation.
 #'
+#' Experimental support is implemented for
+#' newlines (\code{'\\n'}) but these
+#' may be handled differently by
+#' \code{\link{as_plotmath.spar}} and
+#' \code{\link{as_latex.spar}}.
+#'
 #' @param x object
 #' @param ... passed arguments
 #' @export
@@ -47,6 +53,7 @@ as_spork <- function(x, ...)UseMethod('as_spork')
 #' @export
 #' @family spork
 #' @family interface
+#' @family character
 #' @return spork
 #' @examples
 #' as_spork('V_c./F')
@@ -66,12 +73,37 @@ as_spork.character <- function(x, ...){
 #' @export
 #' @keywords internal
 #' @family spork
+#' @family factor
 #' @return spork
 #' @examples
 #' as_spork(as.factor('V_c./F'))
 as_spork.factor <- function(x, ...)as_spork(as.character(x), ...)
 
-
+#' Subset Spork
+#'
+#' Subsets spork, retaining class.
+#' @param x spork
+#' @param ... passed to next method
+#' @export
+#' @keywords internal
+#' @family spork
+#' @return spork
+#' @examples
+#' x <- c(
+#'   'V_c./F',
+#'   'AUC_ss',
+#'   'C_max_ss',
+#'   'var^eta_j'
+#' )
+#' x <- as_spork(x)
+#' class(x)
+#' class(x[1])
+`[.spork` <- function(x, ...){
+  y <- NextMethod()
+  # contrasts and levels will have been handled
+  class(y) <- union('spork', class(y))
+  y
+}
 #' Element-select Spork
 #'
 #' Element-selects spork, retaining class.
@@ -79,7 +111,7 @@ as_spork.factor <- function(x, ...)as_spork(as.character(x), ...)
 #' @param ... passed to next method
 #' @export
 #' @keywords internal
-#' @family util
+#' @family spork
 #' @return spork
 #' @examples
 #' x <- c(
@@ -106,6 +138,7 @@ as_spork.factor <- function(x, ...)as_spork(as.character(x), ...)
 #' @param ... ignored
 #' @export
 #' @keywords internal
+#' @family spork
 #' @return list of spork
 #' @examples
 #' x <- as_spork(letters[1:5])

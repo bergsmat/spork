@@ -18,8 +18,10 @@ as_spar <- function(x, ...)UseMethod('as_spar')
 #' Parses spork.  Converts length-one character
 #' to vector of tokens.  Explicit tokens include
 #' \code{*._^} and any of these escaped with
-#' backslash, e.g. \code{'\\*'}. One or more consecutive
-#' whitespace characters are a single token,
+#' backslash, e.g. \code{'\\*'}.
+#' The newline character is an explicit token (\code{'\\n'}).
+#' One or more consecutive non-newline
+#' whitespace characters  are a single token,
 #' as are one or more consecutive octothorpes (\code{#}).
 #' Any string of characters delimited by
 #' one or more of the above is implicitly
@@ -31,6 +33,7 @@ as_spar <- function(x, ...)UseMethod('as_spar')
 #' @keywords manip
 #' @return spar (character vector)
 #' @family spar
+#' @family spork
 #' @examples
 #' as_spar(as_spork('one joule (Omega) ~ 1 kg*m^2./s^2'))
 
@@ -49,7 +52,7 @@ as_spar.spork <- function(x, ...){
   input <- x
   output <- character(0)
   explicit <- c(
-    '\\s+','#+',
+    '\n','[[:blank:]]+','#+',
     '[*]','[.]','[_]','\\^',
     '[\\][*]','[\\][.]','[\\][_]','[\\]\\^'
   )

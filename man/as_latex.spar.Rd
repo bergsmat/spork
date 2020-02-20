@@ -7,24 +7,33 @@
 \method{as_latex}{spar}(
   x,
   unrecognized = getOption("latex_unrecognized", "latexToken"),
-  italics = FALSE,
-  math = TRUE,
+  token_open = getOption("latex_token_open", "\\\\textrm{"),
+  token_close = getOption("latex_token_close", "}"),
+  math_open = getOption("latex_math_open", "\\\\mathrm{"),
+  math_close = getOption("latex_math_close", "}"),
+  label_open = getOption("latex_label_open", "$"),
+  label_close = getOption("latex_label_close", "$"),
+  enforce_math = getOption("latex_enforce_math", TRUE),
   ...
 )
 }
 \arguments{
-\item{x}{character}
+\item{x}{spar}
 
 \item{unrecognized}{function to process unrecognized tokens: default \code{\link{latexToken}}}
 
-\item{italics}{whether to use italics or not (default: no)}
+\item{token_open, token_close}{these wrap text-like portions of the label; the defaults try to give upright characters (non-italic); also passed to \code{\link{latexToken}}}
 
-\item{math}{whether to wrap in math environment (default: yes)}
+\item{math_open, math_close}{these wrap math-like portions of the label;  the defaults try to give upright characters (non-italic) which may not work for Greek symbols; also passed to \code{\link{latexToken}}}
+
+\item{label_open, label_close}{these wrap the entire label; defaults invoke traditional math mode}
+
+\item{enforce_math}{whether to enforce math mode for nested expression: \code{\link{latexToken}}}
 
 \item{...}{passed to \code{unrecognized}; see \code{\link{latexToken}}}
 }
 \value{
-character
+latex
 }
 \description{
 Converts one spork to latex.
@@ -33,6 +42,17 @@ By default, unrecognized tokens are returned
 literally.  However, Greek symbols and latex
 metacharacters are escaped.
 See \code{\link{latexToken}}.
+}
+\details{
+Experimental support is implemented for
+the newline character (\code{'\\n'}).
+Default behavior is to introduce literal
+newline characters into the resulting
+tex.  This may have no effect on the
+typeset result. It may be possible
+to achieve other effects by using
+non-default values of helper arguments
+and perhaps additional latex packages.
 }
 \examples{
 library(magrittr)
@@ -49,16 +69,17 @@ Other interface:
 \code{\link{as_latex.spork}()},
 \code{\link{as_plotmath.spar}()},
 \code{\link{as_plotmath.spork}()},
+\code{\link{as_previews.spork}()},
 \code{\link{as_spork.character}()},
-\code{\link{concatenate.character}()},
-\code{\link{concatenate.latex}()},
-\code{\link{concatenate.plotmath}()},
 \code{\link{latexToken}()},
 \code{\link{plotmathToken}()}
 
 Other latex: 
+\code{\link{[.latex}()},
+\code{\link{[[.latex}()},
 \code{\link{as_latex.spork}()},
 \code{\link{as_latex}()},
+\code{\link{concatenate.latex}()},
 \code{\link{latexToken}()}
 }
 \concept{interface}

@@ -41,22 +41,29 @@ library(magrittr)
   label
 }
 \seealso{
-Other spork: 
-\code{\link{as_spork.character}()},
-\code{\link{as_spork.factor}()},
-\code{\link{as_spork}()}
-
 Other interface: 
 \code{\link{as_latex.spar}()},
 \code{\link{as_latex.spork}()},
 \code{\link{as_plotmath.spar}()},
 \code{\link{as_plotmath.spork}()},
+\code{\link{as_previews.spork}()},
 \code{\link{as_spork.character}()},
-\code{\link{concatenate.character}()},
-\code{\link{concatenate.latex}()},
-\code{\link{concatenate.plotmath}()},
 \code{\link{latexToken}()},
 \code{\link{plotmathToken}()}
+
+Other plotmath: 
+\code{\link{[.plotmath}()},
+\code{\link{[[.plotmath}()},
+\code{\link{as.png.plotmath}()},
+\code{\link{as_plotmath.spar}()},
+\code{\link{as_plotmath.spork}()},
+\code{\link{as_plotmath}()},
+\code{\link{concatenate.plotmath}()},
+\code{\link{ggplot.plotmath}()},
+\code{\link{goodToken}()},
+\code{\link{plotmathToken}()}
 }
+\concept{expression}
 \concept{interface}
-\concept{spork}
+\concept{plotmath}
+\keyword{internal}

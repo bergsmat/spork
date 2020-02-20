@@ -24,9 +24,18 @@ as_spork(as.factor('V_c./F'))
 }
 \seealso{
 Other spork: 
-\code{\link{as.expression.plotmath}()},
+\code{\link{[.spork}()},
+\code{\link{[[.spork}()},
+\code{\link{as.list.spork}()},
+\code{\link{as.png.spork}()},
+\code{\link{as_latex.spork}()},
+\code{\link{as_plotmath.spork}()},
+\code{\link{as_previews.spork}()},
+\code{\link{as_spar.spork}()},
 \code{\link{as_spork.character}()},
-\code{\link{as_spork}()}
+\code{\link{as_spork}()},
+\code{\link{ggplot.spork}()}
 }
+\concept{factor}
 \concept{spork}
 \keyword{internal}

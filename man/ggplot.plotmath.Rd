@@ -37,6 +37,23 @@ Other preview:
 \code{\link{as_previews}()},
 \code{\link{as_preview}()},
 \code{\link{ggplot.spork}()}
+
+Other ggplot: 
+\code{\link{ggplot.spork}()}
+
+Other plotmath: 
+\code{\link{[.plotmath}()},
+\code{\link{[[.plotmath}()},
+\code{\link{as.expression.plotmath}()},
+\code{\link{as.png.plotmath}()},
+\code{\link{as_plotmath.spar}()},
+\code{\link{as_plotmath.spork}()},
+\code{\link{as_plotmath}()},
+\code{\link{concatenate.plotmath}()},
+\code{\link{goodToken}()},
+\code{\link{plotmathToken}()}
 }
+\concept{ggplot}
+\concept{plotmath}
 \concept{preview}
 \keyword{internal}

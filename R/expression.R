@@ -2,8 +2,10 @@
 #'
 #' Coerces plotmath to expression by parsing as text.
 #' @export
-#' @family spork
+#' @family expression
 #' @family interface
+#' @family plotmath
+#' @keywords internal
 #' @param x plotmath
 #' @param ... ignored arguments
 #' @return expression
@@ -32,28 +34,4 @@
 
 as.expression.plotmath <- function(x, ...)parse(text = x)
 
-#' Subset Spork
-#'
-#' Subsets spork, retaining class.
-#' @param x spork
-#' @param ... passed to next method
-#' @export
-#' @keywords internal
-#' @family util
-#' @return spork
-#' @examples
-#' x <- c(
-#'   'V_c./F',
-#'   'AUC_ss',
-#'   'C_max_ss',
-#'   'var^eta_j'
-#' )
-#' x <- as_spork(x)
-#' class(x)
-#' class(x[1])
-`[.spork` <- function(x, ...){
-  y <- NextMethod()
-  # contrasts and levels will have been handled
-  class(y) <- union('spork', class(y))
-  y
-}
+

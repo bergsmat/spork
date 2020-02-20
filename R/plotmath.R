@@ -23,19 +23,23 @@ as_plotmath <- function(x, ...)UseMethod('as_plotmath')
 #' and the result is wrapped in single quotes.
 #' See \code{\link{plotmathToken}}.
 #'
-#' @export
-#' @family interface
-#' @return character
-#' @family plotmath
-#' @param x character
+#' Experimental support is implemented for
+#' the newline character (\code{'\\n'}).
+#' It trys to break the expression at the
+#' point indicated, and stack the results.
+#' Active subscripts and superscripts
+#' are closed in advance, preventing
+#' these from breaking across lines.
+#'
+#' @param x spar
 #' @param unrecognized function to process unrecognized tokens: default \code{\link{plotmathToken}}
 #' @param ... passed to \code{unrecognized}; see \code{\link{plotmathToken}}
-#' @examples
-#' library(magrittr)
-#' 'V_c./F' %>% as_spork %>% as_plotmath
-#' 'AUC_ss' %>% as_spork %>% as_plotmath
-#' 'C_max_ss' %>% as_spork %>% as_plotmath
-#' 'var^eta_j' %>% as_spork %>% as_plotmath
+#' @export
+#' @family interface
+#' @family plotmath
+#' @family spar
+#' @return character
+
 as_plotmath.spar <- function(
   x,
   unrecognized = getOption('plotmath_unrecognized','plotmathToken'),
@@ -53,12 +57,14 @@ as_plotmath.spar <- function(
 
   #x <- sporklet(x,...)
   closers <- character(0)
+  newlines <- character(0)
+  any_atop <- FALSE
   active <- FALSE
-  if(length(x)==0)return(x)
-  if(identical(x, ''))return(x)
+  if(length(x)==0)return(structure(x, class = union('plotmath', class(x))))
+  if(identical(x, ''))return(structure(x, class = union('plotmath', class(x))))
   base <- ''
   explicit <- c(
-    '\\s+','#+',
+    '\n', '[[:blank:]]+','#+',
     '[*]','[.]','[_]','\\^',
     '[\\][*]','[\\][.]','[\\][_]','[\\]\\^'
   )
@@ -85,7 +91,27 @@ as_plotmath.spar <- function(
       m <- m[m == min(m)]
       stopifnot(length(m) == 1)
       p <- names(m)
-      if(p == '\\s+'){
+      if(p == '\n'){
+        # cannot split scripts across lines
+        # \n dumps the closer stack
+        # sets active FALSE
+        # wraps base in 'atop(' and ','
+        # posts a newline of ')'
+        # flushes newlines
+        if(grepl('%\\.%$',base)) base <- paste0(base, "''")
+        any_atop <- TRUE
+        base <- paste0(
+          #'atop(',
+          base,
+          paste(closers,collapse = ''),
+          #paste(newlines, collapse = ''),
+          '),atop(textstyle('
+        )
+        active <- FALSE
+        closers <- character(0)
+        newlines <- paste0(newlines, ')')
+      }
+      if(p == '[[:blank:]]+'){
         token <- paste0("'",token,"'")
         if(active){
           base <- paste0(base, '*', token)
@@ -182,7 +208,7 @@ as_plotmath.spar <- function(
           base <- paste0(base, "[")
           active <- FALSE
         }else{
-          if(!grepl('[]}]', base)){
+          if(!grepl('[]}]$', base)){
             # must have something to subscript
             base <- paste0(base, "''[")
           }else{
@@ -196,7 +222,7 @@ as_plotmath.spar <- function(
           base <- paste0(base, "^{")
           active <- FALSE
         }else{
-          if(!grepl('[]}]', base)){
+          if(!grepl('[]}]$', base)){
             # must have something to superscript
             base <- paste0(base, "''^{")
           }else{
@@ -211,11 +237,11 @@ as_plotmath.spar <- function(
   # indeed, always check for %.% before appending close
   if(grepl('%\\.%$',base)) base <- paste0(base, "''")
   if(length(closers)){ # dump
-    if(grepl('%\\.%$',base)) base <- paste0(base, "''")
+    #if(grepl('%\\.%$',base)) base <- paste0(base, "''")
     if(active){
       base <- paste0(base, paste(closers, collapse = ''))
     }else{
-      if(grepl('[[{]',base)){
+      if(grepl('[[{]$',base)){
         # empty script ok
         base <- paste0(base, paste(closers, collapse = ''))
       }else{
@@ -223,6 +249,11 @@ as_plotmath.spar <- function(
       }
     }
   }
+  # atop may have been invoked multiple times
+  # dump the newline stack
+  base <- paste0(base, paste(newlines, collapse = ''))
+  # wrap in phantom atop 1
+  if(any_atop)base <- paste0('atop(textstyle(),atop(textstyle(', base, ')))')
   class(base) <- union('plotmath', class(base))
   return(base)
 }
@@ -247,9 +278,9 @@ goodToken <- function(x,...){
   TRUE
 }
 
-#' Quote a Token
+#' Process Plotmath Token
 #'
-#' Quotes a token. Escapes single-quotes and wraps in single-quotes.
+#' Processes a plotmath token. Escapes single-quotes and wraps in single-quotes.
 #' Also maps 'varepsilon' to 'epsilon', since plotmath has only the latter;
 #' likewise 'varrho' maps to 'rho' and 'varpi' maps to 'omega1'.
 #' @param x (length-one) character
@@ -300,6 +331,7 @@ plotmathToken <- function(
 #' @param ... passed to \code{\link{as_plotmath.spar}}
 #' @return plotmath
 #' @family plotmath
+#' @family spork
 #' @family interface
 #' @examples
 #' library(magrittr)
@@ -323,7 +355,7 @@ as_plotmath.spork <- function(x, ...){
 #' @param ... passed to next method
 #' @export
 #' @keywords internal
-#' @family util
+#' @family plotmath
 #' @return plotmath
 #' @examples
 #' x <- c(
@@ -348,7 +380,7 @@ as_plotmath.spork <- function(x, ...){
 #' @param ... passed to next method
 #' @export
 #' @keywords internal
-#' @family util
+#' @family plotmath
 #' @return plotmath
 #' @examples
 #' x <- c(

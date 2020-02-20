@@ -23,23 +23,15 @@ Concatenates Character. Collapses vector using separator.
 concatenate(letters)
 }
 \seealso{
-Other interface: 
-\code{\link{as.expression.plotmath}()},
-\code{\link{as_latex.spar}()},
-\code{\link{as_latex.spork}()},
-\code{\link{as_plotmath.spar}()},
-\code{\link{as_plotmath.spork}()},
-\code{\link{as_spork.character}()},
-\code{\link{concatenate.latex}()},
-\code{\link{concatenate.plotmath}()},
-\code{\link{latexToken}()},
-\code{\link{plotmathToken}()}
-
 Other concatenate: 
 \code{\link{concatenate.NULL}()},
 \code{\link{concatenate.latex}()},
 \code{\link{concatenate.plotmath}()},
 \code{\link{concatenate}()}
+
+Other character: 
+\code{\link{as_spork.character}()}
 }
+\concept{character}
 \concept{concatenate}
-\concept{interface}
+\keyword{internal}

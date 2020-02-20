@@ -1,4 +1,3 @@
-
 test_that('all valid spork print as axis label',{
   library(magrittr)
   library(dplyr)
@@ -32,7 +31,6 @@ test_that('all valid spork print as axis label',{
    "1*' '*joule^{'*'}*' '*~1*' '*kg*' '*m^{2}*'/s'^{2}"
   )
 })
-
 test_that('R reserved words survive in print.dg labels',{
   library(magrittr)
   library(dplyr)
@@ -63,7 +61,6 @@ test_that('as_latex is stable',{
   )
 
 })
-
 test_that('spork to plotmath is stable',{
   e <- c(
   '',
@@ -288,7 +285,6 @@ f <- c(
 g <- as_plotmath(as_spork(e)) %>% as.character
 expect_identical(f, g)
 })
-
 test_that('extreme juxtapostion without escape succeeds',{
   library(magrittr)
   library(testthat)
@@ -322,7 +318,6 @@ test_that('arbitrary plotmath escapes succeed by default',{
   expect_silent(' $ \n \\$ \\\t \\\\$ \\\\\' \\\\\\$ \\\\\\\" \\\\\\\\$ ' %>% render)
   expect_silent(' % \n \\% \\\t \\\\% \\\\\' \\\\\\% \\\\\\\" \\\\\\\\% ' %>% render)
 })
-
 test_that('expressions render without error',{
   library(magrittr)
   library(testthat)
@@ -360,7 +355,6 @@ options('plotmath_conditional_quote' = NULL)
 expect_identical(as.character(plotmathToken('foo')),"foo")
 
 })
-
 test_that('as_previews is stable',{
   skip_on_cran()
   library(magrittr)
@@ -407,11 +401,10 @@ test_that('as_previews is stable',{
   '$\\sigma$ $\\varsigma$ $\\Upsilon$' %>% structure(class = c('latex','character')) %>% as_preview
 
 })
-
 test_that('latexToken() responds to top-level arguments',{
   library(magrittr)
   expect_identical(
-    '\n' %>% as_spork %>% as_latex(italics = TRUE) %>% as.character,
+    '\n' %>% as_spork %>% as_latex(math_open = '\\textrm{') %>% as.character,
     "$\\textrm{\n}$"
   )
 })
@@ -422,19 +415,121 @@ test_that('plotmathToken() responds to top-level arguments',{
     "'\\'"
   )
 })
-test_that('newline is honored in axis label',{
+test_that('as_spar recognizes newline independently of other whitespace',{
   library(magrittr)
-  library(dplyr)
-  library(ggplot2)
-  x <- data.frame(y=1:10, x = 1:10)
-  label <- 'a\nb' %>%
-    as_spork %>%
-    as_plotmath %>%
-    as.expression
-  attr(x, 'label') <- label
-  foo <- ggplot(x,aes(x, y))
-  foo$labels$x <- label
-  print(foo)
-  foo$labels$x
-
+  expect_identical(
+    ' \n \t' %>% as_spork %>% as_spar %>% as.character,
+    c(" ",  "\n", " \t")
+  )
 })
+test_that('as_plotmath handles arbitrary location of newline',{
+  library(magrittr)
+  render <- . %>% as_spork %>% as_plotmath %>% as.expression
+  expect_silent('one joule (Omega) ~ 1 kg*m^2./s^2' %>% render)
+  expect_silent('one joule (Omega) ~ 1 kg*m^2./s^2\n' %>% render)
+  expect_silent('one joule (Omega) ~ 1 kg*m^2./s^\n2' %>% render)
+  expect_silent('one joule (Omega) ~ 1 kg*m^2./s\n^2' %>% render)
+  expect_silent('one joule (Omega) ~ 1 kg*m^2./\ns^2' %>% render)
+  expect_silent('one joule (Omega) ~ 1 kg*m^2.\n/s^2' %>% render)
+  expect_silent('one joule (Omega) ~ 1 kg*m^2\n./s^2' %>% render)
+  expect_silent('one joule (Omega) ~ 1 kg*\nm^2./s^2' %>% render)
+  expect_silent('one joule (Omega) ~ 1 kg\n*m^2./s^2' %>% render)
+  expect_silent('one joule (Omega) ~ 1 \nkg*m^2./s^2' %>% render)
+  expect_silent('one joule (Omega) ~ 1\n kg*m^2./s^2' %>% render)
+  expect_silent('one joule (Omega) ~ \n1 kg*m^2./s^2' %>% render)
+  expect_silent('one joule (Omega) \n~ 1 kg*m^2./s^2' %>% render)
+  expect_silent('one joule (Omega)\n ~ 1 kg*m^2./s^2' %>% render)
+  expect_silent('one joule (Omega\n) ~ 1 kg*m^2./s^2' %>% render)
+  expect_silent('one joule (\nOmega) ~ 1 kg*m^2./s^2' %>% render)
+  expect_silent('one joule \n(Omega) ~ 1 kg*m^2./s^2' %>% render)
+  expect_silent('one joule\n (Omega) ~ 1 kg*m^2./s^2' %>% render)
+  expect_silent('one \njoule (Omega) ~ 1 kg*m^2./s^2' %>% render)
+  expect_silent('\none joule (Omega) ~ 1 kg*m^2./s^2' %>% render)
+})
+test_that('newline renders sensibly as plotmath',{
+  library(magrittr)
+  render <- . %>% as_spork %>% as_plotmath %>% as_preview
+  expect_silent('one joule (Omega) ~ 1 kg*m^2./s^2' %>% render)
+  expect_silent('one joule (Omega) ~ 1 kg*m^2./s^2\n' %>% render)
+  expect_silent('one joule (Omega) ~ 1 kg*m^2./s^\n2' %>% render)
+  expect_silent('one joule (Omega) ~ 1 kg*m^2./s\n^2' %>% render)
+  expect_silent('one joule (Omega) ~ 1 kg*m^2./\ns^2' %>% render)
+  expect_silent('one joule (Omega) ~ 1 kg*m^2.\n/s^2' %>% render)
+  expect_silent('one joule (Omega) ~ 1 kg*m^2\n./s^2' %>% render)
+  expect_silent('one joule (Omega) ~ 1 kg*\nm^2./s^2' %>% render)
+  expect_silent('one joule (Omega) ~ 1 kg\n*m^2./s^2' %>% render)
+  expect_silent('one joule (Omega) ~ 1 \nkg*m^2./s^2' %>% render)
+  expect_silent('one joule (Omega) ~ 1\n kg*m^2./s^2' %>% render)
+  expect_silent('one joule (Omega) ~ \n1 kg*m^2./s^2' %>% render)
+  expect_silent('one joule (Omega) \n~ 1 kg*m^2./s^2' %>% render)
+  expect_silent('one joule (Omega)\n ~ 1 kg*m^2./s^2' %>% render)
+  expect_silent('one joule (Omega\n) ~ 1 kg*m^2./s^2' %>% render)
+  expect_silent('one joule (\nOmega) ~ 1 kg*m^2./s^2' %>% render)
+  expect_silent('one joule \n(Omega) ~ 1 kg*m^2./s^2' %>% render)
+  expect_silent('one joule\n (Omega) ~ 1 kg*m^2./s^2' %>% render)
+  expect_silent('one \njoule (Omega) ~ 1 kg*m^2./s^2' %>% render)
+  expect_silent('\none joule (Omega) ~ 1 kg*m^2./s^2' %>% render)
+})
+test_that('plotmath handles multiple newline',{
+  skip_on_cran()
+  library(magrittr)
+  render <- . %>% as_spork %>% as_plotmath %>% as_preview
+  '1' %>% as_spork %>% as_plotmath %>% as_preview
+  '1\n' %>% as_spork %>% as_plotmath %>% as_preview
+  '1\n2' %>% as_spork %>% as_plotmath %>% as_preview
+  '1\n2\n' %>% as_spork %>% as_plotmath %>% as_preview
+  '1\n2\n3' %>% as_spork %>% as_plotmath %>% as_preview
+  '1\n2\n3\n' %>% as_spork %>% as_plotmath %>% as_preview
+  '1\n2\n3\n4' %>% as_spork %>% as_plotmath %>% as_preview
+  '1\n2\n3\n4\n' %>% as_spork %>% as_plotmath %>% as_preview
+  'one \njoule \n(Omega) ~\n 1 kg*m^2./s^2'%>% render
+  expect_identical(
+    '1\n2\n3\n4\n' %>% as_spork %>% as_plotmath %>% as.character,
+    "atop(textstyle(),atop(textstyle(1),atop(textstyle(2),atop(textstyle(3),atop(textstyle(4),atop(textstyle()))))))"
+  )
+})
+test_that('latex is newline-tolerant by default',{
+  skip_on_cran()
+  library(testthat)
+  library(magrittr)
+  render <- . %>% as_spork %>% as_latex %>% as_preview
+  expect_silent('one joule (Omega) ~ 1 kg*m^2./s^2' %>% render)
+  expect_silent('one joule (Omega) ~ 1 kg*m^2./s^2\n' %>% render)
+  expect_silent('one joule (Omega) ~ 1 kg*m^2./s^\n2' %>% render)
+  expect_silent('one joule (Omega) ~ 1 kg*m^2./s\n^2' %>% render)
+  expect_silent('one joule (Omega) ~ 1 kg*m^2./\ns^2' %>% render)
+  expect_silent('one joule (Omega) ~ 1 kg*m^2.\n/s^2' %>% render)
+  expect_silent('one joule (Omega) ~ 1 kg*m^2\n./s^2' %>% render)
+  expect_silent('one joule (Omega) ~ 1 kg*\nm^2./s^2' %>% render)
+  expect_silent('one joule (Omega) ~ 1 kg\n*m^2./s^2' %>% render)
+  expect_silent('one joule (Omega) ~ 1 \nkg*m^2./s^2' %>% render)
+  expect_silent('one joule (Omega) ~ 1\n kg*m^2./s^2' %>% render)
+  expect_silent('one joule (Omega) ~ \n1 kg*m^2./s^2' %>% render)
+  expect_silent('one joule (Omega) \n~ 1 kg*m^2./s^2' %>% render)
+  expect_silent('one joule (Omega)\n ~ 1 kg*m^2./s^2' %>% render)
+  expect_silent('one joule (Omega\n) ~ 1 kg*m^2./s^2' %>% render)
+  expect_silent('one joule (\nOmega) ~ 1 kg*m^2./s^2' %>% render)
+  expect_silent('one joule \n(Omega) ~ 1 kg*m^2./s^2' %>% render)
+  expect_silent('one joule\n (Omega) ~ 1 kg*m^2./s^2' %>% render)
+  expect_silent('one \njoule (Omega) ~ 1 kg*m^2./s^2' %>% render)
+  expect_silent('\none joule (Omega) ~ 1 kg*m^2./s^2' %>% render)
+})
+test_that('latex handles multiple newline',{
+  skip_on_cran()
+  library(magrittr)
+  render <- . %>% as_spork %>% as_latex %>% as_preview
+  '1' %>% as_spork %>% as_latex %>% as_preview
+  '1\n' %>% as_spork %>% as_latex %>% as_preview
+  '1\n2' %>% as_spork %>% as_latex %>% as_preview
+  '1\n2\n' %>% as_spork %>% as_latex %>% as_preview
+  '1\n2\n3' %>% as_spork %>% as_latex %>% as_preview
+  '1\n2\n3\n' %>% as_spork %>% as_latex %>% as_preview
+  '1\n2\n3\n4' %>% as_spork %>% as_latex %>% as_preview
+  '1\n2\n3\n4\n' %>% as_spork %>% as_latex %>% as_preview
+  'one \njoule \n(Omega) ~\n 1 kg*m^2./s^2'%>% render
+  expect_identical(
+    '1\n2\n3\n4\n' %>% as_spork %>% as_latex %>% as.character,
+    "$\\mathrm{\\textrm{1}\n \\textrm{2}\n \\textrm{3}\n \\textrm{4}\n}$"
+  )
+})
+

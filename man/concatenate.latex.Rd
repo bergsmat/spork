@@ -23,23 +23,20 @@ Concatenates latex. Collapses vector using separator.
 concatenate(as_latex(as_spork(c('BMI_i','kg/m^2'))))
 }
 \seealso{
-Other interface: 
-\code{\link{as.expression.plotmath}()},
-\code{\link{as_latex.spar}()},
-\code{\link{as_latex.spork}()},
-\code{\link{as_plotmath.spar}()},
-\code{\link{as_plotmath.spork}()},
-\code{\link{as_spork.character}()},
-\code{\link{concatenate.character}()},
-\code{\link{concatenate.plotmath}()},
-\code{\link{latexToken}()},
-\code{\link{plotmathToken}()}
-
 Other concatenate: 
 \code{\link{concatenate.NULL}()},
 \code{\link{concatenate.character}()},
 \code{\link{concatenate.plotmath}()},
 \code{\link{concatenate}()}
+
+Other latex: 
+\code{\link{[.latex}()},
+\code{\link{[[.latex}()},
+\code{\link{as_latex.spar}()},
+\code{\link{as_latex.spork}()},
+\code{\link{as_latex}()},
+\code{\link{latexToken}()}
 }
 \concept{concatenate}
-\concept{interface}
+\concept{latex}
+\keyword{internal}

@@ -16,7 +16,8 @@ see methods
 }
 \description{
 Creates a preview.
-Generic, with methods for latex and plotmath.
+Generic, with methods \code{\link{as_preview.latex}} and
+\code{\link{as_preview.plotmath}}.
 }
 \examples{
 library(magrittr)

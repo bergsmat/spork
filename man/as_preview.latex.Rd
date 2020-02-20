@@ -11,6 +11,7 @@
   stem = "latex_preview",
   dir = tempdir(),
   gs_cmd = getOption("gs_cmd", "mgs"),
+  preamble = "\\\\usePackage{amsmath}\\\\n",
   prolog = "\\\\begin{center}",
   epilog = "\\\\end{center}",
   ...

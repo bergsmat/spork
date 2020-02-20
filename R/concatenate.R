@@ -22,8 +22,9 @@ concatenate <- function(x,...)UseMethod('concatenate')
 #' @param sep character
 #' @param ... passed arguments
 #' @export
-#' @family interface
+#' @keywords internal
 #' @family concatenate
+#' @family character
 #' @return character
 #' @examples
 #' concatenate(letters)
@@ -41,8 +42,9 @@ concatenate.character <- function(x, sep = '', ...){
 #' @param sep character
 #' @param ... passed arguments
 #' @export
-#' @family interface
+#' @keywords internal
 #' @family concatenate
+#' @family plotmath
 #' @return plotmath
 #' @examples
 #' concatenate(as_plotmath(as_spork('BMI_i','kg/m^2')))
@@ -61,8 +63,9 @@ concatenate.plotmath <- function(x, sep = '*', ...){
 #' @param sep character
 #' @param ... passed arguments
 #' @export
-#' @family interface
+#' @keywords internal
 #' @family concatenate
+#' @family latex
 #' @return latex
 #' @examples
 #' concatenate(as_latex(as_spork(c('BMI_i','kg/m^2'))))

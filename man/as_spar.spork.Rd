@@ -18,8 +18,10 @@ spar (character vector)
 Parses spork.  Converts length-one character
 to vector of tokens.  Explicit tokens include
 \code{*._^} and any of these escaped with
-backslash, e.g. \code{'\\*'}. One or more consecutive
-whitespace characters are a single token,
+backslash, e.g. \code{'\\*'}.
+The newline character is an explicit token (\code{'\\n'}).
+One or more consecutive non-newline
+whitespace characters  are a single token,
 as are one or more consecutive octothorpes (\code{#}).
 Any string of characters delimited by
 one or more of the above is implicitly
@@ -30,7 +32,22 @@ as_spar(as_spork('one joule (Omega) ~ 1 kg*m^2./s^2'))
 }
 \seealso{
 Other spar: 
+\code{\link{as_plotmath.spar}()},
 \code{\link{as_spar}()}
+
+Other spork: 
+\code{\link{[.spork}()},
+\code{\link{[[.spork}()},
+\code{\link{as.list.spork}()},
+\code{\link{as.png.spork}()},
+\code{\link{as_latex.spork}()},
+\code{\link{as_plotmath.spork}()},
+\code{\link{as_previews.spork}()},
+\code{\link{as_spork.character}()},
+\code{\link{as_spork.factor}()},
+\code{\link{as_spork}()},
+\code{\link{ggplot.spork}()}
 }
 \concept{spar}
+\concept{spork}
 \keyword{manip}

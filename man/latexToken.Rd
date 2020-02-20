@@ -4,16 +4,31 @@
 \alias{latexToken}
 \title{Process Latex Token}
 \usage{
-latexToken(x, unrecognized = latexToken, math = TRUE, italics = FALSE, ...)
+latexToken(
+  x,
+  unrecognized = latexToken,
+  token_open = getOption("latex_token_open", "\\\\textrm{"),
+  token_close = getOption("latex_token_close", "}"),
+  math_open = getOption("latex_math_open", "\\\\mathrm{"),
+  math_close = getOption("latex_math_close", "}"),
+  label_open = getOption("latex_label_open", "$"),
+  label_close = getOption("latex_label_close", "$"),
+  enforce_math = getOption("latex_enforce_math", TRUE),
+  ...
+)
 }
 \arguments{
 \item{x}{character}
 
 \item{unrecognized}{function to process unrecognized tokens}
 
-\item{math}{whether to wrap in math environment}
+\item{token_open, token_close}{these wrap the entire token (used once); by default the token is text-like}
 
-\item{italics}{whether to use italics or not}
+\item{math_open, math_close}{these wrap math-like portions of the token;  the defaults try to give upright characters (non-italic) which may not work for Greek symbols}
+
+\item{label_open, label_close}{these re-wrap math-like portions of the token if \code{enforce_math} is TRUE; defaults invoke traditional math mode}
+
+\item{enforce_math}{whether to enforce math mode for nested expression}
 
 \item{...}{ignored arguments}
 }
@@ -32,9 +47,12 @@ latexToken('Alpha')
 }
 \seealso{
 Other latex: 
+\code{\link{[.latex}()},
+\code{\link{[[.latex}()},
 \code{\link{as_latex.spar}()},
 \code{\link{as_latex.spork}()},
-\code{\link{as_latex}()}
+\code{\link{as_latex}()},
+\code{\link{concatenate.latex}()}
 
 Other interface: 
 \code{\link{as.expression.plotmath}()},
@@ -42,10 +60,8 @@ Other interface:
 \code{\link{as_latex.spork}()},
 \code{\link{as_plotmath.spar}()},
 \code{\link{as_plotmath.spork}()},
+\code{\link{as_previews.spork}()},
 \code{\link{as_spork.character}()},
-\code{\link{concatenate.character}()},
-\code{\link{concatenate.latex}()},
-\code{\link{concatenate.plotmath}()},
 \code{\link{plotmathToken}()}
 }
 \concept{interface}

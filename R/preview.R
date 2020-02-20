@@ -2,7 +2,8 @@ globalVariables('label')
 #' Preview Something
 #'
 #' Creates a preview.
-#' Generic, with methods for latex and plotmath.
+#' Generic, with methods \code{\link{as_preview.latex}} and
+#' \code{\link{as_preview.plotmath}}.
 #' @param x object
 #' @param ... passed arguments
 #' @export
@@ -31,7 +32,6 @@ as_preview <- function(x, ...)UseMethod('as_preview')
 #' @param long nominal page length
 #' @param dir a working directory; see \code{\link[latexpdf]{as.pdf}}
 #' @param gs_cmd ghostscript command; see \code{\link[latexpdf]{ghostconvert}}
-# @param preamble passed to \code{\link[latexpdf]{as.document}}
 #' @param prolog passed to \code{\link[latexpdf]{as.document}}
 #' @param epilog passed to \code{\link[latexpdf]{as.document}}
 #' @param ... passed arguments
@@ -60,7 +60,7 @@ as_preview.latex <- function(
   stem = 'latex_preview',
   dir = tempdir(),
   gs_cmd = getOption('gs_cmd','mgs'),
-  #preamble = '',
+  preamble = '\\usePackage{amsmath}\\n',
   prolog = '\\begin{center}',
   epilog = '\\end{center}',
   ...
@@ -113,6 +113,8 @@ as_previews <- function(x,...)UseMethod('as_previews')
 #' @importFrom grid grid.newpage
 #' @return invisible list of filepaths
 #' @family preview
+#' @family interface
+#' @family spork
 #' @examples
 #' library(magrittr)
 #' specials <- '& % $ # \\_ { } ~ \\^ \\'
@@ -183,6 +185,8 @@ as_preview.plotmath <- function(x, stem = 'plotmath_preview',width = 3, height =
 #' @param blank whether to use a blank plot area
 #' @export
 #' @family preview
+#' @family ggplot
+#' @family spork
 #' @keywords internal
 #' @method ggplot spork
 #' @importFrom ggplot2 ggplot
@@ -210,6 +214,8 @@ ggplot2::ggplot
 #' @param blank whether to use a blank plot area
 #' @export
 #' @family preview
+#' @family ggplot
+#' @family plotmath
 #' @keywords internal
 #' @method ggplot plotmath
 #' @importFrom ggplot2 ggplot
@@ -257,6 +263,8 @@ ggplot.plotmath <- function(data, mapping= aes(), ..., environment = parent.fram
 #' @param ... passed arguments
 #' @export
 #' @family preview
+#' @family spork
+#' @family png
 #' @keywords internal
 #' @method as.png spork
 #' @importFrom grDevices png
@@ -290,6 +298,8 @@ as.png.spork <- function(x, filename = tempfile(), width = 3, height = 1, units 
 #' @param ... passed arguments
 #' @export
 #' @family preview
+#' @family png
+#' @family plotmath
 #' @keywords internal
 #' @method as.png plotmath
 #' @importFrom grDevices png

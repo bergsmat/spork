@@ -30,6 +30,13 @@ Both plotmath and latex names of Greek
 letters are supported; see \code{\link{as_previews.spork}}
 and examples there for disambiguation.
 }
+\details{
+Experimental support is implemented for
+newlines (\code{'\\n'}) but these
+may be handled differently by
+\code{\link{as_plotmath.spar}} and
+\code{\link{as_latex.spar}}.
+}
 \examples{
 library(ggplot2)
 label <- 'one joule (Omega) ~ 1 kg*m^2./s^2'
@@ -44,9 +51,17 @@ print(p)
 }
 \seealso{
 Other spork: 
-\code{\link{as.expression.plotmath}()},
+\code{\link{[.spork}()},
+\code{\link{[[.spork}()},
+\code{\link{as.list.spork}()},
+\code{\link{as.png.spork}()},
+\code{\link{as_latex.spork}()},
+\code{\link{as_plotmath.spork}()},
+\code{\link{as_previews.spork}()},
+\code{\link{as_spar.spork}()},
 \code{\link{as_spork.character}()},
-\code{\link{as_spork.factor}()}
+\code{\link{as_spork.factor}()},
+\code{\link{ggplot.spork}()}
 }
 \concept{spork}
 \keyword{internal}

@@ -28,22 +28,40 @@ library(magrittr)
 }
 \seealso{
 Other plotmath: 
+\code{\link{[.plotmath}()},
+\code{\link{[[.plotmath}()},
+\code{\link{as.expression.plotmath}()},
+\code{\link{as.png.plotmath}()},
 \code{\link{as_plotmath.spar}()},
 \code{\link{as_plotmath}()},
+\code{\link{concatenate.plotmath}()},
+\code{\link{ggplot.plotmath}()},
 \code{\link{goodToken}()},
 \code{\link{plotmathToken}()}
+
+Other spork: 
+\code{\link{[.spork}()},
+\code{\link{[[.spork}()},
+\code{\link{as.list.spork}()},
+\code{\link{as.png.spork}()},
+\code{\link{as_latex.spork}()},
+\code{\link{as_previews.spork}()},
+\code{\link{as_spar.spork}()},
+\code{\link{as_spork.character}()},
+\code{\link{as_spork.factor}()},
+\code{\link{as_spork}()},
+\code{\link{ggplot.spork}()}
 
 Other interface: 
 \code{\link{as.expression.plotmath}()},
 \code{\link{as_latex.spar}()},
 \code{\link{as_latex.spork}()},
 \code{\link{as_plotmath.spar}()},
+\code{\link{as_previews.spork}()},
 \code{\link{as_spork.character}()},
-\code{\link{concatenate.character}()},
-\code{\link{concatenate.latex}()},
-\code{\link{concatenate.plotmath}()},
 \code{\link{latexToken}()},
 \code{\link{plotmathToken}()}
 }
 \concept{interface}
 \concept{plotmath}
+\concept{spork}
