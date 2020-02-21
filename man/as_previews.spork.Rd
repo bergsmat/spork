@@ -77,6 +77,7 @@ Other spork:
 \code{\link{as_spar.spork}()},
 \code{\link{as_spork.character}()},
 \code{\link{as_spork.factor}()},
+\code{\link{as_spork.spork}()},
 \code{\link{as_spork}()},
 \code{\link{ggplot.spork}()}
 }

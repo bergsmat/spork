@@ -22,20 +22,15 @@ arbitrarily nested subscripts (\code{x_y_z})
 and superscripts (\code{x^y^z}). A dot
 (\code{x^y._z}) explicitly terminates
 a group. An asterisk (\code{*}) suggests
-multiplication. Special characters
-may be escaped with a backslash.
+multiplication; a literal backslash
+followed by 'n' suggests a newline
+(handling differs for latex vs. plotmath).
+Special characters may be escaped with a backslash.
 Convert to plotmath with \code{\link{as_plotmath}}
 and to latex with \code{\link{as_latex}}.
 Both plotmath and latex names of Greek
 letters are supported; see \code{\link{as_previews.spork}}
 and examples there for disambiguation.
-}
-\details{
-Experimental support is implemented for
-newlines (\code{'\\n'}) but these
-may be handled differently by
-\code{\link{as_plotmath.spar}} and
-\code{\link{as_latex.spar}}.
 }
 \examples{
 library(ggplot2)
@@ -61,6 +56,7 @@ Other spork:
 \code{\link{as_spar.spork}()},
 \code{\link{as_spork.character}()},
 \code{\link{as_spork.factor}()},
+\code{\link{as_spork.spork}()},
 \code{\link{ggplot.spork}()}
 }
 \concept{spork}

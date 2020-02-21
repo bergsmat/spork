@@ -6,6 +6,7 @@
 \usage{
 \method{as_latex}{spar}(
   x,
+  newline = getOption("latex_newline", "\\n"),
   unrecognized = getOption("latex_unrecognized", "latexToken"),
   token_open = getOption("latex_token_open", "\\\\textrm{"),
   token_close = getOption("latex_token_close", "}"),
@@ -19,6 +20,8 @@
 }
 \arguments{
 \item{x}{spar}
+
+\item{newline}{value to replace \code{'\\n'}}
 
 \item{unrecognized}{function to process unrecognized tokens: default \code{\link{latexToken}}}
 

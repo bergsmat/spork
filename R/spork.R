@@ -7,19 +7,15 @@
 #' and superscripts (\code{x^y^z}). A dot
 #' (\code{x^y._z}) explicitly terminates
 #' a group. An asterisk (\code{*}) suggests
-#' multiplication. Special characters
-#' may be escaped with a backslash.
+#' multiplication; a literal backslash
+#' followed by 'n' suggests a newline
+#' (handling differs for latex vs. plotmath).
+#' Special characters may be escaped with a backslash.
 #' Convert to plotmath with \code{\link{as_plotmath}}
 #' and to latex with \code{\link{as_latex}}.
 #' Both plotmath and latex names of Greek
 #' letters are supported; see \code{\link{as_previews.spork}}
 #' and examples there for disambiguation.
-#'
-#' Experimental support is implemented for
-#' newlines (\code{'\\n'}) but these
-#' may be handled differently by
-#' \code{\link{as_plotmath.spar}} and
-#' \code{\link{as_latex.spar}}.
 #'
 #' @param x object
 #' @param ... passed arguments
@@ -59,6 +55,37 @@ as_spork <- function(x, ...)UseMethod('as_spork')
 #' as_spork('V_c./F')
 as_spork.character <- function(x, ...){
   class(x) <- union('spork', class(x))
+  x
+}
+
+#' Coerce Spork to Spork
+#'
+#' Coerces 'spork' to class 'spork'.
+#' Supplies any implied terminal dots.
+#'
+#' @param x spork
+#' @param ... ignored arguments
+#' @export
+#' @family spork
+#' @keywords internal
+#' @return spork
+#' @examples
+#' as_spork(as_spork(c('C_max_ss','t^1/2','V_c./F','foo')))
+#' as_spork(as_spork('V_c./F'))
+#' as_spork(as_spork('V_c'))
+as_spork.spork <- function(x, ...){
+  if(length(x) == 0) return(x)
+  if(any(grepl('SPORKBOUNDARY',x)))stop('SPORKBOUNDARY is reserved')
+  test <- as_plotmath(as_spork(paste0(x,'SPORKBOUNDARY')))
+  aft <- sapply(test, USE.NAMES = FALSE, after, what = 'SPORKBOUNDARY', fixed = TRUE)
+  aft <- sapply(aft, function(i)if(length(i)==0)'' else i)
+  stable <- !grepl('[]}]',aft) # any closers?
+  if(all(stable))return(x)
+  problems <- x[!stable]
+  candidates <- paste0(problems,'.')
+  candidates <- as_spork(candidates)
+  verified <- as_spork(candidates)
+  x[!stable] <- verified
   x
 }
 

@@ -405,7 +405,7 @@ test_that('latexToken() responds to top-level arguments',{
   library(magrittr)
   expect_identical(
     '\n' %>% as_spork %>% as_latex(math_open = '\\textrm{') %>% as.character,
-    "$\\textrm{\n}$"
+    "$\\textrm{\\textrm{\n}}$" #"$\\textrm{\n}$"
   )
 })
 test_that('plotmathToken() responds to top-level arguments',{
@@ -418,8 +418,8 @@ test_that('plotmathToken() responds to top-level arguments',{
 test_that('as_spar recognizes newline independently of other whitespace',{
   library(magrittr)
   expect_identical(
-    ' \n \t' %>% as_spork %>% as_spar %>% as.character,
-    c(" ",  "\n", " \t")
+    ' \\n \t' %>% as_spork %>% as_spar %>% as.character,
+    c(" ",  "\\n", " \t")
   )
 })
 test_that('as_plotmath handles arbitrary location of newline',{
@@ -484,7 +484,7 @@ test_that('plotmath handles multiple newline',{
   '1\n2\n3\n4\n' %>% as_spork %>% as_plotmath %>% as_preview
   'one \njoule \n(Omega) ~\n 1 kg*m^2./s^2'%>% render
   expect_identical(
-    '1\n2\n3\n4\n' %>% as_spork %>% as_plotmath %>% as.character,
+    '1\\n2\\n3\\n4\\n' %>% as_spork %>% as_plotmath %>% as.character,
     "atop(textstyle(),atop(textstyle(1),atop(textstyle(2),atop(textstyle(3),atop(textstyle(4),atop(textstyle()))))))"
   )
 })
@@ -528,7 +528,7 @@ test_that('latex handles multiple newline',{
   '1\n2\n3\n4\n' %>% as_spork %>% as_latex %>% as_preview
   'one \njoule \n(Omega) ~\n 1 kg*m^2./s^2'%>% render
   expect_identical(
-    '1\n2\n3\n4\n' %>% as_spork %>% as_latex %>% as.character,
+    '1\\n2\\n3\\n4\\n' %>% as_spork %>% as_latex %>% as.character,
     "$\\mathrm{\\textrm{1}\n \\textrm{2}\n \\textrm{3}\n \\textrm{4}\n}$"
   )
 })

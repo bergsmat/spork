@@ -19,9 +19,8 @@ as_spar <- function(x, ...)UseMethod('as_spar')
 #' to vector of tokens.  Explicit tokens include
 #' \code{*._^} and any of these escaped with
 #' backslash, e.g. \code{'\\*'}.
-#' The newline character is an explicit token (\code{'\\n'}).
-#' One or more consecutive non-newline
-#' whitespace characters  are a single token,
+#' Backslash-n is an explicit token (\code{'\\n'}).
+#' One or more consecutive whitespace characters are a single token,
 #' as are one or more consecutive octothorpes (\code{#}).
 #' Any string of characters delimited by
 #' one or more of the above is implicitly
@@ -52,7 +51,7 @@ as_spar.spork <- function(x, ...){
   input <- x
   output <- character(0)
   explicit <- c(
-    '\n','[[:blank:]]+','#+',
+    '[\\][n]','\\s+','#+',
     '[*]','[.]','[_]','\\^',
     '[\\][*]','[\\][.]','[\\][_]','[\\]\\^'
   )

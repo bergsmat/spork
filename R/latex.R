@@ -37,6 +37,7 @@ as_latex <- function(x, ...)UseMethod('as_latex')
 #' @return latex
 #' @family latex
 #' @param x spar
+#' @param newline value to replace \code{'\\n'}
 #' @param unrecognized function to process unrecognized tokens: default \code{\link{latexToken}}
 #' @param token_open,token_close these wrap text-like portions of the label; the defaults try to give upright characters (non-italic); also passed to \code{\link{latexToken}}
 #' @param math_open,math_close these wrap math-like portions of the label;  the defaults try to give upright characters (non-italic) which may not work for Greek symbols; also passed to \code{\link{latexToken}}
@@ -54,6 +55,7 @@ as_latex <- function(x, ...)UseMethod('as_latex')
 
 as_latex.spar <- function(
   x,
+  newline = getOption('latex_newline','\n'),
   unrecognized = getOption('latex_unrecognized','latexToken'),
   token_open = getOption('latex_token_open', '\\textrm{'),
   token_close = getOption('latex_token_close','}'),
@@ -81,7 +83,7 @@ as_latex.spar <- function(
   if(identical(x, ''))return(structure(x, class = union('latex', class(x))))
   base <- ''
   explicit <- c(
-    '\n', '[[:blank:]]+',
+    '[\\][n]', '\\s+',
     '[*]','[.]','[_]','\\^',
     '[\\][*]','[\\][.]','[\\][_]','[\\]\\^'
   )
@@ -119,10 +121,10 @@ as_latex.spar <- function(
       m <- m[m == min(m)]
       stopifnot(length(m) == 1)
       p <- names(m)
-      if(p == '\n'){
-          base <- paste0(base, '\n')
+      if(p == '[\\][n]'){
+          base <- paste0(base, newline)
       }
-      if(p == '[[:blank:]]+'){
+      if(p == '\\s+'){
         token <- paste0(token_open,token,token_close)
         if(active){
           base <- paste0(base, ' ', token)

@@ -64,7 +64,7 @@ as_plotmath.spar <- function(
   if(identical(x, ''))return(structure(x, class = union('plotmath', class(x))))
   base <- ''
   explicit <- c(
-    '\n', '[[:blank:]]+','#+',
+    '[\\][n]', '\\s+','#+',
     '[*]','[.]','[_]','\\^',
     '[\\][*]','[\\][.]','[\\][_]','[\\]\\^'
   )
@@ -91,9 +91,9 @@ as_plotmath.spar <- function(
       m <- m[m == min(m)]
       stopifnot(length(m) == 1)
       p <- names(m)
-      if(p == '\n'){
+      if(p == '[\\][n]'){
         # cannot split scripts across lines
-        # \n dumps the closer stack
+        # \\n dumps the closer stack
         # sets active FALSE
         # wraps base in 'atop(' and ','
         # posts a newline of ')'
@@ -111,7 +111,7 @@ as_plotmath.spar <- function(
         closers <- character(0)
         newlines <- paste0(newlines, ')')
       }
-      if(p == '[[:blank:]]+'){
+      if(p == '\\s+'){
         token <- paste0("'",token,"'")
         if(active){
           base <- paste0(base, '*', token)
