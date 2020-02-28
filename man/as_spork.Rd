@@ -45,19 +45,15 @@ p$labels$x <- label
 print(p)
 }
 \seealso{
-Other spork: 
-\code{\link{[.spork}()},
-\code{\link{[[.spork}()},
-\code{\link{as.list.spork}()},
-\code{\link{as.png.spork}()},
-\code{\link{as_latex.spork}()},
-\code{\link{as_plotmath.spork}()},
-\code{\link{as_previews.spork}()},
-\code{\link{as_spar.spork}()},
-\code{\link{as_spork.character}()},
-\code{\link{as_spork.factor}()},
-\code{\link{as_spork.spork}()},
-\code{\link{ggplot.spork}()}
+Other spork: \code{\link{[.spork}}, \code{\link{[[.spork}},
+  \code{\link{as.list.spork}}, \code{\link{as.png.spork}},
+  \code{\link{as_latex.spork}},
+  \code{\link{as_plotmath.spork}},
+  \code{\link{as_previews.spork}},
+  \code{\link{as_spar.spork}},
+  \code{\link{as_spork.character}},
+  \code{\link{as_spork.factor}},
+  \code{\link{as_spork.spork}}, \code{\link{ggplot.spork}}
 }
 \concept{spork}
 \keyword{internal}

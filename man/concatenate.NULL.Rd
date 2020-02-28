@@ -4,7 +4,7 @@
 \alias{concatenate.NULL}
 \title{Concatenate NULL}
 \usage{
-\method{concatenate}{`NULL`}(x, ...)
+\method{concatenate}{NULL}(x, ...)
 }
 \arguments{
 \item{x}{NULL}
@@ -21,11 +21,10 @@ Concatenates null. Returns empty string.
 concatenate(NULL)
 }
 \seealso{
-Other concatenate: 
-\code{\link{concatenate.character}()},
-\code{\link{concatenate.latex}()},
-\code{\link{concatenate.plotmath}()},
-\code{\link{concatenate}()}
+Other concatenate: \code{\link{concatenate.character}},
+  \code{\link{concatenate.latex}},
+  \code{\link{concatenate.plotmath}},
+  \code{\link{concatenate}}
 }
 \concept{concatenate}
 \keyword{internal}

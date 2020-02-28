@@ -23,17 +23,16 @@ goodToken('foo')
 goodToken('\\\\$')
 }
 \seealso{
-Other plotmath: 
-\code{\link{[.plotmath}()},
-\code{\link{[[.plotmath}()},
-\code{\link{as.expression.plotmath}()},
-\code{\link{as.png.plotmath}()},
-\code{\link{as_plotmath.spar}()},
-\code{\link{as_plotmath.spork}()},
-\code{\link{as_plotmath}()},
-\code{\link{concatenate.plotmath}()},
-\code{\link{ggplot.plotmath}()},
-\code{\link{plotmathToken}()}
+Other plotmath: \code{\link{[.plotmath}},
+  \code{\link{[[.plotmath}},
+  \code{\link{as.expression.plotmath}},
+  \code{\link{as.png.plotmath}},
+  \code{\link{as_plotmath.spar}},
+  \code{\link{as_plotmath.spork}},
+  \code{\link{as_plotmath}},
+  \code{\link{concatenate.plotmath}},
+  \code{\link{ggplot.plotmath}},
+  \code{\link{plotmathToken}}
 }
 \concept{plotmath}
 \keyword{internal}

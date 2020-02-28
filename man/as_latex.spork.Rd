@@ -30,37 +30,27 @@ as_latex(x)
 as_latex(as_spork('gravitational force (kg\\\\.m/s^2.)'))
 }
 \seealso{
-Other latex: 
-\code{\link{[.latex}()},
-\code{\link{[[.latex}()},
-\code{\link{as_latex.spar}()},
-\code{\link{as_latex}()},
-\code{\link{concatenate.latex}()},
-\code{\link{latexToken}()}
+Other latex: \code{\link{[.latex}}, \code{\link{[[.latex}},
+  \code{\link{as_latex.spar}}, \code{\link{as_latex}},
+  \code{\link{concatenate.latex}}, \code{\link{latexToken}}
 
-Other spork: 
-\code{\link{[.spork}()},
-\code{\link{[[.spork}()},
-\code{\link{as.list.spork}()},
-\code{\link{as.png.spork}()},
-\code{\link{as_plotmath.spork}()},
-\code{\link{as_previews.spork}()},
-\code{\link{as_spar.spork}()},
-\code{\link{as_spork.character}()},
-\code{\link{as_spork.factor}()},
-\code{\link{as_spork.spork}()},
-\code{\link{as_spork}()},
-\code{\link{ggplot.spork}()}
+Other spork: \code{\link{[.spork}}, \code{\link{[[.spork}},
+  \code{\link{as.list.spork}}, \code{\link{as.png.spork}},
+  \code{\link{as_plotmath.spork}},
+  \code{\link{as_previews.spork}},
+  \code{\link{as_spar.spork}},
+  \code{\link{as_spork.character}},
+  \code{\link{as_spork.factor}},
+  \code{\link{as_spork.spork}}, \code{\link{as_spork}},
+  \code{\link{ggplot.spork}}
 
-Other interface: 
-\code{\link{as.expression.plotmath}()},
-\code{\link{as_latex.spar}()},
-\code{\link{as_plotmath.spar}()},
-\code{\link{as_plotmath.spork}()},
-\code{\link{as_previews.spork}()},
-\code{\link{as_spork.character}()},
-\code{\link{latexToken}()},
-\code{\link{plotmathToken}()}
+Other interface: \code{\link{as.expression.plotmath}},
+  \code{\link{as_latex.spar}},
+  \code{\link{as_plotmath.spar}},
+  \code{\link{as_plotmath.spork}},
+  \code{\link{as_previews.spork}},
+  \code{\link{as_spork.character}},
+  \code{\link{latexToken}}, \code{\link{plotmathToken}}
 }
 \concept{interface}
 \concept{latex}

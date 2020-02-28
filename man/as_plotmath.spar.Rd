@@ -4,11 +4,9 @@
 \alias{as_plotmath.spar}
 \title{Convert One Spork to Plotmath}
 \usage{
-\method{as_plotmath}{spar}(
-  x,
+\method{as_plotmath}{spar}(x,
   unrecognized = getOption("plotmath_unrecognized", "plotmathToken"),
-  ...
-)
+  ...)
 }
 \arguments{
 \item{x}{spar}
@@ -40,31 +38,26 @@ are closed in advance, preventing
 these from breaking across lines.
 }
 \seealso{
-Other interface: 
-\code{\link{as.expression.plotmath}()},
-\code{\link{as_latex.spar}()},
-\code{\link{as_latex.spork}()},
-\code{\link{as_plotmath.spork}()},
-\code{\link{as_previews.spork}()},
-\code{\link{as_spork.character}()},
-\code{\link{latexToken}()},
-\code{\link{plotmathToken}()}
+Other interface: \code{\link{as.expression.plotmath}},
+  \code{\link{as_latex.spar}},
+  \code{\link{as_latex.spork}},
+  \code{\link{as_plotmath.spork}},
+  \code{\link{as_previews.spork}},
+  \code{\link{as_spork.character}},
+  \code{\link{latexToken}}, \code{\link{plotmathToken}}
 
-Other plotmath: 
-\code{\link{[.plotmath}()},
-\code{\link{[[.plotmath}()},
-\code{\link{as.expression.plotmath}()},
-\code{\link{as.png.plotmath}()},
-\code{\link{as_plotmath.spork}()},
-\code{\link{as_plotmath}()},
-\code{\link{concatenate.plotmath}()},
-\code{\link{ggplot.plotmath}()},
-\code{\link{goodToken}()},
-\code{\link{plotmathToken}()}
+Other plotmath: \code{\link{[.plotmath}},
+  \code{\link{[[.plotmath}},
+  \code{\link{as.expression.plotmath}},
+  \code{\link{as.png.plotmath}},
+  \code{\link{as_plotmath.spork}},
+  \code{\link{as_plotmath}},
+  \code{\link{concatenate.plotmath}},
+  \code{\link{ggplot.plotmath}}, \code{\link{goodToken}},
+  \code{\link{plotmathToken}}
 
-Other spar: 
-\code{\link{as_spar.spork}()},
-\code{\link{as_spar}()}
+Other spar: \code{\link{as_spar.spork}},
+  \code{\link{as_spar}}
 }
 \concept{interface}
 \concept{plotmath}

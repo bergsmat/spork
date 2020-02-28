@@ -22,9 +22,8 @@ Generic, with method \code{\link{as_spar.spork}}.
 # see methods
 }
 \seealso{
-Other spar: 
-\code{\link{as_plotmath.spar}()},
-\code{\link{as_spar.spork}()}
+Other spar: \code{\link{as_plotmath.spar}},
+  \code{\link{as_spar.spork}}
 }
 \concept{generics}
 \concept{spar}

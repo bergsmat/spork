@@ -4,9 +4,7 @@
 \alias{as_latex.spar}
 \title{Convert One Spork to Latex}
 \usage{
-\method{as_latex}{spar}(
-  x,
-  newline = getOption("latex_newline", "\\n"),
+\method{as_latex}{spar}(x, newline = getOption("latex_newline", "\\n"),
   unrecognized = getOption("latex_unrecognized", "latexToken"),
   token_open = getOption("latex_token_open", "\\\\textrm{"),
   token_close = getOption("latex_token_close", "}"),
@@ -14,9 +12,7 @@
   math_close = getOption("latex_math_close", "}"),
   label_open = getOption("latex_label_open", "$"),
   label_close = getOption("latex_label_close", "$"),
-  enforce_math = getOption("latex_enforce_math", TRUE),
-  ...
-)
+  enforce_math = getOption("latex_enforce_math", TRUE), ...)
 }
 \arguments{
 \item{x}{spar}
@@ -67,23 +63,17 @@ library(magrittr)
 'one joule (Omega) ~ 1 kg*m^2./s^2' \%>\% as_spork \%>\% as_latex
 }
 \seealso{
-Other interface: 
-\code{\link{as.expression.plotmath}()},
-\code{\link{as_latex.spork}()},
-\code{\link{as_plotmath.spar}()},
-\code{\link{as_plotmath.spork}()},
-\code{\link{as_previews.spork}()},
-\code{\link{as_spork.character}()},
-\code{\link{latexToken}()},
-\code{\link{plotmathToken}()}
+Other interface: \code{\link{as.expression.plotmath}},
+  \code{\link{as_latex.spork}},
+  \code{\link{as_plotmath.spar}},
+  \code{\link{as_plotmath.spork}},
+  \code{\link{as_previews.spork}},
+  \code{\link{as_spork.character}},
+  \code{\link{latexToken}}, \code{\link{plotmathToken}}
 
-Other latex: 
-\code{\link{[.latex}()},
-\code{\link{[[.latex}()},
-\code{\link{as_latex.spork}()},
-\code{\link{as_latex}()},
-\code{\link{concatenate.latex}()},
-\code{\link{latexToken}()}
+Other latex: \code{\link{[.latex}}, \code{\link{[[.latex}},
+  \code{\link{as_latex.spork}}, \code{\link{as_latex}},
+  \code{\link{concatenate.latex}}, \code{\link{latexToken}}
 }
 \concept{interface}
 \concept{latex}

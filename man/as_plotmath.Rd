@@ -22,17 +22,15 @@ Coerce to plotmath.  Generic, with method
 example(as_plotmath.spork)
 }
 \seealso{
-Other plotmath: 
-\code{\link{[.plotmath}()},
-\code{\link{[[.plotmath}()},
-\code{\link{as.expression.plotmath}()},
-\code{\link{as.png.plotmath}()},
-\code{\link{as_plotmath.spar}()},
-\code{\link{as_plotmath.spork}()},
-\code{\link{concatenate.plotmath}()},
-\code{\link{ggplot.plotmath}()},
-\code{\link{goodToken}()},
-\code{\link{plotmathToken}()}
+Other plotmath: \code{\link{[.plotmath}},
+  \code{\link{[[.plotmath}},
+  \code{\link{as.expression.plotmath}},
+  \code{\link{as.png.plotmath}},
+  \code{\link{as_plotmath.spar}},
+  \code{\link{as_plotmath.spork}},
+  \code{\link{concatenate.plotmath}},
+  \code{\link{ggplot.plotmath}}, \code{\link{goodToken}},
+  \code{\link{plotmathToken}}
 }
 \concept{plotmath}
 \keyword{internal}
