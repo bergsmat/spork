@@ -30,18 +30,23 @@ a token as well.
 as_spar(as_spork('one joule (Omega) ~ 1 kg*m^2./s^2'))
 }
 \seealso{
-Other spar: \code{\link{as_plotmath.spar}},
-  \code{\link{as_spar}}
+Other spar: 
+\code{\link{as_plotmath.spar}()},
+\code{\link{as_spar}()}
 
-Other spork: \code{\link{[.spork}}, \code{\link{[[.spork}},
-  \code{\link{as.list.spork}}, \code{\link{as.png.spork}},
-  \code{\link{as_latex.spork}},
-  \code{\link{as_plotmath.spork}},
-  \code{\link{as_previews.spork}},
-  \code{\link{as_spork.character}},
-  \code{\link{as_spork.factor}},
-  \code{\link{as_spork.spork}}, \code{\link{as_spork}},
-  \code{\link{ggplot.spork}}
+Other spork: 
+\code{\link{[.spork}()},
+\code{\link{[[.spork}()},
+\code{\link{as.list.spork}()},
+\code{\link{as.png.spork}()},
+\code{\link{as_latex.spork}()},
+\code{\link{as_plotmath.spork}()},
+\code{\link{as_previews.spork}()},
+\code{\link{as_spork.character}()},
+\code{\link{as_spork.factor}()},
+\code{\link{as_spork.spork}()},
+\code{\link{as_spork}()},
+\code{\link{ggplot.spork}()}
 }
 \concept{spar}
 \concept{spork}

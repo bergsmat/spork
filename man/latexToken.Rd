@@ -4,19 +4,20 @@
 \alias{latexToken}
 \title{Process Latex Token}
 \usage{
-latexToken(x, unrecognized = latexToken,
+latexToken(
+  x,
   token_open = getOption("latex_token_open", "\\\\textrm{"),
   token_close = getOption("latex_token_close", "}"),
   math_open = getOption("latex_math_open", "\\\\mathrm{"),
   math_close = getOption("latex_math_close", "}"),
   label_open = getOption("latex_label_open", "$"),
   label_close = getOption("latex_label_close", "$"),
-  enforce_math = getOption("latex_enforce_math", TRUE), ...)
+  enforce_math = getOption("latex_enforce_math", TRUE),
+  ...
+)
 }
 \arguments{
 \item{x}{character}
-
-\item{unrecognized}{function to process unrecognized tokens}
 
 \item{token_open, token_close}{these wrap the entire token (used once); by default the token is text-like}
 
@@ -42,19 +43,23 @@ latexToken('alpha')
 latexToken('Alpha')
 }
 \seealso{
-Other latex: \code{\link{[.latex}}, \code{\link{[[.latex}},
-  \code{\link{as_latex.spar}},
-  \code{\link{as_latex.spork}}, \code{\link{as_latex}},
-  \code{\link{concatenate.latex}}
+Other latex: 
+\code{\link{[.latex}()},
+\code{\link{[[.latex}()},
+\code{\link{as_latex.spar}()},
+\code{\link{as_latex.spork}()},
+\code{\link{as_latex}()},
+\code{\link{concatenate.latex}()}
 
-Other interface: \code{\link{as.expression.plotmath}},
-  \code{\link{as_latex.spar}},
-  \code{\link{as_latex.spork}},
-  \code{\link{as_plotmath.spar}},
-  \code{\link{as_plotmath.spork}},
-  \code{\link{as_previews.spork}},
-  \code{\link{as_spork.character}},
-  \code{\link{plotmathToken}}
+Other interface: 
+\code{\link{as.expression.plotmath}()},
+\code{\link{as_latex.spar}()},
+\code{\link{as_latex.spork}()},
+\code{\link{as_plotmath.spar}()},
+\code{\link{as_plotmath.spork}()},
+\code{\link{as_previews.spork}()},
+\code{\link{as_spork.character}()},
+\code{\link{plotmathToken}()}
 }
 \concept{interface}
 \concept{latex}

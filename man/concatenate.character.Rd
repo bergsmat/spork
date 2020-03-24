@@ -23,12 +23,14 @@ Concatenates Character. Collapses vector using separator.
 concatenate(letters)
 }
 \seealso{
-Other concatenate: \code{\link{concatenate.NULL}},
-  \code{\link{concatenate.latex}},
-  \code{\link{concatenate.plotmath}},
-  \code{\link{concatenate}}
+Other concatenate: 
+\code{\link{concatenate.NULL}()},
+\code{\link{concatenate.latex}()},
+\code{\link{concatenate.plotmath}()},
+\code{\link{concatenate}()}
 
-Other character: \code{\link{as_spork.character}}
+Other character: 
+\code{\link{as_spork.character}()}
 }
 \concept{character}
 \concept{concatenate}

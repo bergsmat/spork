@@ -4,8 +4,15 @@
 \alias{as.png.spork}
 \title{Convert Spork to PNG}
 \usage{
-\method{as.png}{spork}(x, filename = tempfile(), width = 3,
-  height = 1, units = "in", res = 150, ...)
+\method{as.png}{spork}(
+  x,
+  filename = tempfile(),
+  width = 3,
+  height = 1,
+  units = "in",
+  res = 150,
+  ...
+)
 }
 \arguments{
 \item{x}{spork; see \code{\link{as_spork}}}
@@ -35,25 +42,32 @@ library(latexpdf)
 file
 }
 \seealso{
-Other preview: \code{\link{as.png.plotmath}},
-  \code{\link{as_preview.latex}},
-  \code{\link{as_preview.plotmath}},
-  \code{\link{as_previews.spork}},
-  \code{\link{as_previews}}, \code{\link{as_preview}},
-  \code{\link{ggplot.plotmath}}, \code{\link{ggplot.spork}}
+Other preview: 
+\code{\link{as.png.plotmath}()},
+\code{\link{as_preview.latex}()},
+\code{\link{as_preview.plotmath}()},
+\code{\link{as_previews.spork}()},
+\code{\link{as_previews}()},
+\code{\link{as_preview}()},
+\code{\link{ggplot.plotmath}()},
+\code{\link{ggplot.spork}()}
 
-Other spork: \code{\link{[.spork}}, \code{\link{[[.spork}},
-  \code{\link{as.list.spork}},
-  \code{\link{as_latex.spork}},
-  \code{\link{as_plotmath.spork}},
-  \code{\link{as_previews.spork}},
-  \code{\link{as_spar.spork}},
-  \code{\link{as_spork.character}},
-  \code{\link{as_spork.factor}},
-  \code{\link{as_spork.spork}}, \code{\link{as_spork}},
-  \code{\link{ggplot.spork}}
+Other spork: 
+\code{\link{[.spork}()},
+\code{\link{[[.spork}()},
+\code{\link{as.list.spork}()},
+\code{\link{as_latex.spork}()},
+\code{\link{as_plotmath.spork}()},
+\code{\link{as_previews.spork}()},
+\code{\link{as_spar.spork}()},
+\code{\link{as_spork.character}()},
+\code{\link{as_spork.factor}()},
+\code{\link{as_spork.spork}()},
+\code{\link{as_spork}()},
+\code{\link{ggplot.spork}()}
 
-Other png: \code{\link{as.png.plotmath}}
+Other png: 
+\code{\link{as.png.plotmath}()}
 }
 \concept{png}
 \concept{preview}

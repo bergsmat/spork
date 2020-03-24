@@ -4,8 +4,15 @@
 \alias{as.png.plotmath}
 \title{Convert Plotmath to PNG}
 \usage{
-\method{as.png}{plotmath}(x, filename = tempfile(), width = 3,
-  height = 1, units = "in", res = 150, ...)
+\method{as.png}{plotmath}(
+  x,
+  filename = tempfile(),
+  width = 3,
+  height = 1,
+  units = "in",
+  res = 150,
+  ...
+)
 }
 \arguments{
 \item{x}{plotmath; see \code{\link{as_plotmath}}}
@@ -35,24 +42,30 @@ library(latexpdf)
 file
 }
 \seealso{
-Other preview: \code{\link{as.png.spork}},
-  \code{\link{as_preview.latex}},
-  \code{\link{as_preview.plotmath}},
-  \code{\link{as_previews.spork}},
-  \code{\link{as_previews}}, \code{\link{as_preview}},
-  \code{\link{ggplot.plotmath}}, \code{\link{ggplot.spork}}
+Other preview: 
+\code{\link{as.png.spork}()},
+\code{\link{as_preview.latex}()},
+\code{\link{as_preview.plotmath}()},
+\code{\link{as_previews.spork}()},
+\code{\link{as_previews}()},
+\code{\link{as_preview}()},
+\code{\link{ggplot.plotmath}()},
+\code{\link{ggplot.spork}()}
 
-Other png: \code{\link{as.png.spork}}
+Other png: 
+\code{\link{as.png.spork}()}
 
-Other plotmath: \code{\link{[.plotmath}},
-  \code{\link{[[.plotmath}},
-  \code{\link{as.expression.plotmath}},
-  \code{\link{as_plotmath.spar}},
-  \code{\link{as_plotmath.spork}},
-  \code{\link{as_plotmath}},
-  \code{\link{concatenate.plotmath}},
-  \code{\link{ggplot.plotmath}}, \code{\link{goodToken}},
-  \code{\link{plotmathToken}}
+Other plotmath: 
+\code{\link{[.plotmath}()},
+\code{\link{[[.plotmath}()},
+\code{\link{as.expression.plotmath}()},
+\code{\link{as_plotmath.spar}()},
+\code{\link{as_plotmath.spork}()},
+\code{\link{as_plotmath}()},
+\code{\link{concatenate.plotmath}()},
+\code{\link{ggplot.plotmath}()},
+\code{\link{goodToken}()},
+\code{\link{plotmathToken}()}
 }
 \concept{plotmath}
 \concept{png}

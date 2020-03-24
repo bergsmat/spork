@@ -4,8 +4,7 @@
 \alias{as_previews.spork}
 \title{Compare Previews of Spork}
 \usage{
-\method{as_previews}{spork}(x, wide = 70, long = 20, width = 3,
-  height = 1, ...)
+\method{as_previews}{spork}(x, wide = 70, long = 20, width = 3, height = 1, ...)
 }
 \arguments{
 \item{x}{length-one spork}
@@ -36,7 +35,7 @@ specials \%>\% as_spork \%>\% as_previews
 specials \%>\% gsub(' ','',.) \%>\% as_spork \%>\% as_previews
 'one joule (Omega) ~ 1 kg*m^2./s^2' \%>\% as_spork \%>\% as_previews
 
-# disambiguation for plotmath and latex (see \\code{\\link[grDevices]{plotmath}}):
+# disambiguation for plotmath and latex (see \code{\link[grDevices]{plotmath}}):
 
 'epsilon.varepsilon' \%>\% as_spork \%>\% as_previews
 'rho.varrho' \%>\% as_spork \%>\% as_previews
@@ -48,30 +47,39 @@ specials \%>\% gsub(' ','',.) \%>\% as_spork \%>\% as_previews
 }
 }
 \seealso{
-Other preview: \code{\link{as.png.plotmath}},
-  \code{\link{as.png.spork}},
-  \code{\link{as_preview.latex}},
-  \code{\link{as_preview.plotmath}},
-  \code{\link{as_previews}}, \code{\link{as_preview}},
-  \code{\link{ggplot.plotmath}}, \code{\link{ggplot.spork}}
+Other preview: 
+\code{\link{as.png.plotmath}()},
+\code{\link{as.png.spork}()},
+\code{\link{as_preview.latex}()},
+\code{\link{as_preview.plotmath}()},
+\code{\link{as_previews}()},
+\code{\link{as_preview}()},
+\code{\link{ggplot.plotmath}()},
+\code{\link{ggplot.spork}()}
 
-Other interface: \code{\link{as.expression.plotmath}},
-  \code{\link{as_latex.spar}},
-  \code{\link{as_latex.spork}},
-  \code{\link{as_plotmath.spar}},
-  \code{\link{as_plotmath.spork}},
-  \code{\link{as_spork.character}},
-  \code{\link{latexToken}}, \code{\link{plotmathToken}}
+Other interface: 
+\code{\link{as.expression.plotmath}()},
+\code{\link{as_latex.spar}()},
+\code{\link{as_latex.spork}()},
+\code{\link{as_plotmath.spar}()},
+\code{\link{as_plotmath.spork}()},
+\code{\link{as_spork.character}()},
+\code{\link{latexToken}()},
+\code{\link{plotmathToken}()}
 
-Other spork: \code{\link{[.spork}}, \code{\link{[[.spork}},
-  \code{\link{as.list.spork}}, \code{\link{as.png.spork}},
-  \code{\link{as_latex.spork}},
-  \code{\link{as_plotmath.spork}},
-  \code{\link{as_spar.spork}},
-  \code{\link{as_spork.character}},
-  \code{\link{as_spork.factor}},
-  \code{\link{as_spork.spork}}, \code{\link{as_spork}},
-  \code{\link{ggplot.spork}}
+Other spork: 
+\code{\link{[.spork}()},
+\code{\link{[[.spork}()},
+\code{\link{as.list.spork}()},
+\code{\link{as.png.spork}()},
+\code{\link{as_latex.spork}()},
+\code{\link{as_plotmath.spork}()},
+\code{\link{as_spar.spork}()},
+\code{\link{as_spork.character}()},
+\code{\link{as_spork.factor}()},
+\code{\link{as_spork.spork}()},
+\code{\link{as_spork}()},
+\code{\link{ggplot.spork}()}
 }
 \concept{interface}
 \concept{preview}

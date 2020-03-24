@@ -260,7 +260,7 @@ as_latex.spar <- function(
 #' and escapes latex metacharacters.
 #'
 #' @param x character
-#' @param unrecognized function to process unrecognized tokens
+# @param unrecognized function to process unrecognized tokens
 #' @param token_open,token_close these wrap the entire token (used once); by default the token is text-like
 #' @param math_open,math_close these wrap math-like portions of the token;  the defaults try to give upright characters (non-italic) which may not work for Greek symbols
 #' @param label_open,label_close these re-wrap math-like portions of the token if \code{enforce_math} is TRUE; defaults invoke traditional math mode
@@ -276,7 +276,7 @@ as_latex.spar <- function(
 #' latexToken('Alpha')
 latexToken <- function(
   x,
-  unrecognized = latexToken,
+  #unrecognized = latexToken,
   token_open = getOption('latex_token_open', '\\textrm{'),
   token_close = getOption('latex_token_close','}'),
   math_open = getOption('latex_math_open', '\\mathrm{'),

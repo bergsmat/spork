@@ -4,8 +4,12 @@
 \alias{plotmathToken}
 \title{Process Plotmath Token}
 \usage{
-plotmathToken(x, conditional = getOption("plotmath_conditional_quote",
-  TRUE), unescape = getOption("plotmath_unescape", TRUE), ...)
+plotmathToken(
+  x,
+  conditional = getOption("plotmath_conditional_quote", TRUE),
+  unescape = getOption("plotmath_unescape", TRUE),
+  ...
+)
 }
 \arguments{
 \item{x}{(length-one) character}
@@ -28,28 +32,31 @@ likewise 'varrho' maps to 'rho' and 'varpi' maps to 'omega1'.
 plotmathToken("can't")
 plotmathToken("\\\\", unescape = TRUE)
 plotmathToken("\\\\", unescape = FALSE)
-plotmathToken("\\n", conditional = TRUE)
-plotmathToken("\\n", conditional = FALSE)
+plotmathToken("\n", conditional = TRUE)
+plotmathToken("\n", conditional = FALSE)
 }
 \seealso{
-Other plotmath: \code{\link{[.plotmath}},
-  \code{\link{[[.plotmath}},
-  \code{\link{as.expression.plotmath}},
-  \code{\link{as.png.plotmath}},
-  \code{\link{as_plotmath.spar}},
-  \code{\link{as_plotmath.spork}},
-  \code{\link{as_plotmath}},
-  \code{\link{concatenate.plotmath}},
-  \code{\link{ggplot.plotmath}}, \code{\link{goodToken}}
+Other plotmath: 
+\code{\link{[.plotmath}()},
+\code{\link{[[.plotmath}()},
+\code{\link{as.expression.plotmath}()},
+\code{\link{as.png.plotmath}()},
+\code{\link{as_plotmath.spar}()},
+\code{\link{as_plotmath.spork}()},
+\code{\link{as_plotmath}()},
+\code{\link{concatenate.plotmath}()},
+\code{\link{ggplot.plotmath}()},
+\code{\link{goodToken}()}
 
-Other interface: \code{\link{as.expression.plotmath}},
-  \code{\link{as_latex.spar}},
-  \code{\link{as_latex.spork}},
-  \code{\link{as_plotmath.spar}},
-  \code{\link{as_plotmath.spork}},
-  \code{\link{as_previews.spork}},
-  \code{\link{as_spork.character}},
-  \code{\link{latexToken}}
+Other interface: 
+\code{\link{as.expression.plotmath}()},
+\code{\link{as_latex.spar}()},
+\code{\link{as_latex.spork}()},
+\code{\link{as_plotmath.spar}()},
+\code{\link{as_plotmath.spork}()},
+\code{\link{as_previews.spork}()},
+\code{\link{as_spork.character}()},
+\code{\link{latexToken}()}
 }
 \concept{interface}
 \concept{plotmath}

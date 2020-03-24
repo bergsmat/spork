@@ -25,10 +25,11 @@ Generic, with methods
 # see methods
 }
 \seealso{
-Other concatenate: \code{\link{concatenate.NULL}},
-  \code{\link{concatenate.character}},
-  \code{\link{concatenate.latex}},
-  \code{\link{concatenate.plotmath}}
+Other concatenate: 
+\code{\link{concatenate.NULL}()},
+\code{\link{concatenate.character}()},
+\code{\link{concatenate.latex}()},
+\code{\link{concatenate.plotmath}()}
 }
 \concept{concatenate}
 \keyword{internal}

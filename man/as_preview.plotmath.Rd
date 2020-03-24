@@ -4,8 +4,7 @@
 \alias{as_preview.plotmath}
 \title{Preview Spork as Plotmath}
 \usage{
-\method{as_preview}{plotmath}(x, stem = "plotmath_preview", width = 3,
-  height = 1, ...)
+\method{as_preview}{plotmath}(x, stem = "plotmath_preview", width = 3, height = 1, ...)
 }
 \arguments{
 \item{x}{spork; see \code{\link{as_spork}}}
@@ -32,12 +31,15 @@ as_plotmath \%>\%
 as_preview
 }
 \seealso{
-Other preview: \code{\link{as.png.plotmath}},
-  \code{\link{as.png.spork}},
-  \code{\link{as_preview.latex}},
-  \code{\link{as_previews.spork}},
-  \code{\link{as_previews}}, \code{\link{as_preview}},
-  \code{\link{ggplot.plotmath}}, \code{\link{ggplot.spork}}
+Other preview: 
+\code{\link{as.png.plotmath}()},
+\code{\link{as.png.spork}()},
+\code{\link{as_preview.latex}()},
+\code{\link{as_previews.spork}()},
+\code{\link{as_previews}()},
+\code{\link{as_preview}()},
+\code{\link{ggplot.plotmath}()},
+\code{\link{ggplot.spork}()}
 }
 \concept{preview}
 \keyword{internal}
