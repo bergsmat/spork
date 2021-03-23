@@ -44,11 +44,11 @@ conversion from pdf using \code{\link[latexpdf]{ghostconvert}}.
 }
 \examples{
 \donttest{
-library(magrittr)
-'one joule (Omega) ~ 1 kg*m^2./s^2' \%>\%
-as_spork \%>\%
-as_latex \%>\%
-as_preview
+# library(magrittr)
+# 'one joule (Omega) ~ 1 kg*m^2./s^2' \%>\%
+# as_spork \%>\%
+# as_latex \%>\%
+#as_preview
 }
 }
 \seealso{

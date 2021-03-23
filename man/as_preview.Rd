@@ -23,11 +23,11 @@ Generic, with methods \code{\link{as_preview.latex}} and
 library(magrittr)
 'V_c./F' \%>\% as_spork \%>\% as_plotmath \%>\% as_preview
 \donttest{
-'V_c./F' \%>\% as_spork \%>\% as_latex \%>\% as_preview
+# 'V_c./F' \%>\% as_spork \%>\% as_latex \%>\% as_preview
 }
 'one joule (Omega) ~ 1 kg*m^2./s^2' \%>\% as_spork \%>\% as_plotmath \%>\% as_preview
 \donttest{
-'one joule (Omega) ~ 1 kg*m^2./s^2' \%>\% as_spork \%>\% as_latex \%>\% as_preview
+# 'one joule (Omega) ~ 1 kg*m^2./s^2' \%>\% as_spork \%>\% as_latex \%>\% as_preview
 }
 }
 \seealso{

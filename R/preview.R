@@ -14,11 +14,11 @@ globalVariables('label')
 #' library(magrittr)
 #' 'V_c./F' %>% as_spork %>% as_plotmath %>% as_preview
 #' \donttest{
-#' 'V_c./F' %>% as_spork %>% as_latex %>% as_preview
+#' # 'V_c./F' %>% as_spork %>% as_latex %>% as_preview
 #' }
 #' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_plotmath %>% as_preview
 #' \donttest{
-#' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_latex %>% as_preview
+#' # 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_latex %>% as_preview
 #' }
 as_preview <- function(x, ...)UseMethod('as_preview')
 
@@ -47,11 +47,11 @@ as_preview <- function(x, ...)UseMethod('as_preview')
 #' @return invisible filepath
 #' @examples
 #' \donttest{
-#' library(magrittr)
-#' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>%
-#' as_spork %>%
-#' as_latex %>%
-#' as_preview
+#' # library(magrittr)
+#' # 'one joule (Omega) ~ 1 kg*m^2./s^2' %>%
+#' # as_spork %>%
+#' # as_latex %>%
+#' #as_preview
 #' }
 as_preview.latex <- function(
   x,
@@ -119,19 +119,19 @@ as_previews <- function(x,...)UseMethod('as_previews')
 #' library(magrittr)
 #' specials <- '& % $ # \\_ { } ~ \\^ \\'
 #' \donttest{
-#' specials %>% as_spork %>% as_previews
-#' specials %>% gsub(' ','',.) %>% as_spork %>% as_previews
-#' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_previews
+#' # specials %>% as_spork %>% as_previews
+#' # specials %>% gsub(' ','',.) %>% as_spork %>% as_previews
+#' # 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_previews
 #'
 #' # disambiguation for plotmath and latex (see \code{\link[grDevices]{plotmath}}):
 #'
-#' 'epsilon.varepsilon' %>% as_spork %>% as_previews
-#' 'rho.varrho' %>% as_spork %>% as_previews
-#' 'Upsilon.Upsilon1' %>% as_spork %>% as_previews
-#' 'phi.phi1.varphi' %>% as_spork %>% as_previews
-#' 'sigma.sigma1.varsigma.stigma' %>% as_spork %>% as_previews
-#' 'theta.vartheta.theta1' %>% as_spork %>% as_previews
-#' 'omega.omega1.pi.varpi' %>% as_spork %>% as_previews
+#' # 'epsilon.varepsilon' %>% as_spork %>% as_previews
+#' # 'rho.varrho' %>% as_spork %>% as_previews
+#' # 'Upsilon.Upsilon1' %>% as_spork %>% as_previews
+#' # 'phi.phi1.varphi' %>% as_spork %>% as_previews
+#' # 'sigma.sigma1.varsigma.stigma' %>% as_spork %>% as_previews
+#' # 'theta.vartheta.theta1' %>% as_spork %>% as_previews
+#' # 'omega.omega1.pi.varpi' %>% as_spork %>% as_previews
 #' }
 
 as_previews.spork <- function(x, wide = 70, long = 20, width = 3, height = 1,...){
