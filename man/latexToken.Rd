@@ -53,12 +53,15 @@ Other latex:
 
 Other interface: 
 \code{\link{as.expression.plotmath}()},
+\code{\link{as_html.spar}()},
+\code{\link{as_html.spork}()},
 \code{\link{as_latex.spar}()},
 \code{\link{as_latex.spork}()},
 \code{\link{as_plotmath.spar}()},
 \code{\link{as_plotmath.spork}()},
 \code{\link{as_previews.spork}()},
 \code{\link{as_spork.character}()},
+\code{\link{htmlToken}()},
 \code{\link{plotmathToken}()}
 }
 \concept{interface}

@@ -1,77 +1,73 @@
-#' Coerce to Latex
+#' Coerce to Html
 #'
-#' Coerce to latex.  Generic, with method
-#' \code{\link{as_latex.spork}}.
+#' Coerce to html.  Generic, with method
+#' \code{\link{as_html.spork}}.
 #'
 #' @param x object
 #' @param ... passed arguments
 #' @export
 #' @keywords internal
-#' @family latex
-#' @return latex
+#' @family html
+#' @return html
 #' @examples
-#' example(as_latex.spork)
-as_latex <- function(x, ...)UseMethod('as_latex')
+#' example(as_html.spork)
+as_html <- function(x, ...)UseMethod('as_html')
 
-#' Convert One Spork to Latex
+#' Convert One Spork to Html
 #'
-#' Converts one spork to latex.
+#' Converts one spork to html.
 #' See description for \code{\link{as_spork}}.
 #' By default, unrecognized tokens are returned
-#' literally.  However, Greek symbols and latex
+#' literally.  However, Greek symbols and html
 #' metacharacters are escaped.
-#' See \code{\link{latexToken}}.
+#' See \code{\link{htmlToken}}.
 #'
 #' Experimental support is implemented for
 #' the newline character (\code{'\\n'}).
-#' Default behavior is to introduce literal
-#' newline characters into the resulting
-#' tex.  This may have no effect on the
-#' typeset result. It may be possible
-#' to achieve other effects by using
-#' non-default values of helper arguments
-#' and perhaps additional latex packages.
+#' Default behavior is to introduce linebreaks
+#' (<br/>) into the resulting
+#' html.
 #'
 #' @export
 #' @family interface
-#' @return latex
-#' @family latex
+#' @return html
+#' @family html
 #' @param x spar
 #' @param newline value to replace \code{'\\n'}
-#' @param unrecognized function to process unrecognized tokens: default \code{\link{latexToken}}
-#' @param token_open,token_close these wrap text-like portions of the label; the defaults try to give upright characters (non-italic); also passed to \code{\link{latexToken}}
-#' @param math_open,math_close these wrap math-like portions of the label;  the defaults try to give upright characters (non-italic) which may not work for Greek symbols; also passed to \code{\link{latexToken}}
-#' @param label_open,label_close these wrap the entire label; defaults invoke traditional math mode
-#' @param enforce_math whether to enforce math mode for nested expression: \code{\link{latexToken}}
-#' @param ... passed to \code{unrecognized}; see \code{\link{latexToken}}
+#' @param unrecognized function to process unrecognized tokens: default \code{\link{htmlToken}}
+#' @param token_open,token_close these wrap text-like portions of the label; the defaults try to give upright characters (non-italic); also passed to \code{\link{htmlToken}}
+#' @param math_open,math_close these wrap math-like portions of the label;  the defaults try to give upright characters (non-italic) which may not work for Greek symbols; also passed to \code{\link{htmlToken}}
+#' @param label_open,label_close these wrap the entire label
+# @param enforce_math whether to enforce math mode for nested expression: \code{\link{htmlToken}}
+#' @param ... passed to \code{unrecognized}; see \code{\link{htmlToken}}
 #' @examples
 #' library(magrittr)
-#' 'V_c./F' %>% as_spork %>% as_latex
-#' 'AUC_ss' %>% as_spork %>% as_latex
-#' 'C_max_ss' %>% as_spork %>% as_latex
-#' 'var^eta_j' %>% as_spork %>% as_latex
-#' '& % $ # \\_ { } ~ \\^ \\' %>% as_spork %>% as_latex
-#' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_latex
+#' 'V_c./F' %>% as_spork %>% as_html
+#' 'AUC_ss' %>% as_spork %>% as_html
+#' 'C_max_ss' %>% as_spork %>% as_html
+#' 'var^eta_j' %>% as_spork %>% as_html
+#' '& < % $ # \\_ { } ~ \\^ \\' %>% as_spork %>% as_html
+#' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_html
 
-as_latex.spar <- function(
+as_html.spar <- function(
   x,
-  newline = getOption('latex_newline','\n'),
-  unrecognized = getOption('latex_unrecognized','latexToken'),
-  token_open = getOption('latex_token_open', '\\textrm{'),
-  token_close = getOption('latex_token_close','}'),
-  math_open = getOption('latex_math_open', '\\mathrm{'),
-  math_close = getOption('latex_math_close', '}'),
-  label_open = getOption('latex_label_open', '$'),
-  label_close = getOption('latex_label_close', '$'),
-  enforce_math = getOption('latex_enforce_math',TRUE),
+  newline = getOption('html_newline','<br/>'),
+  unrecognized = getOption('html_unrecognized','htmlToken'),
+  token_open = getOption('html_token_open', ''),
+  token_close = getOption('html_token_close',''),
+  math_open = getOption('html_math_open', ''),
+  math_close = getOption('html_math_close', ''),
+  label_open = getOption('html_label_open', ''),
+  label_close = getOption('html_label_close', ''),
+  # enforce_math = getOption('html_enforce_math',TRUE),
   ...
 ){
-  # the latex of a spork is the sequential
+  # the html of a spork is the sequential
   # combination of tokens.
   # Tokens _ or ^ or . are non-printing
   # but trigger nesting or un-nesting.
   # Whitespace and recognized escapes are supplied literally.
-  # unescaped '*' is promoted to \code{\cdot}.
+  # unescaped '*' is promoted to '&times;'.
   # surviving tokens are processed by 'unrecognized',
   # which escapes metacharacters and
   # names of Greek letters, but renders other
@@ -79,8 +75,8 @@ as_latex.spar <- function(
 
   closers <- character(0)
   active <- FALSE
-  if(length(x)==0)return(structure(x, class = union('latex', class(x))))
-  if(identical(x, ''))return(structure(x, class = union('latex', class(x))))
+  if(length(x)==0)return(structure(x, class = union('html', class(x))))
+  if(identical(x, ''))return(structure(x, class = union('html', class(x))))
   base <- ''
   explicit <- c(
     '[\\][n]', '\\s+',
@@ -101,13 +97,13 @@ as_latex.spar <- function(
         math_close = math_close,
         label_open = label_open,
         label_close = label_close,
-        enforce_math = enforce_math,
+        #enforce_math = enforce_math,
         ...
       )
       if(active){
         base <- paste0(base, ' ', token)
       }else{
-        if(grepl('[]}]$',base)){ # not empty nest
+        if(grepl('[]}]$',base)){ # not empty nest for latex.  html equivalent?
           base <- paste0(base, ' ', token)
           active <- TRUE
         }else{ # empty nest or start of line
@@ -127,10 +123,10 @@ as_latex.spar <- function(
       if(p == '\\s+'){
         token <- paste0(token_open,token,token_close)
         if(active){
-          base <- paste0(base, ' ', token)
+          base <- paste0(base, '', token) # changed from ' '; html seems less fussy than latex
         }else{
           if(grepl('[]}]$',base)){ # not empty nest
-            base <- paste0(base, ' ', token)
+            base <- paste0(base, '', token) # changing here too
             active <- TRUE
           }else{ # empty nest or start of line
             base <- paste0(base, token)
@@ -157,7 +153,7 @@ as_latex.spar <- function(
         }
       }
       if(p == '[\\][_]'){
-        token <- paste0(token_open, '\\_', token_close)
+        token <- paste0(token_open, '_', token_close)
         if(active){
           base <- paste0(base, ' ', token)
         }else{
@@ -166,7 +162,7 @@ as_latex.spar <- function(
         }
       }
       if(p == '[\\]\\^'){
-        token <- paste0(token_open,"{\\textasciicircum}",token_close)
+        token <- paste0(token_open,'^',token_close)
         if(active){
           base <- paste0(base, ' ', token)
         }else{
@@ -175,7 +171,7 @@ as_latex.spar <- function(
         }
       }
       if(p == '[*]'){
-        token <- paste0("{\\cdot}")
+        token <- paste0("&times;")
         if(active){
           base <- paste0(base, ' ', token)
           active <- FALSE
@@ -196,36 +192,36 @@ as_latex.spar <- function(
             if(grepl('[[{]$',base)){# empty nest ok
               base <- paste0(base, cl)
             }else{
-              base <- paste0(base, cl )
+              base <- paste0(base, cl)
             }
           }
         }
       }
       if(p == '[_]'){
-        closers <- c('}', closers)
+        closers <- c('</sub>', closers)
         if(active){
-          base <- paste0(base,"_{")
+          base <- paste0(base,"<sub>")
           active <- FALSE
         }else{
           if(!grepl('[]}]$', base)){
             # must have something to subscript
-            base <- paste0(base, "~_{")
+            base <- paste0(base, "&nbsp;<sub>")
           }else{
-            base <- paste0(base, "~_{")
+            base <- paste0(base, "&nbsp;<sub>")
           }
         }
       }
       if(p == '\\^'){
-        closers <- c('}', closers)
+        closers <- c('</sup>', closers)
         if(active){
-          base <- paste0(base, "^{")
+          base <- paste0(base, "<sup>")
           active <- FALSE
         }else{
           if(!grepl('[]}]$', base)){
             # must have something to superscript
-            base <- paste0(base, "~^{")
+            base <- paste0(base, "&nbsp;<sup>")
           }else{
-            base <- paste0(base, "~^{")
+            base <- paste0(base, "&nbsp;<sup>")
           }
         }
       }
@@ -253,80 +249,70 @@ as_latex.spar <- function(
   return(base)
 }
 
-#' Process Latex Token
+#' Process Html Token
 #'
-#' Pre-processes a latex token not recognized as
+#' Pre-processes a html token not recognized as
 #' spork.  Escapes the common names for Greek letters
-#' and escapes latex metacharacters.
+#' and escapes html metacharacters.
 #'
 #' @param x character
 # @param unrecognized function to process unrecognized tokens
 #' @param token_open,token_close these wrap the entire token (used once); by default the token is text-like
 #' @param math_open,math_close these wrap math-like portions of the token;  the defaults try to give upright characters (non-italic) which may not work for Greek symbols
-#' @param label_open,label_close these re-wrap math-like portions of the token if \code{enforce_math} is TRUE; defaults invoke traditional math mode
-#' @param enforce_math whether to enforce math mode for nested expression
+#' @param label_open,label_close these re-wrap math-like portions of the token
+# @param enforce_math whether to enforce math mode for nested expression
 #' @param ... ignored arguments
 #' @export
-#' @family latex
+#' @family html
 #' @family interface
-#' @return latex
+#' @return html
 #' @examples
-#' latexToken('foo')
-#' latexToken('alpha')
-#' latexToken('Alpha')
-latexToken <- function(
+#' htmlToken('foo')
+#' htmlToken('alpha')
+#' htmlToken('Alpha')
+htmlToken <- function(
   x,
-  #unrecognized = latexToken,
-  token_open = getOption('latex_token_open', '\\textrm{'),
-  token_close = getOption('latex_token_close','}'),
-  math_open = getOption('latex_math_open', '\\mathrm{'),
-  math_close = getOption('latex_math_close', '}'),
-  label_open = getOption('latex_label_open', '$'),
-  label_close = getOption('latex_label_close', '$'),
-  enforce_math = getOption('latex_enforce_math',TRUE),
+  #unrecognized = htmlToken,
+  token_open = getOption('html_token_open', ''),
+  token_close = getOption('html_token_close',''),
+  math_open = getOption('html_math_open', ''),
+  math_close = getOption('html_math_close', ''),
+  label_open = getOption('html_label_open', ''),
+  label_close = getOption('html_label_close', ''),
+  #enforce_math = getOption('html_enforce_math',TRUE),
   ...
 ){
-  special <- c(  '&',  '%',  '$',  '#',  '_',  '{',  '}','~',                '^',               '\\'             ) # special in latex
-  replace <- c('\\&','\\%','\\$','\\#','\\_','\\{','\\}','${\\sim}$','{\\textasciicircum}','{\\textbackslash}')      # use in latex
-  greek <- c(
-    'alpha','beta','gamma','delta','epsilon','zeta',
+  special <- c(  '&',  '<' )        # special in html
+  replace <- c('&amp;','&lt;')      # use in html
+  greek <- c( # look for these
+    'alpha','beta','gamma','delta','epsilon','zeta', # no good match for arc epsilon in html
     'eta','theta','iota','kappa','lambda','mu',
     'nu','xi','omicron','pi','rho','sigma','tau',
-    'upsilon','phi','chi','psi','omega'
+    'upsilon','phi','chi','psi','omega' # no regular phi in html
   )
   # https://www.overleaf.com/learn/latex/List_of_Greek_letters_and_math_symbols
-  names(greek) <- c(
-    '\\alpha','\\beta','\\gamma','\\delta','\\epsilon','\\zeta',
-    '\\eta','\\theta','\\iota','\\kappa','\\lambda','\\mu',
-    '\\nu','\\xi',
-    'o',
-    '\\pi','\\rho','\\sigma','\\tau',
-    '\\upsilon','\\phi','\\chi','\\psi','\\omega'
-  )
-  Greek <- c(
+  names(greek) <- paste0('&', greek, ';') # replace with these
+
+  Greek <- c( # look for these
     'Alpha','Beta','Gamma','Delta','Epsilon','Zeta',
     'Eta','Theta','Iota','Kappa','Lambda','Mu',
     'Nu','Xi','Omicron','Pi','Rho','Sigma','Tau',
     'Upsilon','Phi','Chi','Psi','Omega'
   )
-  names(Greek) <- c(
-    'A','B','\\Gamma','\\Delta','E','Z',
-    'H','\\Theta','I','K','\\Lambda','M',
-    'N','\\Xi','O','\\Pi','P','\\Sigma','T',
-    '\\Upsilon','\\Phi','X','\\Psi','\\Omega'
-  )
-  extra <- c( # these are things you can say in plotmath
+  names(Greek) <- paste0('&', Greek, ';') # replace with these
+
+  extra <- c( # look for these
     'Upsilon1','varepsilon','omega1',
     'theta1', 'phi1', 'sigma1',
     'vartheta','varphi','varsigma',
-    'stigma', 'varrho','varpi'
+    'stigma', 'varrho','varpi' # no fancy rho in html
   )
 
-  names(extra) <- c( # these are things you can say in tex
-    '\\Upsilon','\\varepsilon','\\varpi',
-    '\\vartheta','\\varphi','\\varsigma',
-    '\\vartheta','\\varphi','\\varsigma',
-    '\\varsigma', '\\varrho','\\varpi'
+  names(extra) <- c( # replace with these
+    '&upsih;','&epsilon;','&omega;',
+    '&thetasym;','&phi;','&sigmaf;',
+    '&thetasym;','&phi;','&sigmaf;',
+    '&sigmaf;', '&rho;','&piv;'
   )
 
   # escape <- function(x,pattern,replace)sub(
@@ -391,10 +377,10 @@ latexToken <- function(
       # }
       mathopen <- math_open
       mathclose <- math_close
-      if(enforce_math){
-        mathopen <- paste0(label_open,mathopen)
-        mathclose <- paste0(mathclose, label_close)
-      }
+      # if(enforce_math){
+      #   mathopen <- paste0(label_open,mathopen)
+      #   mathclose <- paste0(mathclose, label_close)
+      # }
 
       ths <- paste0(mathopen, p, mathclose)
       #aft <- after(input, pattern, fixed = FALSE)
@@ -408,20 +394,20 @@ latexToken <- function(
   x <- output
 
   x <- paste0(token_open, x, token_close)
-  class(x) <- union('latex', class(x))
+  class(x) <- union('html', class(x))
   x
 }
 
-#' Convert Spork to Latex
+#' Convert Spork to Html
 #'
-#' Converts spork to latex.
-#' Vectorized version of \code{\link{as_latex.spar}}.
+#' Converts spork to html.
+#' Vectorized version of \code{\link{as_html.spar}}.
 #'
 #' @export
 #' @param x spork
-#' @param ... passed to \code{\link{as_latex.spar}}
-#' @return latex
-#' @family latex
+#' @param ... passed to \code{\link{as_html.spar}}
+#' @return html
+#' @family html
 #' @family spork
 #' @family interface
 #' @examples
@@ -432,24 +418,24 @@ latexToken <- function(
 #'   'var^eta_j'
 #' )
 #' x <- as_spork(x)
-#' as_latex(x)
-#' as_latex(as_spork('gravitational force (kg\\.m/s^2.)'))
-as_latex.spork <- function(x, ...){
+#' as_html(x)
+#' as_html(as_spork('gravitational force (kg\\.m/s^2.)'))
+as_html.spork <- function(x, ...){
   y <- lapply(x, as_spar, USE.NAMES = F, ...)
-  y <- sapply(y, as_latex, USE.NAMES = F, ...)
+  y <- sapply(y, as_html, USE.NAMES = F, ...)
   if(length(y) == 0) y <- character(0)
-  class(y) <- union('latex', class(y))
+  class(y) <- union('html', class(y))
   y
 }
-#' Subset Latex
+#' Subset Html
 #'
-#' Subsets latex, retaining class.
-#' @param x latex
+#' Subsets html, retaining class.
+#' @param x html
 #' @param ... passed to next method
 #' @export
 #' @keywords internal
-#' @family latex
-#' @return latex
+#' @family html
+#' @return html
 #' @examples
 #' x <- c(
 #'   'V_c./F',
@@ -457,25 +443,25 @@ as_latex.spork <- function(x, ...){
 #'   'C_max_ss',
 #'   'var^eta_j'
 #' )
-#' x <- as_latex(as_spork(x))
+#' x <- as_html(as_spork(x))
 #' class(x)
 #' class(x[1])
-`[.latex` <- function(x, ...){
+`[.html` <- function(x, ...){
   y <- NextMethod()
   # contrasts and levels will have been handled
-  class(y) <- union('latex', class(y))
+  class(y) <- union('html', class(y))
   y
 }
 
-#' Element-select Latex
+#' Element-select Html
 #'
-#' Element-selects latex, retaining class.
-#' @param x latex
+#' Element-selects html, retaining class.
+#' @param x html
 #' @param ... passed to next method
 #' @export
 #' @keywords internal
-#' @family latex
-#' @return latex
+#' @family html
+#' @return html
 #' @examples
 #' x <- c(
 #'   'V_c./F',
@@ -483,13 +469,13 @@ as_latex.spork <- function(x, ...){
 #'   'C_max_ss',
 #'   'var^eta_j'
 #' )
-#' x <- as_latex(as_spork(x))
+#' x <- as_html(as_spork(x))
 #' class(x)
 #' class(x[[1]])
-`[[.latex` <- function(x, ...){
+`[[.html` <- function(x, ...){
   y <- NextMethod()
   # contrasts and levels will have been handled
-  class(y) <- union('latex', class(y))
+  class(y) <- union('html', class(y))
   y
 }
 

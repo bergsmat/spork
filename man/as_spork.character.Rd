@@ -27,6 +27,7 @@ Other spork:
 \code{\link{[[.spork}()},
 \code{\link{as.list.spork}()},
 \code{\link{as.png.spork}()},
+\code{\link{as_html.spork}()},
 \code{\link{as_latex.spork}()},
 \code{\link{as_plotmath.spork}()},
 \code{\link{as_previews.spork}()},
@@ -38,11 +39,14 @@ Other spork:
 
 Other interface: 
 \code{\link{as.expression.plotmath}()},
+\code{\link{as_html.spar}()},
+\code{\link{as_html.spork}()},
 \code{\link{as_latex.spar}()},
 \code{\link{as_latex.spork}()},
 \code{\link{as_plotmath.spar}()},
 \code{\link{as_plotmath.spork}()},
 \code{\link{as_previews.spork}()},
+\code{\link{htmlToken}()},
 \code{\link{latexToken}()},
 \code{\link{plotmathToken}()}
 
