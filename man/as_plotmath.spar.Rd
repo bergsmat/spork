@@ -44,6 +44,7 @@ Other interface:
 \code{\link{as.expression.plotmath}()},
 \code{\link{as_html.spar}()},
 \code{\link{as_html.spork}()},
+\code{\link{as_latex.default}()},
 \code{\link{as_latex.spar}()},
 \code{\link{as_latex.spork}()},
 \code{\link{as_plotmath.spork}()},

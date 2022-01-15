@@ -25,6 +25,7 @@ example(as_latex.spork)
 Other latex: 
 \code{\link{[.latex}()},
 \code{\link{[[.latex}()},
+\code{\link{as_latex.default}()},
 \code{\link{as_latex.spar}()},
 \code{\link{as_latex.spork}()},
 \code{\link{concatenate.latex}()},

@@ -71,6 +71,7 @@ Other interface:
 \code{\link{as.expression.plotmath}()},
 \code{\link{as_html.spar}()},
 \code{\link{as_html.spork}()},
+\code{\link{as_latex.default}()},
 \code{\link{as_latex.spork}()},
 \code{\link{as_plotmath.spar}()},
 \code{\link{as_plotmath.spork}()},
@@ -83,6 +84,7 @@ Other interface:
 Other latex: 
 \code{\link{[.latex}()},
 \code{\link{[[.latex}()},
+\code{\link{as_latex.default}()},
 \code{\link{as_latex.spork}()},
 \code{\link{as_latex}()},
 \code{\link{concatenate.latex}()},

@@ -441,6 +441,26 @@ as_latex.spork <- function(x, ...){
   class(y) <- union('latex', class(y))
   y
 }
+
+#' Convert Default to Latex
+#'
+#' Converts anything to latex by adding class 'latex'.
+#'
+#' @export
+#' @param x object
+#' @param ... ignored
+#' @return latex
+#' @family latex
+#' @family spork
+#' @family interface
+#' @examples
+#' as_latex('text')
+
+as_latex.default <- function(x, ...){
+  class(x) <- union('latex', class(x))
+  x
+}
+
 #' Subset Latex
 #'
 #' Subsets latex, retaining class.

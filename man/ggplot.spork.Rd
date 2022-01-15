@@ -47,6 +47,7 @@ Other spork:
 \code{\link{as.list.spork}()},
 \code{\link{as.png.spork}()},
 \code{\link{as_html.spork}()},
+\code{\link{as_latex.default}()},
 \code{\link{as_latex.spork}()},
 \code{\link{as_plotmath.spork}()},
 \code{\link{as_previews.spork}()},
