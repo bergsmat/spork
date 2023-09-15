@@ -67,7 +67,7 @@ as_html.spar <- function(
   # Tokens _ or ^ or . are non-printing
   # but trigger nesting or un-nesting.
   # Whitespace and recognized escapes are supplied literally.
-  # unescaped '*' is promoted to '&times;'.
+  # unescaped '*' is promoted to '&#183;'.
   # surviving tokens are processed by 'unrecognized',
   # which escapes metacharacters and
   # names of Greek letters, but renders other
@@ -171,12 +171,12 @@ as_html.spar <- function(
         }
       }
       if(p == '[*]'){
-        token <- paste0("&times;")
+        token <- paste0("&#183;")
         if(active){
-          base <- paste0(base, ' ', token)
+          base <- paste0(base, '', token)
           active <- FALSE
         }else{
-          base <- paste0(base, ' ', token)
+          base <- paste0(base, '', token)
           active <- FALSE
         }
       }
