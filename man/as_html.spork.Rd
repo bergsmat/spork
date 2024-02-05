@@ -35,6 +35,7 @@ Other html:
 \code{\link{[[.html}()},
 \code{\link{as_html.spar}()},
 \code{\link{as_html}()},
+\code{\link{html2xml}()},
 \code{\link{htmlToken}()}
 
 Other spork: 

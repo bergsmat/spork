@@ -7,7 +7,7 @@
 \method{as_html}{spar}(
   x,
   newline = getOption("html_newline", "<br/>"),
-  unrecognized = getOption("html_unrecognized", "htmlToken"),
+  unrecognized = getOption("html_unrecognized", spork::htmlToken),
   token_open = getOption("html_token_open", ""),
   token_close = getOption("html_token_close", ""),
   math_open = getOption("html_math_open", ""),
@@ -79,6 +79,7 @@ Other html:
 \code{\link{[[.html}()},
 \code{\link{as_html.spork}()},
 \code{\link{as_html}()},
+\code{\link{html2xml}()},
 \code{\link{htmlToken}()}
 }
 \concept{html}

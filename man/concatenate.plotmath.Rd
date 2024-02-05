@@ -20,7 +20,7 @@ plotmath
 Concatenates plotmath. Collapses vector using separator.
 }
 \examples{
-concatenate(as_plotmath(as_spork('BMI_i','kg/m^2')))
+concatenate(as_plotmath(as_spork(c('BMI_i','kg/m^2'))))
 }
 \seealso{
 Other concatenate: 

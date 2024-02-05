@@ -52,7 +52,7 @@ as_html <- function(x, ...)UseMethod('as_html')
 as_html.spar <- function(
   x,
   newline = getOption('html_newline','<br/>'),
-  unrecognized = getOption('html_unrecognized','htmlToken'),
+  unrecognized = getOption('html_unrecognized',spork::htmlToken),
   token_open = getOption('html_token_open', ''),
   token_close = getOption('html_token_close',''),
   math_open = getOption('html_math_open', ''),
@@ -205,9 +205,9 @@ as_html.spar <- function(
         }else{
           if(!grepl('[]}]$', base)){
             # must have something to subscript
-            base <- paste0(base, "&nbsp;<sub>")
+            base <- paste0(base, "&#160;<sub>")
           }else{
-            base <- paste0(base, "&nbsp;<sub>")
+            base <- paste0(base, "&#160;<sub>")
           }
         }
       }
@@ -219,9 +219,9 @@ as_html.spar <- function(
         }else{
           if(!grepl('[]}]$', base)){
             # must have something to superscript
-            base <- paste0(base, "&nbsp;<sup>")
+            base <- paste0(base, "&#160;<sup>")
           }else{
-            base <- paste0(base, "&nbsp;<sup>")
+            base <- paste0(base, "&#160;<sup>")
           }
         }
       }
@@ -291,7 +291,10 @@ htmlToken <- function(
     'upsilon','phi','chi','psi','omega' # no regular phi in html
   )
   # https://www.overleaf.com/learn/latex/List_of_Greek_letters_and_math_symbols
-  names(greek) <- paste0('&', greek, ';') # replace with these
+  # as of 0.2.5, address kableExtra bug 814 using html2xml
+  # https://github.com/haozhu233/kableExtra/issues/814 .
+  # https://www.thoughtco.com/html-codes-greek-characters-4062212
+  names(greek) <- html2xml(paste0('&', greek, ';')) # replace with these
 
   Greek <- c( # look for these
     'Alpha','Beta','Gamma','Delta','Epsilon','Zeta',
@@ -299,7 +302,7 @@ htmlToken <- function(
     'Nu','Xi','Omicron','Pi','Rho','Sigma','Tau',
     'Upsilon','Phi','Chi','Psi','Omega'
   )
-  names(Greek) <- paste0('&', Greek, ';') # replace with these
+  names(Greek) <- html2xml(paste0('&', Greek, ';')) # replace with these
 
   extra <- c( # look for these
     'Upsilon1','varepsilon','omega1',
@@ -308,12 +311,12 @@ htmlToken <- function(
     'stigma', 'varrho','varpi' # no fancy rho in html
   )
 
-  names(extra) <- c( # replace with these
+  names(extra) <- html2xml(c( # replace with these
     '&upsih;','&epsilon;','&omega;',
     '&thetasym;','&phi;','&sigmaf;',
     '&thetasym;','&phi;','&sigmaf;',
     '&sigmaf;', '&rho;','&piv;'
-  )
+  ))
 
   # escape <- function(x,pattern,replace)sub(
   #   fixed = TRUE,
@@ -480,4 +483,148 @@ as_html.spork <- function(x, ...){
 }
 
 
+#' Convert HTML Greek entity references to XML
+#' 
+#' Converts HTML Greek entity references to XML entity references.
+#' This is necessary because of a kableExtra bug: 
+#' https://github.com/haozhu233/kableExtra/issues/814 .
+#' The mappings used here are from 
+#' https://www.thoughtco.com/html-codes-greek-characters-4062212
+#' 
+#' @param x html character
+#' @param ... ignored
+#' @keywords internal
+#' @family html
+#' @return html
+#' @examples
+#' htmlToken('alpha')
+#' htmlToken('Upsilon1')
+#' htmlToken('vartheta')
+#' htmlToken('stigma')
+#' htmlToken('varrho')
+#' htmlToken('varpi')
+#' htmlToken('Upsilon1')
+ 
+html2xml <- function(x, ...){
+stopifnot(inherits(x,'character'))
+html <- c(
+'&Alpha;',
+'&alpha;',
+'&Beta;',
+'&beta;',
+'&Gamma;',
+'&gamma;',
+'&Delta;',
+'&delta;',
+'&Epsilon;',
+'&epsilon;',
+'&Zeta;',
+'&zeta;',
+'&Eta;',
+'&eta;',
+'&Theta;',
+'&theta;',
+'&Iota;',
+'&iota;',
+'&Kappa;',
+'&kappa;',
+'&Lambda;',
+'&lambda;',
+'&Mu;',
+'&mu;',
+'&Nu;',
+'&nu;',
+'&Xi;',
+'&xi;',
+'&Omicron;',
+'&omicron;',
+'&Pi;',
+'&pi;',
+'&Rho;',
+'&rho;',
+'&Sigma;',
+'&sigma;',
+'&sigmaf;',
+'&Tau;',
+'&tau;',
+'&Upsilon;',
+'&upsilon;',
+'&Phi;',
+'&phi;',
+'&Chi;',
+'&chi;',
+'&Psi;',
+'&psi;',
+'&Omega;',
+'&omega;',
+'&upsih;',   # https://www.compart.com/en/unicode/U+03D2
+'&thetasym;',
+'&piv;'
+)
+
+xml <- c(
+'&#913;',
+'&#945;',
+'&#914;',
+'&#946;',
+'&#915;',
+'&#947;',
+'&#916;',
+'&#948;',
+'&#917;',
+'&#949;',
+'&#918;',
+'&#950;',
+'&#919;',
+'&#951;',
+'&#920;',
+'&#952;',
+'&#921;',
+'&#953;',
+'&#922;',
+'&#954;',
+'&#923;',
+'&#955;',
+'&#924;',
+'&#956;',
+'&#925;',
+'&#957;',
+'&#926;',
+'&#958;',
+'&#927;',
+'&#959;',
+'&#928;',
+'&#960;',
+'&#929;',
+'&#961;',
+'&#931;',
+'&#963;',
+'&#962;',
+'&#932;',
+'&#964;',
+'&#933;',
+'&#965;',
+'&#934;',
+'&#966;',
+'&#935;',
+'&#967;',
+'&#936;',
+'&#968;',
+'&#937;',
+'&#969;', 
+'&#978;',   # https://www.compart.com/en/unicode/U+03D2
+'&#977;',   # https://en.wikipedia.org/wiki/Theta
+            # https://www.compart.com/en/unicode/U+03D1
+'&#982;'    # https://en.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references
+            # https://www.compart.com/en/unicode/U+03D6
+
+)
+
+stopifnot(length(html) == length(xml))
+i <- match(x, table = html, nomatch = 0)
+matched <- i != 0
+x[matched] <- xml[i[matched]]
+x
+
+}
 

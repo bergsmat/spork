@@ -47,7 +47,7 @@ concatenate.character <- function(x, sep = '', ...){
 #' @family plotmath
 #' @return plotmath
 #' @examples
-#' concatenate(as_plotmath(as_spork('BMI_i','kg/m^2')))
+#' concatenate(as_plotmath(as_spork(c('BMI_i','kg/m^2'))))
 concatenate.plotmath <- function(x, sep = '*', ...){
   stopifnot(is.character(sep))
   stopifnot(length(sep) == 1)
