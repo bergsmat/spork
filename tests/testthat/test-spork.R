@@ -493,7 +493,7 @@ test_that('plotmath handles multiple newline',{
 test_that('greek characters are properly isolated',{
   skip_on_cran()
   # check these manually
-  'alpha' %>% as_latex
+  'alpha' %>% as_spork %>% as_latex
   'alpha' %>% as_html
   'alpha' %>% as_plotmath
   'alpha' %>% as_previews(sleep = 0)  # ok
@@ -616,6 +616,6 @@ test_that('as_previews is stable',{
 test_that('backslash-n has effect', {
   # test manually
   '1\\n2\\n3' %>% as_previews
-  '1\\n2\\n3' %>% as_latex %>% as_preview
+  '1\\n2\\n3' %>% as_spork %>% as_latex %>% as_preview
   
 })

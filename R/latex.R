@@ -39,22 +39,6 @@ as_latex.greek <- function(x, ...){
   y
 }
 
-#' Convert Default to Latex
-#' 
-#' Coerces to spork, then to latex.
-#' @param x inherits character
-#' @param ... passed arguments
-#' @family latex
-#' @keywords internal
-#' @export
-#' @return latex
-#' @examples
-#' as_latex('anything')
-as_latex.default <- function(x, ...){
-  x <- as_spork(x, ...)
-  x <- as_latex(x, ...)
-  x
-}
 
 #' Coerce to Latex
 #'
@@ -104,14 +88,14 @@ as_latex <- function(x, ...)UseMethod('as_latex')
 #' @param ... passed to \code{unrecognized}; see \code{\link{latexToken}}
 #' @examples
 #' library(magrittr)
-#' 'V_c./F' %>% as_latex
-#' 'AUC_ss' %>% as_latex
-#' 'C_max_ss' %>% as_latex
-#' 'var^eta_j' %>% as_latex
-#' '& % $ # \\_ { } ~ \\^ \\' %>% as_latex
-#' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_latex
-#' 'one joule (`Omega`) ~ 1 kg*m^2./s^2' %>% as_latex
-#' 'one joule (\\`Omega\\`) ~ 1 kg*m^2./s^2' %>% as_latex
+#' 'V_c./F' %>% as_spork %>% as_latex
+#' 'AUC_ss' %>% as_spork %>% as_latex
+#' 'C_max_ss' %>% as_spork %>% as_latex
+#' 'var^eta_j' %>% as_spork %>% as_latex
+#' '& % $ # \\_ { } ~ \\^ \\' %>% as_spork %>% as_latex
+#' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_latex
+#' 'one joule (`Omega`) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_latex
+#' 'one joule (\\`Omega\\`) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_latex
 
 as_latex.spar <- function(
   x,

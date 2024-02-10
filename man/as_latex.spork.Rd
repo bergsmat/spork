@@ -33,7 +33,6 @@ as_latex(as_spork('gravitational force (kg\\\\.m/s^2.)'))
 Other latex: 
 \code{\link{[.latex}()},
 \code{\link{[[.latex}()},
-\code{\link{as_latex.default}()},
 \code{\link{as_latex.greek}()},
 \code{\link{as_latex.spar}()},
 \code{\link{as_latex}()},

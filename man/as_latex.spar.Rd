@@ -59,14 +59,14 @@ and perhaps additional latex packages.
 }
 \examples{
 library(magrittr)
-'V_c./F' \%>\% as_latex
-'AUC_ss' \%>\% as_latex
-'C_max_ss' \%>\% as_latex
-'var^eta_j' \%>\% as_latex
-'& \% $ # \\\\_ { } ~ \\\\^ \\\\' \%>\% as_latex
-'one joule (Omega) ~ 1 kg*m^2./s^2' \%>\% as_latex
-'one joule (`Omega`) ~ 1 kg*m^2./s^2' \%>\% as_latex
-'one joule (\\\\`Omega\\\\`) ~ 1 kg*m^2./s^2' \%>\% as_latex
+'V_c./F' \%>\% as_spork \%>\% as_latex
+'AUC_ss' \%>\% as_spork \%>\% as_latex
+'C_max_ss' \%>\% as_spork \%>\% as_latex
+'var^eta_j' \%>\% as_spork \%>\% as_latex
+'& \% $ # \\\\_ { } ~ \\\\^ \\\\' \%>\% as_spork \%>\% as_latex
+'one joule (Omega) ~ 1 kg*m^2./s^2' \%>\% as_spork \%>\% as_latex
+'one joule (`Omega`) ~ 1 kg*m^2./s^2' \%>\% as_spork \%>\% as_latex
+'one joule (\\\\`Omega\\\\`) ~ 1 kg*m^2./s^2' \%>\% as_spork \%>\% as_latex
 }
 \seealso{
 Other interface: 
@@ -85,7 +85,6 @@ Other interface:
 Other latex: 
 \code{\link{[.latex}()},
 \code{\link{[[.latex}()},
-\code{\link{as_latex.default}()},
 \code{\link{as_latex.greek}()},
 \code{\link{as_latex.spork}()},
 \code{\link{as_latex}()},
