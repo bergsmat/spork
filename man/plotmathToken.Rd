@@ -6,7 +6,7 @@
 \usage{
 plotmathToken(
   x,
-  conditional = getOption("plotmath_conditional_quote", TRUE),
+  conditional = getOption("plotmath_conditional_quote", FALSE),
   unescape = getOption("plotmath_unescape", TRUE),
   ...
 )
@@ -34,6 +34,8 @@ plotmathToken("\\\\", unescape = TRUE)
 plotmathToken("\\\\", unescape = FALSE)
 plotmathToken("\n", conditional = TRUE)
 plotmathToken("\n", conditional = FALSE)
+plotmathToken('alpha')
+plotmathToken('Alpha')
 }
 \seealso{
 Other plotmath: 
@@ -41,6 +43,8 @@ Other plotmath:
 \code{\link{[[.plotmath}()},
 \code{\link{as.expression.plotmath}()},
 \code{\link{as.png.plotmath}()},
+\code{\link{as_plotmath.default}()},
+\code{\link{as_plotmath.greek}()},
 \code{\link{as_plotmath.spar}()},
 \code{\link{as_plotmath.spork}()},
 \code{\link{as_plotmath}()},
@@ -52,7 +56,6 @@ Other interface:
 \code{\link{as.expression.plotmath}()},
 \code{\link{as_html.spar}()},
 \code{\link{as_html.spork}()},
-\code{\link{as_latex.default}()},
 \code{\link{as_latex.spar}()},
 \code{\link{as_latex.spork}()},
 \code{\link{as_plotmath.spar}()},

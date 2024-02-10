@@ -1,3 +1,87 @@
+#' Convert to Greek
+#' 
+#' Converts to Greek.  Generic, 
+#' with method for character.
+#' @param x object of dispatch
+#' @param ... passed arguments
+#' @export
+#' @keywords internal
+#' @family greek
+as_greek <- function(x, ...)UseMethod('as_greek')
+
+#' Convert character to Greek
+#' 
+#' Converts character to Greek by assigning class 'greek'.
+#' @param x coerced to character
+#' @param ... passed arguments
+#' @return class greek (character)
+#' @export
+#' @keywords internal
+#' @family greek
+
+#' @examples
+#' as_greek(greek())
+#' 
+as_greek.default <- function(x, ...){
+  x <- as.character(x)
+  class(x) <- union('greek', class(x))
+  x
+}
+
+#' Greek letters recognized by Spork
+#' 
+#' Returns words representing the Greek
+#' letters recognized by \pkg{spork}.
+#' 
+#' See \code{\link{plotmath}} for related detail.
+#' In addition to the 24 uppercase and 24
+#' lowercase Greek letters, 
+#' latex supports 
+#' varepsilon, vartheta, varpi, varsigma, and varrho
+#' while plotmath supports
+#' theta1, phi1, sigma1, omega1, Upsilon1, and stigma1.
+#' Spork supports all, and tries to do something useful
+#' for those not supported in html, latex, or plotmath. 
+#' 
+#' @keywords internal
+#' @export
+#' @family spork
+#' @return class 'greek' (character)
+#' @examples
+#' greek()
+greek <- function(){
+  # https://www.overleaf.com/learn/latex/List_of_Greek_letters_and_math_symbols
+
+  greek <- c(
+    'alpha','beta','gamma','delta',
+    'epsilon','zeta', 'eta','theta',# no good match for arc epsilon in html
+    'iota','kappa','lambda','mu',
+    'nu','xi','omicron','pi',
+    'rho','sigma','tau', 'upsilon',
+    'phi','chi','psi','omega' # no regular phi in html
+  )
+  
+  Greek <- c(
+    'Alpha','Beta','Gamma','Delta',
+    'Epsilon','Zeta','Eta','Theta',
+    'Iota','Kappa','Lambda','Mu',
+    'Nu','Xi','Omicron','Pi',
+    'Rho','Sigma','Tau','Upsilon',
+    'Phi','Chi','Psi','Omega'
+  )
+  texExtra <- c(
+    'varepsilon','vartheta','varpi','varsigma','varrho'
+  )
+  plotmathExtra <- c(
+    'theta1','phi1','sigma1','omega1','Upsilon1','stigma1'
+  )
+  x <- c(greek, Greek, texExtra, plotmathExtra)
+  x <- sort(x)
+  x <- as_greek(x)
+  x
+}
+
+
 #' Coerce to Spork
 #'
 #' Coerces to class 'spork'. Generic,
@@ -12,7 +96,8 @@
 #' (handling differs for latex vs. plotmath).
 #' Special characters may be escaped with a backslash.
 #' Convert to plotmath with \code{\link{as_plotmath}}
-#' and to latex with \code{\link{as_latex}}.
+#' and to latex with \code{\link{as_latex}}
+#' and to html with \code{\link{as_html}}.
 #' Both plotmath and latex names of Greek
 #' letters are supported; see \code{\link{as_previews.spork}}
 #' and examples there for disambiguation.

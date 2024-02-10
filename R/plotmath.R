@@ -13,41 +13,87 @@
 #' example(as_plotmath.spork)
 as_plotmath <- function(x, ...)UseMethod('as_plotmath')
 
+#' Convert Greek to Plotmath
+#' 
+#' Converts Greek letter names to plotmath.
+#' @param x greek
+#' @param ... ignored
+#' @family plotmath
+#' @keywords internal
+#' @export
+#' @return plotmath
+#' @examples
+#' as_plotmath(greek())
+as_plotmath.greek <- function(x, ...){
+  x[x == 'varepsilon'] <- 'epsilon'
+  x[x == 'varrho'] <- 'rho'
+  x[x == 'varpi'] <- 'omega1'
+  class(x) <- 'plotmath'
+  x
+}
+
+#' Convert Default to Plotmath
+#' 
+#' Coerces to spork, then to plotmath.
+#' @param x inherits character
+#' @param ... passed arguments
+#' @family plotmath
+#' @keywords internal
+#' @export
+#' @return plotmath
+#' @examples
+#' as_plotmath('anything')
+as_plotmath.default <- function(x, ...){
+  x <- as_spork(x, ...)
+  x <- as_plotmath(x, ...)
+  x
+}
+
 #' Convert One Spork to Plotmath
 #'
 #' Converts one spork to plotmath.
 #' See description for \code{\link{as_spork}}.
-#' By default, unrecognized tokens are returned
-#' unmodified if they are parseable.
+#' Unrecognized tokens are returned
+#' unmodified by default.
 #' Otherwise, backslashes and single quotes are escaped,
 #' and the result is wrapped in single quotes.
 #' See \code{\link{plotmathToken}}.
 #'
 #' Experimental support is implemented for
-#' the newline character (\code{'\\n'}).
-#' It trys to break the expression at the
+#' the sequence "backslash n" (\code{'\\n'}).
+#' It tries to break the expression at the
 #' point indicated, and stack the results.
 #' Active subscripts and superscripts
 #' are closed in advance, preventing
 #' these from breaking across lines.
 #'
 #' @param x spar
-#' @param unrecognized function to process unrecognized tokens: default \code{\link{plotmathToken}}
-#' @param ... passed to \code{unrecognized}; see \code{\link{plotmathToken}}
+#' @param unrecognized function to process unrecognized tokens
+#' @param ... passed to \code{unrecognized}
 #' @export
 #' @family interface
 #' @family plotmath
 #' @family spar
 #' @return character
-
+#' @seealso plotmathToken
+#' @examples
+#' library(magrittr)
+#' 'V_c./F' %>% as_plotmath
+#' 'AUC_ss' %>% as_plotmath
+#' 'C_max_ss' %>% as_plotmath
+#' 'var^eta_j' %>% as_plotmath
+#' '& % $ # \\_ { } ~ \\^ \\' %>% as_plotmath
+#' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_plotmath
+#' 'one joule (`Omega`) ~ 1 kg*m^2./s^2' %>% as_plotmath
+#' 'one joule (\\`Omega\\`) ~ 1 kg*m^2./s^2' %>% as_plotmath
 as_plotmath.spar <- function(
   x,
-  unrecognized = getOption('plotmath_unrecognized','plotmathToken'),
+  unrecognized = getOption('plotmath_unrecognized',spork::plotmathToken),
   ...
 ){
   # the plotmath of a spork is the sequential
   # combination of tokens.
-  # tokens separated by _ or ^ or . are non-printing
+  # tokens separated by _ or ^ or . which are non-printing
   # but trigger nesting or un-nesting.
   # Single quote is escaped and used for quoting.
   # Whitespace is quoted.
@@ -56,6 +102,7 @@ as_plotmath.spar <- function(
   # surviving tokens are processed by 'unrecognized'.
 
   #x <- sporklet(x,...)
+  
   closers <- character(0)
   newlines <- character(0)
   any_atop <- FALSE
@@ -63,17 +110,24 @@ as_plotmath.spar <- function(
   if(length(x)==0)return(structure(x, class = union('plotmath', class(x))))
   if(identical(x, ''))return(structure(x, class = union('plotmath', class(x))))
   base <- ''
+  greek <- as.character(greek())
+  ungreek <- paste0('`', greek, '`')
+  greek <- paste0('\\b', greek, '\\b') # only at boundaries
   explicit <- c(
-    '[\\][n]', '\\s+','#+',
+    '[\\][n]','\\s+','#+',
     '[*]','[.]','[_]','\\^',
-    '[\\][*]','[\\][.]','[\\][_]','[\\]\\^'
+    '[\\][*]','[\\][.]','[\\][_]','[\\]\\^',
+    greek, ungreek, '[\\][`]'
   )
+  
   for(token in x){
     m <- sapply(explicit, function(pattern)position(token, pattern))
     if(max(m) == -1){ # unrecognized token
       # pre-process
       fun <- match.fun(unrecognized)
+      #cat('as_plotmat.spar:', token, '->')
       token <- fun(token, ...)
+      #cat(token, '\n')
       if(active){
         base <- paste0(base, '*', token)
       }else{
@@ -101,7 +155,7 @@ as_plotmath.spar <- function(
         if(grepl('%\\.%$',base)) base <- paste0(base, "''")
         any_atop <- TRUE
         base <- paste0(
-          #'atop(',
+          # 'atop(',
           base,
           paste(closers,collapse = ''),
           #paste(newlines, collapse = ''),
@@ -192,6 +246,13 @@ as_plotmath.spar <- function(
           if(grepl('%\\.%$',base)) base <- paste0(base, "''")
           if(active){
             base <- paste0(base, cl)
+            # 0.2.6 consider '_Tau.iota' %>% as_plotmath
+            # seems like next material, if any, should append.
+            # but remaining active causes a bug for "a_b.^c"
+            # which is rendered to "'a'['b']*''^{'c'}"
+            # giving b and c vertically aligned.
+            # the real need was the empty nest check for greek and `greek`
+            # which have now been modeled on 'unrecognized' code block.
             active <- FALSE
           }else{ # not active
             if(grepl('[[{]$',base)){# empty nest ok
@@ -228,6 +289,43 @@ as_plotmath.spar <- function(
           }else{
             base <- paste0(base, "*''^{")
           }
+        }
+      }
+      if(p %in% greek){ # modeled on 'unrecognized'
+        token <- as_plotmath(as_greek(token))
+        if(active){
+          base <- paste0(base, '*', token)
+        }else{
+          if(grepl('[]}]$',base)){ # not empty nest
+            base <- paste0(base, '*', token)
+            active = TRUE
+          }else{
+            base <- paste0(base, token)
+            active <- TRUE
+          }
+        }
+      }
+      if(p %in% ungreek){
+        token <- gsub('`',"'",token)
+        if(active){
+          base <- paste0(base, '*', token)
+        }else{
+          if(grepl('[]}]$',base)){ # not empty nest
+            base <- paste0(base, '*', token)
+            active = TRUE
+          }else{
+            base <- paste0(base, token)
+            active <- TRUE
+          }
+        }
+      }
+      if(p == '[\\][`]'){
+        token <- paste0("'`'")
+        if(active){
+          base <- paste0(base, '*', token)
+        }else{
+          base <- paste0(base, token)
+          active <- TRUE
         }
       }
     }
@@ -278,6 +376,8 @@ goodToken <- function(x,...){
   TRUE
 }
 
+
+
 #' Process Plotmath Token
 #'
 #' Processes a plotmath token. Escapes single-quotes and wraps in single-quotes.
@@ -297,28 +397,28 @@ goodToken <- function(x,...){
 #' plotmathToken("\\", unescape = FALSE)
 #' plotmathToken("\n", conditional = TRUE)
 #' plotmathToken("\n", conditional = FALSE)
+#' plotmathToken('alpha')
+#' plotmathToken('Alpha')
 
 plotmathToken <- function(
   x,
-  conditional = getOption('plotmath_conditional_quote', TRUE),
+  conditional = getOption('plotmath_conditional_quote', FALSE),
   unescape = getOption('plotmath_unescape', TRUE),
   ...
 ){
-  token <- x
-  token <- gsub('\\bvarepsilon\\b','epsilon', token)
-  token <- gsub('\\bvarrho\\b','rho', token)
-  token <- gsub('\\bvarpi\\b','omega1', token)
+  # greek should be parsed by as_spar()
   if(conditional){
-    if(goodToken(token)){
-      class(token) <- union('plotmath', class(token))
-      return(token)
+    if(goodToken(x)){
+      class(x) <- union('plotmath', class(x))
+      return(x)
     }
   }
-  if(unescape) token <- gsub('[\\]','\\\\\\\\', token)
-  token <- gsub("'","\\\\'",token)
-  token <- paste0("'", token, "'")
-  class(token) <- union('plotmath', class(token))
-  token
+
+  if(unescape) x <- gsub('[\\]','\\\\\\\\', x)
+  x <- gsub("'","\\\\'",x)
+  x <- paste0("'", x, "'")
+  class(x) <- union('plotmath', class(x))
+  x
 }
 
 #' Convert Spork to Plotmath
@@ -335,11 +435,11 @@ plotmathToken <- function(
 #' @family interface
 #' @examples
 #' library(magrittr)
-#' 'V_c./F' %>% as_spork %>% as_plotmath
-#' 'AUC_ss' %>% as_spork %>% as_plotmath
-#' 'C_max_ss' %>% as_spork %>% as_plotmath
-#' 'var^eta_j' %>% as_spork %>% as_plotmath
-#' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_plotmath
+#' 'V_c./F' %>% as_plotmath
+#' 'AUC_ss' %>% as_plotmath
+#' 'C_max_ss' %>% as_plotmath
+#' 'var^eta_j' %>% as_plotmath
+#' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_plotmath
 as_plotmath.spork <- function(x, ...){
   y <- lapply(x, as_spar, USE.NAMES = F, ...)
   y <- sapply(y, as_plotmath, USE.NAMES = F, ...)
@@ -398,4 +498,3 @@ as_plotmath.spork <- function(x, ...){
   class(y) <- union('plotmath', class(y))
   y
 }
-

@@ -1,3 +1,51 @@
+#' Convert Greek to Html
+#' 
+#' Converts Greek letter names to html.
+#' @param x greek
+#' @param ... ignored
+#' @family html
+#' @keywords internal
+#' @export
+#' @return html
+#' @examples
+#' as_html(greek())
+as_html.greek <- function(x, ...){
+  stopifnot(all(x %in% greek()))
+  y <- paste0('&', x, ';') # construct default character entity reference
+  y[x == 'Upsilon1']   <- '&upsih;'
+  y[x == 'varepsilon'] <- '&epsilon;'
+  y[x == 'omega1']     <- '&omega;'
+  y[x == 'theta1']     <- '&thetasym;'
+  y[x == 'phi1']       <- '&phi;'
+  y[x == 'sigma1']     <- '&sigmaf;'
+  y[x == 'vartheta']   <- '&thetasym;'
+  y[x == 'varphi']     <- '&phi;'
+  y[x == 'varsigma']   <- '&sigmaf;'
+  y[x == 'stigma']     <- '&sigmaf;'
+  y[x == 'varrho']     <- '&rho;'
+  y[x == 'varpi']      <- '&piv;'
+
+  class(y) <- c('html','character')
+  y
+}
+
+#' Convert Default to Html
+#' 
+#' Coerces to spork, then to html.
+#' @param x inherits character
+#' @param ... passed arguments
+#' @family html
+#' @keywords internal
+#' @export
+#' @return html
+#' @examples
+#' as_html('anything')
+as_html.default <- function(x, ...){
+  x <- as_spork(x, ...)
+  x <- as_html(x, ...)
+  x
+}
+
 #' Coerce to Html
 #'
 #' Coerce to html.  Generic, with method
@@ -42,12 +90,14 @@ as_html <- function(x, ...)UseMethod('as_html')
 #' @param ... passed to \code{unrecognized}; see \code{\link{htmlToken}}
 #' @examples
 #' library(magrittr)
-#' 'V_c./F' %>% as_spork %>% as_html
-#' 'AUC_ss' %>% as_spork %>% as_html
-#' 'C_max_ss' %>% as_spork %>% as_html
-#' 'var^eta_j' %>% as_spork %>% as_html
-#' '& < % $ # \\_ { } ~ \\^ \\' %>% as_spork %>% as_html
-#' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_html
+#' 'V_c./F' %>% as_html
+#' 'AUC_ss' %>% as_html
+#' 'C_max_ss' %>% as_html
+#' 'var^eta_j' %>% as_html
+#' '& < % $ # \\_ { } ~ \\^ \\' %>% as_html
+#' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_html
+#' 'one joule (`Omega`) ~ 1 kg*m^2./s^2' %>% as_html
+#' 'one joule (\\`Omega\\`) ~ 1 kg*m^2./s^2' %>% as_html
 
 as_html.spar <- function(
   x,
@@ -78,10 +128,14 @@ as_html.spar <- function(
   if(length(x)==0)return(structure(x, class = union('html', class(x))))
   if(identical(x, ''))return(structure(x, class = union('html', class(x))))
   base <- ''
+  greek <- as.character(greek())
+  ungreek <- paste0('`', greek, '`')
+  greek <- paste0('\\b', greek, '\\b') # only at boundaries
   explicit <- c(
-    '[\\][n]', '\\s+',
+    '[\\][n]','\\s+','#+',
     '[*]','[.]','[_]','\\^',
-    '[\\][*]','[\\][.]','[\\][_]','[\\]\\^'
+    '[\\][*]','[\\][.]','[\\][_]','[\\]\\^',
+    greek, ungreek, '[\\][`]'
   )
   for(token in x){
     m <- sapply(explicit, function(pattern)position(token, pattern))
@@ -101,10 +155,10 @@ as_html.spar <- function(
         ...
       )
       if(active){
-        base <- paste0(base, ' ', token)
+        base <- paste0(base, token)
       }else{
-        if(grepl('[]}]$',base)){ # not empty nest for latex.  html equivalent?
-          base <- paste0(base, ' ', token)
+         if(grepl('[]}]$',base)){ # not empty nest for latex.  html equivalent?
+          base <- paste0(base, token)
           active <- TRUE
         }else{ # empty nest or start of line
           base <- paste0(base, token)
@@ -121,6 +175,20 @@ as_html.spar <- function(
           base <- paste0(base, newline)
       }
       if(p == '\\s+'){
+        token <- paste0(token_open,token,token_close)
+        if(active){
+          base <- paste0(base, '', token) # changed from ' '; html seems less fussy than latex
+        }else{
+          if(grepl('[]}]$',base)){ # not empty nest
+            base <- paste0(base, '', token) # changing here too
+            active <- TRUE
+          }else{ # empty nest or start of line
+            base <- paste0(base, token)
+            active <- TRUE
+          }
+        }
+      }
+      if(p == '#+'){
         token <- paste0(token_open,token,token_close)
         if(active){
           base <- paste0(base, '', token) # changed from ' '; html seems less fussy than latex
@@ -204,10 +272,9 @@ as_html.spar <- function(
           active <- FALSE
         }else{
           if(!grepl('[]}]$', base)){
-            # must have something to subscript
-            base <- paste0(base, "&#160;<sub>")
+            base <- paste0(base, "<sub>") # 0.2.6 removed &#160;
           }else{
-            base <- paste0(base, "&#160;<sub>")
+            base <- paste0(base, "<sub>") # 0.2.6 removed &#160;
           }
         }
       }
@@ -218,11 +285,39 @@ as_html.spar <- function(
           active <- FALSE
         }else{
           if(!grepl('[]}]$', base)){
-            # must have something to superscript
-            base <- paste0(base, "&#160;<sup>")
+            base <- paste0(base, "<sup>") # 0.2.6 removed &#160;
           }else{
-            base <- paste0(base, "&#160;<sup>")
+            base <- paste0(base, "<sup>") # 0.2.6 removed &#160;
           }
+        }
+      }
+      if(p %in% greek){
+        token <- html2xml(as_html(as_greek(token)))
+        token <- paste0(token_open, token, token_close)
+        if(active){
+          base <- paste0(base, token)
+        }else{
+          base <- paste0(base, token)
+          active <- TRUE
+        }
+      }
+      if(p %in% ungreek){
+        token <- gsub('`','',token)
+        token <- paste0(token_open, token, token_close)
+        if(active){
+          base <- paste0(base, token)
+        }else{
+          base <- paste0(base, token)
+          active <- TRUE
+        }
+      }
+      if(p == '[\\][`]'){
+        token <- paste0(token_open, '`', token_close)
+        if(active){
+          base <- paste0(base, token)
+        }else{
+          base <- paste0(base, token)
+          active <- TRUE
         }
       }
     }
@@ -282,41 +377,53 @@ htmlToken <- function(
   #enforce_math = getOption('html_enforce_math',TRUE),
   ...
 ){
-  special <- c(  '&',  '<' )        # special in html
-  replace <- c('&amp;','&lt;')      # use in html
-  greek <- c( # look for these
-    'alpha','beta','gamma','delta','epsilon','zeta', # no good match for arc epsilon in html
-    'eta','theta','iota','kappa','lambda','mu',
-    'nu','xi','omicron','pi','rho','sigma','tau',
-    'upsilon','phi','chi','psi','omega' # no regular phi in html
-  )
-  # https://www.overleaf.com/learn/latex/List_of_Greek_letters_and_math_symbols
-  # as of 0.2.5, address kableExtra bug 814 using html2xml
-  # https://github.com/haozhu233/kableExtra/issues/814 .
-  # https://www.thoughtco.com/html-codes-greek-characters-4062212
-  names(greek) <- html2xml(paste0('&', greek, ';')) # replace with these
-
-  Greek <- c( # look for these
-    'Alpha','Beta','Gamma','Delta','Epsilon','Zeta',
-    'Eta','Theta','Iota','Kappa','Lambda','Mu',
-    'Nu','Xi','Omicron','Pi','Rho','Sigma','Tau',
-    'Upsilon','Phi','Chi','Psi','Omega'
-  )
-  names(Greek) <- html2xml(paste0('&', Greek, ';')) # replace with these
-
-  extra <- c( # look for these
-    'Upsilon1','varepsilon','omega1',
-    'theta1', 'phi1', 'sigma1',
-    'vartheta','varphi','varsigma',
-    'stigma', 'varrho','varpi' # no fancy rho in html
-  )
-
-  names(extra) <- html2xml(c( # replace with these
-    '&upsih;','&epsilon;','&omega;',
-    '&thetasym;','&phi;','&sigmaf;',
-    '&thetasym;','&phi;','&sigmaf;',
-    '&sigmaf;', '&rho;','&piv;'
-  ))
+  special <- c(  '&',  '<', '\\' )        # special in html
+  replace <- c('&amp;','&lt;', '&#92;')      # use in html
+  # greek <- c( # look for these
+  #   'alpha','beta','gamma','delta',
+  #   'epsilon','zeta', 'eta','theta',# no good match for arc epsilon in html
+  #   'iota','kappa','lambda','mu',
+  #   'nu','xi','omicron','pi',
+  #   'rho','sigma','tau', 'upsilon',
+  #   'phi','chi','psi','omega' # no regular phi in html
+  # )
+  # # https://www.overleaf.com/learn/latex/List_of_Greek_letters_and_math_symbols
+  # # as of 0.2.5, address kableExtra bug 814 using html2xml
+  # # https://github.com/haozhu233/kableExtra/issues/814 .
+  # # https://www.thoughtco.com/html-codes-greek-characters-4062212
+  # names(greek) <- html2xml(paste0('&', greek, ';')) # replace with these
+  # 
+  # Greek <- c( # look for these
+  #   'Alpha','Beta','Gamma','Delta',
+  #   'Epsilon','Zeta','Eta','Theta',
+  #   'Iota','Kappa','Lambda','Mu',
+  #   'Nu','Xi','Omicron','Pi',
+  #   'Rho','Sigma','Tau','Upsilon',
+  #   'Phi','Chi','Psi','Omega'
+  # )
+  # names(Greek) <- html2xml(paste0('&', Greek, ';')) # replace with these
+  # 
+  # texExtra <- c(
+  #   'Upsilon', 'varepsilon','vartheta','varpi','varsigma','varrho'
+  # )
+  # plotmathExtra <- c(
+  #   'theta1','phi1','sigma1','omega1','Upsilon1','stigma1'
+  # )
+  # # extra is a combination of texExtra and plotmathExtra
+  # # spork supports union greek, Greek, extra
+  # extra <- c( # look for these
+  #   'Upsilon1','varepsilon','omega1',
+  #   'theta1', 'phi1', 'sigma1',
+  #   'vartheta','varphi','varsigma',
+  #   'stigma', 'varrho','varpi' # no fancy rho in html
+  # )
+  # 
+  # names(extra) <- html2xml(c( # replace with these
+  #   '&upsih;','&epsilon;','&omega;',
+  #   '&thetasym;','&phi;','&sigmaf;',
+  #   '&thetasym;','&phi;','&sigmaf;',
+  #   '&sigmaf;', '&rho;','&piv;'
+  # ))
 
   # escape <- function(x,pattern,replace)sub(
   #   fixed = TRUE,
@@ -352,7 +459,9 @@ htmlToken <- function(
   x <- output
 
   ### greek
-  nms <- c(greek, Greek, extra)
+  # nms <- c(greek, Greek, extra)
+  nms <- greek()
+  names(nms) <- html2xml(as_html(greek()))
   input <- x
   output <- ''
   while(nchar(input)){

@@ -27,7 +27,8 @@ followed by 'n' suggests a newline
 (handling differs for latex vs. plotmath).
 Special characters may be escaped with a backslash.
 Convert to plotmath with \code{\link{as_plotmath}}
-and to latex with \code{\link{as_latex}}.
+and to latex with \code{\link{as_latex}}
+and to html with \code{\link{as_html}}.
 Both plotmath and latex names of Greek
 letters are supported; see \code{\link{as_previews.spork}}
 and examples there for disambiguation.
@@ -51,15 +52,16 @@ Other spork:
 \code{\link{as.list.spork}()},
 \code{\link{as.png.spork}()},
 \code{\link{as_html.spork}()},
-\code{\link{as_latex.default}()},
 \code{\link{as_latex.spork}()},
 \code{\link{as_plotmath.spork}()},
 \code{\link{as_previews.spork}()},
+\code{\link{as_spar.default}()},
 \code{\link{as_spar.spork}()},
 \code{\link{as_spork.character}()},
 \code{\link{as_spork.factor}()},
 \code{\link{as_spork.spork}()},
-\code{\link{ggplot.spork}()}
+\code{\link{ggplot.spork}()},
+\code{\link{greek}()}
 }
 \concept{spork}
 \keyword{internal}

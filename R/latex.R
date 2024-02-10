@@ -1,3 +1,61 @@
+#' Convert Greek to Latex
+#' 
+#' Converts Greek letter names to html.
+#' @param x greek
+#' @param ... ignored
+#' @family latex
+#' @keywords internal
+#' @export
+#' @return latex
+#' @examples
+#' as_latex(greek())
+as_latex.greek <- function(x, ...){
+  stopifnot(all(x %in% greek()))
+  # https://www.overleaf.com/learn/latex/List_of_Greek_letters_and_math_symbols
+  y <- paste0('\\', x)
+  y[x == 'omicron'] <- 'o'
+  y[x == 'Alpha'] <- 'A'
+  y[x == 'Beta'] <- 'B'
+  y[x == 'Epsilon'] <- 'E'
+  y[x == 'Zeta'] <- 'Z'
+  y[x == 'Eta'] <- 'H'
+  y[x == 'Iota'] <- 'I'
+  y[x == 'Kappa'] <- 'K'
+  y[x == 'Mu'] <- 'M'
+  y[x == 'Nu'] <- 'N'
+  y[x == 'Omicron'] <- 'O'
+  y[x == 'Rho'] <- 'P'
+  y[x == 'Tau'] <- 'T'
+  y[x == 'Chi'] <- 'X'
+  
+  y[x == 'Upsilon1'] <- '\\Upsilon'
+  y[x == 'omega1'] <- '\\varpi'
+  y[x == 'theta1'] <- '\\vartheta'
+  y[x == 'phi1'] <- '\\varphi'
+  y[x == 'sigma1'] <- '\\varsigma'
+  y[x == 'stigma'] <- '\\varsigma'
+  
+  class(y) <- c('latex','character')
+  y
+}
+
+#' Convert Default to Latex
+#' 
+#' Coerces to spork, then to latex.
+#' @param x inherits character
+#' @param ... passed arguments
+#' @family latex
+#' @keywords internal
+#' @export
+#' @return latex
+#' @examples
+#' as_latex('anything')
+as_latex.default <- function(x, ...){
+  x <- as_spork(x, ...)
+  x <- as_latex(x, ...)
+  x
+}
+
 #' Coerce to Latex
 #'
 #' Coerce to latex.  Generic, with method
@@ -46,17 +104,19 @@ as_latex <- function(x, ...)UseMethod('as_latex')
 #' @param ... passed to \code{unrecognized}; see \code{\link{latexToken}}
 #' @examples
 #' library(magrittr)
-#' 'V_c./F' %>% as_spork %>% as_latex
-#' 'AUC_ss' %>% as_spork %>% as_latex
-#' 'C_max_ss' %>% as_spork %>% as_latex
-#' 'var^eta_j' %>% as_spork %>% as_latex
-#' '& % $ # \\_ { } ~ \\^ \\' %>% as_spork %>% as_latex
-#' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_latex
+#' 'V_c./F' %>% as_latex
+#' 'AUC_ss' %>% as_latex
+#' 'C_max_ss' %>% as_latex
+#' 'var^eta_j' %>% as_latex
+#' '& % $ # \\_ { } ~ \\^ \\' %>% as_latex
+#' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_latex
+#' 'one joule (`Omega`) ~ 1 kg*m^2./s^2' %>% as_latex
+#' 'one joule (\\`Omega\\`) ~ 1 kg*m^2./s^2' %>% as_latex
 
 as_latex.spar <- function(
   x,
   newline = getOption('latex_newline','\n'),
-  unrecognized = getOption('latex_unrecognized','latexToken'),
+  unrecognized = getOption('latex_unrecognized',spork::latexToken),
   token_open = getOption('latex_token_open', '\\textrm{'),
   token_close = getOption('latex_token_close','}'),
   math_open = getOption('latex_math_open', '\\mathrm{'),
@@ -82,10 +142,14 @@ as_latex.spar <- function(
   if(length(x)==0)return(structure(x, class = union('latex', class(x))))
   if(identical(x, ''))return(structure(x, class = union('latex', class(x))))
   base <- ''
+  greek <- as.character(greek())
+  ungreek <- paste0('`', greek, '`')
+  greek <- paste0('\\b', greek, '\\b') # only at boundaries
   explicit <- c(
-    '[\\][n]', '\\s+',
+    '[\\][n]','\\s+','#+',
     '[*]','[.]','[_]','\\^',
-    '[\\][*]','[\\][.]','[\\][_]','[\\]\\^'
+    '[\\][*]','[\\][.]','[\\][_]','[\\]\\^',
+    greek, ungreek, '[\\][`]'
   )
   for(token in x){
     m <- sapply(explicit, function(pattern)position(token, pattern))
@@ -125,6 +189,21 @@ as_latex.spar <- function(
           base <- paste0(base, newline)
       }
       if(p == '\\s+'){
+        token <- paste0(token_open,token,token_close)
+        if(active){
+          base <- paste0(base, ' ', token)
+        }else{
+          if(grepl('[]}]$',base)){ # not empty nest
+            base <- paste0(base, ' ', token)
+            active <- TRUE
+          }else{ # empty nest or start of line
+            base <- paste0(base, token)
+            active <- TRUE
+          }
+        }
+      }
+      if(p == '#+'){
+        token <- gsub('#','\\\\#',token)
         token <- paste0(token_open,token,token_close)
         if(active){
           base <- paste0(base, ' ', token)
@@ -209,9 +288,10 @@ as_latex.spar <- function(
         }else{
           if(!grepl('[]}]$', base)){
             # must have something to subscript
-            base <- paste0(base, "~_{")
+            # https://en.wikipedia.org/wiki/Whitespace_character
+            base <- paste0(base, "\\,_{")  # 0.2.6 formerly ~_{
           }else{
-            base <- paste0(base, "~_{")
+            base <- paste0(base, "\\,_{")  # 0.2.6 formerly ~_{
           }
         }
       }
@@ -223,10 +303,66 @@ as_latex.spar <- function(
         }else{
           if(!grepl('[]}]$', base)){
             # must have something to superscript
-            base <- paste0(base, "~^{")
+            base <- paste0(base, "\\,^{") # 0.2.6 formerly ~^{
           }else{
-            base <- paste0(base, "~^{")
+            base <- paste0(base, "\\,^{") # 0.2.6 formerly ~^{
           }
+        }
+      }
+      if(p %in% greek){
+        # as of 0.2.6:
+        # if we got here, the search term p
+        # is literally one of spork greek vocabulary words.
+        # These were formerly handled by latexToken,
+        # but are now unreachable there since they are 
+        # 'recognized' during parsing.
+        # Calling as_latex() gives us the tex code
+        # for the character of interest.
+        # We reproduce here the openers and closers
+        # (borrowed from latexToken)
+        # that are needed to place these in math mode.
+        # i.e.: \\alpha -> $\\mathrm{\\alpha}}$
+        
+        mathopen <- math_open
+        mathclose <- math_close
+        if(enforce_math){
+          mathopen <- paste0(label_open,mathopen)
+          mathclose <- paste0(mathclose, label_close)
+        }
+
+        token <- as_latex(as_greek(token))
+        
+        token <- paste0(
+          token_open, 
+            mathopen,
+              token, 
+            mathclose,
+          token_close
+        )
+        if(active){
+          base <- paste0(base, ' ', token)
+        }else{
+          base <- paste0(base, token)
+          active <- TRUE
+        }
+      }
+      if(p %in% ungreek){
+        token <- gsub('`','',token)
+        token <- paste0(token_open, token, token_close)
+        if(active){
+          base <- paste0(base, token)
+        }else{
+          base <- paste0(base, token)
+          active <- TRUE
+        }
+      }
+      if(p == '[\\][`]'){
+        token <- paste0(token_open, '`', token_close)
+        if(active){
+          base <- paste0(base, ' ', token)
+        }else{
+          base <- paste0(base, ' ', token)
+          active <- TRUE
         }
       }
     }
@@ -288,46 +424,52 @@ latexToken <- function(
 ){
   special <- c(  '&',  '%',  '$',  '#',  '_',  '{',  '}','~',                '^',               '\\'             ) # special in latex
   replace <- c('\\&','\\%','\\$','\\#','\\_','\\{','\\}','${\\sim}$','{\\textasciicircum}','{\\textbackslash}')      # use in latex
-  greek <- c(
-    'alpha','beta','gamma','delta','epsilon','zeta',
-    'eta','theta','iota','kappa','lambda','mu',
-    'nu','xi','omicron','pi','rho','sigma','tau',
-    'upsilon','phi','chi','psi','omega'
-  )
-  # https://www.overleaf.com/learn/latex/List_of_Greek_letters_and_math_symbols
-  names(greek) <- c(
-    '\\alpha','\\beta','\\gamma','\\delta','\\epsilon','\\zeta',
-    '\\eta','\\theta','\\iota','\\kappa','\\lambda','\\mu',
-    '\\nu','\\xi',
-    'o',
-    '\\pi','\\rho','\\sigma','\\tau',
-    '\\upsilon','\\phi','\\chi','\\psi','\\omega'
-  )
-  Greek <- c(
-    'Alpha','Beta','Gamma','Delta','Epsilon','Zeta',
-    'Eta','Theta','Iota','Kappa','Lambda','Mu',
-    'Nu','Xi','Omicron','Pi','Rho','Sigma','Tau',
-    'Upsilon','Phi','Chi','Psi','Omega'
-  )
-  names(Greek) <- c(
-    'A','B','\\Gamma','\\Delta','E','Z',
-    'H','\\Theta','I','K','\\Lambda','M',
-    'N','\\Xi','O','\\Pi','P','\\Sigma','T',
-    '\\Upsilon','\\Phi','X','\\Psi','\\Omega'
-  )
-  extra <- c( # these are things you can say in plotmath
-    'Upsilon1','varepsilon','omega1',
-    'theta1', 'phi1', 'sigma1',
-    'vartheta','varphi','varsigma',
-    'stigma', 'varrho','varpi'
-  )
-
-  names(extra) <- c( # these are things you can say in tex
-    '\\Upsilon','\\varepsilon','\\varpi',
-    '\\vartheta','\\varphi','\\varsigma',
-    '\\vartheta','\\varphi','\\varsigma',
-    '\\varsigma', '\\varrho','\\varpi'
-  )
+  # greek <- c(
+  #   'alpha','beta','gamma','delta',
+  #   'epsilon','zeta','eta','theta',
+  #   'iota','kappa','lambda','mu',
+  #   'nu','xi','omicron','pi',
+  #   'rho','sigma','tau','upsilon',
+  #   'phi','chi','psi','omega'
+  # )
+  # # https://www.overleaf.com/learn/latex/List_of_Greek_letters_and_math_symbols
+  # names(greek) <- c(
+  #   '\\alpha','\\beta','\\gamma','\\delta','\\epsilon','\\zeta',
+  #   '\\eta','\\theta','\\iota','\\kappa','\\lambda','\\mu',
+  #   '\\nu','\\xi',
+  #   'o',
+  #   '\\pi','\\rho','\\sigma','\\tau',
+  #   '\\upsilon','\\phi','\\chi','\\psi','\\omega'
+  # )
+  # Greek <- c(
+  #   'Alpha','Beta','Gamma','Delta',
+  #   'Epsilon','Zeta','Eta','Theta',
+  #   'Iota','Kappa','Lambda','Mu',
+  #   'Nu','Xi','Omicron','Pi',
+  #   'Rho','Sigma','Tau','Upsilon',
+  #   'Phi','Chi','Psi','Omega'
+  # )
+  # names(Greek) <- c(
+  #   'A','B','\\Gamma','\\Delta',
+  #   'E','Z','H','\\Theta',
+  #   'I','K','\\Lambda','M',
+  #   'N','\\Xi','O','\\Pi',
+  #   'P','\\Sigma','T','\\Upsilon',
+  #   '\\Phi','X','\\Psi','\\Omega'
+  # )
+  # extra <- c( # these are things you can say in plotmath
+  #   'Upsilon1','varepsilon','omega1',
+  #   'theta1', 'phi1', 'sigma1',
+  #   'vartheta','varphi','varsigma',
+  #   'stigma', 'varrho','varpi'
+  # )
+  # 
+  # names(extra) <- c( # these are things you can say in tex
+  #   '\\Upsilon','\\varepsilon','\\varpi',
+  #   '\\vartheta','\\varphi','\\varsigma',
+  #   '\\vartheta','\\varphi','\\varsigma',
+  #   '\\varsigma', '\\varrho','\\varpi'
+  # )
 
   # escape <- function(x,pattern,replace)sub(
   #   fixed = TRUE,
@@ -363,7 +505,9 @@ latexToken <- function(
   x <- output
 
   ### greek
-  nms <- c(greek, Greek, extra)
+  # nms <- c(greek, Greek, extra)
+  nms <- greek()
+  names(nms) <- as_latex(greek())
   input <- x
   output <- ''
   while(nchar(input)){
@@ -440,25 +584,6 @@ as_latex.spork <- function(x, ...){
   if(length(y) == 0) y <- character(0)
   class(y) <- union('latex', class(y))
   y
-}
-
-#' Convert Default to Latex
-#'
-#' Converts anything to latex by adding class 'latex'.
-#'
-#' @export
-#' @param x object
-#' @param ... ignored
-#' @return latex
-#' @family latex
-#' @family spork
-#' @family interface
-#' @examples
-#' as_latex('text')
-
-as_latex.default <- function(x, ...){
-  class(x) <- union('latex', class(x))
-  x
 }
 
 #' Subset Latex

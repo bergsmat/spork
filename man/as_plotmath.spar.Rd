@@ -6,45 +6,56 @@
 \usage{
 \method{as_plotmath}{spar}(
   x,
-  unrecognized = getOption("plotmath_unrecognized", "plotmathToken"),
+  unrecognized = getOption("plotmath_unrecognized", spork::plotmathToken),
   ...
 )
 }
 \arguments{
 \item{x}{spar}
 
-\item{unrecognized}{function to process unrecognized tokens: default \code{\link{plotmathToken}}}
+\item{unrecognized}{function to process unrecognized tokens}
 
-\item{...}{passed to \code{unrecognized}; see \code{\link{plotmathToken}}}
+\item{...}{passed to \code{unrecognized}}
 }
 \value{
 character
-atop(',
 }
 \description{
 Converts one spork to plotmath.
 See description for \code{\link{as_spork}}.
-By default, unrecognized tokens are returned
-unmodified if they are parseable.
+Unrecognized tokens are returned
+unmodified by default.
 Otherwise, backslashes and single quotes are escaped,
 and the result is wrapped in single quotes.
 See \code{\link{plotmathToken}}.
 }
 \details{
 Experimental support is implemented for
-the newline character (\code{'\\n'}).
-It trys to break the expression at the
+the sequence "backslash n" (\code{'\\n'}).
+It tries to break the expression at the
 point indicated, and stack the results.
 Active subscripts and superscripts
 are closed in advance, preventing
 these from breaking across lines.
 }
+\examples{
+library(magrittr)
+'V_c./F' \%>\% as_plotmath
+'AUC_ss' \%>\% as_plotmath
+'C_max_ss' \%>\% as_plotmath
+'var^eta_j' \%>\% as_plotmath
+'& \% $ # \\\\_ { } ~ \\\\^ \\\\' \%>\% as_plotmath
+'one joule (Omega) ~ 1 kg*m^2./s^2' \%>\% as_plotmath
+'one joule (`Omega`) ~ 1 kg*m^2./s^2' \%>\% as_plotmath
+'one joule (\\\\`Omega\\\\`) ~ 1 kg*m^2./s^2' \%>\% as_plotmath
+}
 \seealso{
+plotmathToken
+
 Other interface: 
 \code{\link{as.expression.plotmath}()},
 \code{\link{as_html.spar}()},
 \code{\link{as_html.spork}()},
-\code{\link{as_latex.default}()},
 \code{\link{as_latex.spar}()},
 \code{\link{as_latex.spork}()},
 \code{\link{as_plotmath.spork}()},
@@ -59,6 +70,8 @@ Other plotmath:
 \code{\link{[[.plotmath}()},
 \code{\link{as.expression.plotmath}()},
 \code{\link{as.png.plotmath}()},
+\code{\link{as_plotmath.default}()},
+\code{\link{as_plotmath.greek}()},
 \code{\link{as_plotmath.spork}()},
 \code{\link{as_plotmath}()},
 \code{\link{concatenate.plotmath}()},
@@ -67,6 +80,7 @@ Other plotmath:
 \code{\link{plotmathToken}()}
 
 Other spar: 
+\code{\link{as_spar.default}()},
 \code{\link{as_spar.spork}()},
 \code{\link{as_spar}()}
 }

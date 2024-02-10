@@ -24,6 +24,7 @@ Generic, with method \code{\link{as_spar.spork}}.
 \seealso{
 Other spar: 
 \code{\link{as_plotmath.spar}()},
+\code{\link{as_spar.default}()},
 \code{\link{as_spar.spork}()}
 }
 \concept{generics}

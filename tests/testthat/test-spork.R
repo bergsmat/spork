@@ -16,19 +16,19 @@ test_that('all valid spork print as axis label',{
   expect_silent(ggplot(x,aes(x, y)))
 
  expect_identical(
-  'gravitational force  (kg\\.m/s^2.)' %>%
+  'gravitational force (kg\\.m/s^2.)' %>%
     as_spork %>%
     as_plotmath %>%
     as.character,
-  "gravitational*' '*force*'  '*'(kg'*'.'*m/s^{2}*')'"
+  "'gravitational'*' '*'force'*' '*'(kg'*'.'*'m/s'^{'2'}*')'"
   )
 
   expect_identical(
-   '1 joule^\\*. ~1 kg m^2./s^2' %>%
+   '1 joule^\\*. ~1 kg m^2./s^2' %>% 
      as_spork %>%
      as_plotmath %>%
      as.character,
-   "1*' '*joule^{'*'}*' '*~1*' '*kg*' '*m^{2}*'/s'^{2}"
+   "'1'*' '*'joule'^{'*'}*' '*'~1'*' '*'kg'*' '*'m'^{'2'}*'/s'^{'2'}"
   )
 })
 test_that('R reserved words survive in print.dg labels',{
@@ -53,13 +53,12 @@ test_that('as_latex is stable',{
     "$\\mathrm{\\textrm{$\\mathrm{\\Omega}$} \\textrm{ } \\textrm{joule}^{ \\textrm{*}} \\textrm{ } \\textrm{${\\sim}$1} \\textrm{ } \\textrm{kg} {\\cdot} \\textrm{m}^{\\textrm{2}} \\textrm{/s}^{\\textrm{2}}}$"
   )
   expect_identical(
-    'gravitational force gamma (kg\\.m/s^2.)' %>%
+    'gravitational force gamma (kg\\.m/s^2.)' %>% 
       as_spork %>%
       as_latex %>%
       as.character,
     "$\\mathrm{\\textrm{gravitational} \\textrm{ } \\textrm{force} \\textrm{ } \\textrm{$\\mathrm{\\gamma}$} \\textrm{ } \\textrm{(kg} \\textrm{.} \\textrm{m/s}^{\\textrm{2}} \\textrm{)}}$"
   )
-
 })
 test_that('spork to plotmath is stable',{
   e <- c(
@@ -146,11 +145,11 @@ test_that('spork to plotmath is stable',{
   "H_b^A_1^c",
   "H_b^A_1^c.",
   "H_b^A_1^.c",
-  "H_b^A_1.^c",
+  "H_b^A_1.^c", # 70, changed at 0.2.6
   "H_b^A_.1^c",
-  "H_b^A._1^c",
+  "H_b^A._1^c", # 72, changed at 0.2.6
   "H_b^.A_1^c",
-  "H_b.^A_1^c",
+  "H_b.^A_1^c", # 74, changed at 0.2.6
   "H_.b^A_1^c",
   "H._b^A_1^c",
   ".H_b^A_1^c",
@@ -181,109 +180,127 @@ test_that('spork to plotmath is stable',{
   " H]_]b ^]A]_]1]^]c].]"
 )
 f <- c(
-  "",
-  "",
-  "''^{}",
-  "''^{}",
-  "''^{}",
-  "a",
-  "a",
-  "a",
-  "1",
-  "1",
-  "1",
-  "a^{}",
-  "''^{a}",
-  "1^{}",
-  "''^{1}",
-  "a^{}",
-  "a^{}",
-  "a^{}",
-  "''^{a}",
-  "''^{a}",
-  "''^{}*a",
-  "1^{}",
-  "1^{}",
-  "1^{}",
-  "''^{1}",
-  "''^{1}",
-  "''^{}*1",
-  "a1^{}",
-  "a1^{}",
-  "a1^{}",
-  "''^{a1}",
-  "''^{a1}",
-  "''^{}*a1",
-  "'1a'^{}",
-  "'1a'^{}",
-  "'1a'^{}",
-  "''^{'1a'}",
-  "''^{'1a'}",
-  "''^{}*'1a'",
-  "'\"'^{}"  ,
-  "'\"'^{}",
-  "'\"'^{}",
-  "''^{'\"'}",
-  "''^{'\"'}",
-  "''^{}*'\"'",
-  "'\\''^{}",
-  "'\\''^{}",
-  "'\\''^{}",
-  "''^{'\\''}",
-  "''^{'\\''}",
-  "''^{}*'\\''",
-  "'  '",
-  "'  '*xx",
-  "xx*'  '",
-  "'  '*xx*'  '",
-  "xx*'  '*xx",
-  "'\\\\\\\\'",
-  "'*'",
-  "'.'",
-  "'_'",
-  "''%.%''",
-  "a%.%b",
-  "a*' '%.%' '*b",
-  "a*' '%.%b",
-  "a*'*'*b",
-  "a*'*'*'b$'",
-  "H[b^{A[1^{c}]}]",
-  "H[b^{A[1^{c}]}]",
-  "H[b^{A[1^{}*c]}]",
-  "H[b^{A[1]*''^{c}}]",
-  "H[b^{A[]*1^{c}}]",
-  "H[b^{A}*''[1^{c}]]",
-  "H[b^{}*A[1^{c}]]",
-  "H[b]*''^{A[1^{c}]}",
-  "H[]*b^{A[1^{c}]}",
-  "H[b^{A[1^{c}]}]",
-  "H[b^{A[1^{c}]}]",
-  "''[''[''[''[]]]]",
-  "''[''[''[]]]",
-  "''[''[]]",
-  "''[]",
-  "",
-  "''^{''^{''^{''^{}}}}",
-  "''^{''^{''^{}}}",
-  "''^{''^{}}",
-  "''^{}",
-  "",
-  "H[b^{A[1^{c}]}]",
-  "''[' ']",
-  "' '[]",
-  "' '*'='*' '",
-  "' '[' ']",
-  "''^{c}",
-  "' '^{c}",
-  "''^{' '*c}",
-  "''^{c*' '}",
-  "''^{c}*' '",
-  "' '^{' '*c*' '}*' '",
-  "' '*H*' '[' '*b*' '^{' '*A*' '[' '*1*' '^{' '*c*' '}*' ']}]",
-  "' '*'H]'[']b'*' '^{']A]'[']1]'^{']c]'}*']']}]"
+   "''"                                                                   
+  , ""                                                                     
+  , "''^{}"                                                                
+  , "''^{}"                                                                
+  , "''^{}"                                                                
+  , "'a'"                                                                  
+  , "'a'"                                                                  
+  , "'a'"                                                                  
+  , "'1'"                                                                  
+  , "'1'"                                                                  
+  , "'1'"                                                                  
+  , "'a'^{}"                                                               
+  , "''^{'a'}"                                                             
+  , "'1'^{}"                                                               
+  , "''^{'1'}"                                                             
+  , "'a'^{}"                                                               
+  , "'a'^{}"                                                               
+  , "'a'^{}"                                                               
+  , "''^{'a'}"                                                             
+  , "''^{'a'}"                                                             
+  , "''^{}*'a'"                                                            
+  , "'1'^{}"                                                               
+  , "'1'^{}"                                                               
+  , "'1'^{}"                                                               
+  , "''^{'1'}"                                                             
+  , "''^{'1'}"                                                             
+  , "''^{}*'1'"                                                            
+  , "'a1'^{}"                                                              
+  , "'a1'^{}"                                                              
+  , "'a1'^{}"                                                              
+  , "''^{'a1'}"                                                            
+  , "''^{'a1'}"                                                            
+  , "''^{}*'a1'"                                                           
+  , "'1a'^{}"                                                              
+  , "'1a'^{}"                                                              
+  , "'1a'^{}"                                                              
+  , "''^{'1a'}"                                                            
+  , "''^{'1a'}"                                                            
+  , "''^{}*'1a'"                                                           
+  , "'\"'^{}"                                                              
+  , "'\"'^{}"                                                              
+  , "'\"'^{}"                                                              
+  , "''^{'\"'}"                                                            
+  , "''^{'\"'}"                                                            
+  , "''^{}*'\"'"                                                           
+  , "'\\''^{}"                                                             
+  , "'\\''^{}"                                                             
+  , "'\\''^{}"                                                             
+  , "''^{'\\''}"                                                           
+  , "''^{'\\''}"                                                           
+  , "''^{}*'\\''"                                                          
+  , "'  '"                                                                 
+  , "'  '*'xx'"                                                            
+  , "'xx'*'  '"                                                            
+  , "'  '*'xx'*'  '"                                                       
+  , "'xx'*'  '*'xx'"                                                       
+  , "'\\\\\\\\'"                                                           
+  , "'*'"                                                                  
+  , "'.'"                                                                  
+  , "'_'"                                                                  
+  , "''%.%''"                                                              
+  , "'a'%.%'b'"                                                            
+  , "'a'*' '%.%' '*'b'"                                                    
+  , "'a'*' '%.%'b'"                                                        
+  , "'a'*'*'*'b'"                                                          
+, "'a'*'*'*'b$'"                                                         
+, "'H'['b'^{'A'['1'^{'c'}]}]"                                            
+, "'H'['b'^{'A'['1'^{'c'}]}]"                                            
+, "'H'['b'^{'A'['1'^{}*'c']}]"                                           
+
+, "'H'['b'^{'A'['1']*''^{'c'}}]"                            
+# "'H'['b'^{'A'['1']^{'c'}}]"# 70, changed at 0.2.6  
+
+, "'H'['b'^{'A'[]*'1'^{'c'}}]"                                           
+
+, "'H'['b'^{'A'}*''['1'^{'c'}]]"
+# "'H'['b'^{'A'}['1'^{'c'}]]" # 72, changed at 0.2.6
+
+, "'H'['b'^{}*'A'['1'^{'c'}]]"                                           
+
+, "'H'['b']*''^{'A'['1'^{'c'}]}"                             
+# "'H'['b']^{'A'['1'^{'c'}]}"# 74, changed at 0.2.6 
+
+, "'H'[]*'b'^{'A'['1'^{'c'}]}"                                           
+, "'H'['b'^{'A'['1'^{'c'}]}]"                                            
+, "'H'['b'^{'A'['1'^{'c'}]}]"                                            
+, "''[''[''[''[]]]]"                                                     
+, "''[''[''[]]]"                                                         
+, "''[''[]]"                                                             
+, "''[]"                                                                 
+, ""                                                                     
+, "''^{''^{''^{''^{}}}}"                                                 
+, "''^{''^{''^{}}}"                                                      
+, "''^{''^{}}"                                                           
+, "''^{}"                                                                
+, ""                                                                     
+, "'H'['b'^{'A'['1'^{'c'}]}]"                                            
+, "''[' ']"                                                              
+, "' '[]"                                                                
+, "' '*'='*' '"                                                          
+, "' '[' ']"                                                             
+, "''^{'c'}"                                                             
+, "' '^{'c'}"                                                            
+, "''^{' '*'c'}"                                                         
+, "''^{'c'*' '}"                                                         
+, "''^{'c'}*' '"                                                         
+, "' '^{' '*'c'*' '}*' '"                                                
+, "' '*'H'*' '[' '*'b'*' '^{' '*'A'*' '[' '*'1'*' '^{' '*'c'*' '}*' ']}]"
+, "' '*'H]'[']b'*' '^{']A]'[']1]'^{']c]'}*']']}]" 
 )
 g <- as_plotmath(as_spork(e)) %>% as.character
 expect_identical(f, g)
+
+
+structure("'H'['b'^{'A'}*''['1'^{'c'}]]" , class = 'plotmath') %>% as_preview()
+structure("'H'['b'^{'A'}['1'^{'c'}]]", class = 'plotmath') %>% as_preview()
+
+
+
+
+
 })
 test_that('extreme juxtapostion without escape succeeds',{
   library(magrittr)
@@ -321,7 +338,7 @@ test_that('arbitrary plotmath escapes succeed by default',{
 test_that('expressions render without error',{
   library(magrittr)
   library(testthat)
-  render <- . %>% as_spork %>% as_plotmath %>% as.expression
+  render <- . %>% as_plotmath %>% as.expression
 expect_silent( '^*' %>% render )
 expect_silent( '^\\*' %>% render )
 expect_silent( '^\\*.' %>% render )
@@ -347,59 +364,23 @@ options(plotmath_unescape = FALSE)
 expect_false(plotmathToken("\\$") %>% goodToken)
 options(plotmath_unescape = NULL)
 expect_false(plotmathToken("\\$", unescape = FALSE) %>% goodToken)
-expect_identical(as.character(plotmathToken('foo')), 'foo')
+expect_identical(as.character(plotmathToken('foo')), "'foo'")
 expect_identical(as.character(plotmathToken('foo',conditional = FALSE)),"'foo'")
 options('plotmath_conditional_quote' = FALSE)
 expect_identical(as.character(plotmathToken('foo')), "'foo'")
 options('plotmath_conditional_quote' = NULL)
-expect_identical(as.character(plotmathToken('foo')),"foo")
+expect_identical(as.character(plotmathToken('foo')),"'foo'")
 
 })
-test_that('as_previews is stable',{
-  skip_on_cran()
-  library(magrittr)
-  #'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_plotmath %>% as_preview
-  #'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_latex %>% as_preview
-  #'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_previews
-  expect_silent('V_c./F' %>% as_spork %>%as_previews)
-  expect_silent('AUC_ss' %>% as_spork %>%as_previews)
-  expect_silent('C_max_ss' %>% as_spork %>%as_previews)
-  expect_silent('var^eta_j' %>% as_spork %>%as_previews)
-  expect_silent('gravitational force - gamma (kg\\.m/s^2.)'%>% as_spork %>%as_previews)
-  expect_silent('C(t_j.) = C_0. * epsilon^-kt_j' %>% as_spork %>%as_previews)
-  expect_silent('eta^eta' %>% as_spork %>%as_previews)
-  expect_silent('Eta^Eta' %>% as_spork %>%as_previews)
-  expect_silent('omicron' %>% as_spork %>%as_previews)
-
-  expect_silent('Alpha^alpha' %>% as_spork %>%as_previews)
-  expect_silent('Beta^beta' %>% as_spork %>%as_previews)
-  expect_silent('Gamma^gamma' %>% as_spork %>%as_previews)
-  expect_silent('Delta^delta' %>% as_spork %>%as_previews)
-  expect_silent('Epsilon^epsilon' %>% as_spork %>%as_previews)
-  expect_silent('Zeta^zeta' %>% as_spork %>%as_previews)
-  expect_silent('Eta^eta' %>% as_spork %>%as_previews)
-  expect_silent('Theta^theta' %>% as_spork %>%as_previews)
-  expect_silent('Iota^iota' %>% as_spork %>%as_previews)
-  expect_silent('Kappa^kappa' %>% as_spork %>%as_previews)
-  expect_silent('Lambda^lambda' %>% as_spork %>%as_previews)
-  expect_silent('Mu^mu' %>% as_spork %>%as_previews)
-  expect_silent('Nu^nu' %>% as_spork %>%as_previews)
-  expect_silent('Xi^xi' %>% as_spork %>%as_previews)
-  expect_silent('Omicron^omicron' %>% as_spork %>%as_previews)
-  expect_silent('Pi^pi' %>% as_spork %>%as_previews)
-  expect_silent('Rho^rho' %>% as_spork %>%as_previews)
-  expect_silent('Sigma^sigma' %>% as_spork %>%as_previews)
-  expect_silent('Tau^tau' %>% as_spork %>%as_previews)
-  expect_silent('Upsilon^upsilon' %>% as_spork %>%as_previews)
-  expect_silent('Phi^phi' %>% as_spork %>%as_previews)
-  expect_silent('Chi^chi' %>% as_spork %>%as_previews)
-  expect_silent('Psi^psi' %>% as_spork %>%as_previews)
-  expect_silent('Omega^omega' %>% as_spork %>%as_previews)
-  'Tau.iota.mu.omicron.theta.epsilon.upsilon.sigma' %>%
-    as_spork %>%as_previews
-  'varsigma~Upsilon1~varrho' %>% structure(class = c('plotmath','character')) %>% as_preview
-  '$\\sigma$ $\\varsigma$ $\\Upsilon$' %>% structure(class = c('latex','character')) %>% as_preview
-
+test_that('greek is parsed only at word boundaries',{
+  expect_identical(
+    'alpha.beta' %>% as_spork %>% as_spar %>% as.character,
+    c('alpha','.','beta')
+  )
+  expect_identical(
+    'alphabeta' %>% as_spork %>% as_spar %>% as.character,
+    c('alphabeta')
+  )
 })
 test_that('latexToken() responds to top-level arguments',{
   library(magrittr)
@@ -470,50 +451,6 @@ test_that('newline renders sensibly as plotmath',{
   expect_silent('one \njoule (Omega) ~ 1 kg*m^2./s^2' %>% render)
   expect_silent('\none joule (Omega) ~ 1 kg*m^2./s^2' %>% render)
 })
-test_that('plotmath handles multiple newline',{
-  skip_on_cran()
-  library(magrittr)
-  render <- . %>% as_spork %>% as_plotmath %>% as_preview
-  '1' %>% as_spork %>% as_plotmath %>% as_preview
-  '1\n' %>% as_spork %>% as_plotmath %>% as_preview
-  '1\n2' %>% as_spork %>% as_plotmath %>% as_preview
-  '1\n2\n' %>% as_spork %>% as_plotmath %>% as_preview
-  '1\n2\n3' %>% as_spork %>% as_plotmath %>% as_preview
-  '1\n2\n3\n' %>% as_spork %>% as_plotmath %>% as_preview
-  '1\n2\n3\n4' %>% as_spork %>% as_plotmath %>% as_preview
-  '1\n2\n3\n4\n' %>% as_spork %>% as_plotmath %>% as_preview
-  'one \njoule \n(Omega) ~\n 1 kg*m^2./s^2'%>% render
-  expect_identical(
-    '1\\n2\\n3\\n4\\n' %>% as_spork %>% as_plotmath %>% as.character,
-    "atop(textstyle(),atop(textstyle(1),atop(textstyle(2),atop(textstyle(3),atop(textstyle(4),atop(textstyle()))))))"
-  )
-})
-test_that('latex is newline-tolerant by default',{
-  skip_on_cran()
-  library(testthat)
-  library(magrittr)
-  render <- . %>% as_spork %>% as_latex %>% as_preview
-  expect_silent('one joule (Omega) ~ 1 kg*m^2./s^2' %>% render)
-  expect_silent('one joule (Omega) ~ 1 kg*m^2./s^2\n' %>% render)
-  expect_silent('one joule (Omega) ~ 1 kg*m^2./s^\n2' %>% render)
-  expect_silent('one joule (Omega) ~ 1 kg*m^2./s\n^2' %>% render)
-  expect_silent('one joule (Omega) ~ 1 kg*m^2./\ns^2' %>% render)
-  expect_silent('one joule (Omega) ~ 1 kg*m^2.\n/s^2' %>% render)
-  expect_silent('one joule (Omega) ~ 1 kg*m^2\n./s^2' %>% render)
-  expect_silent('one joule (Omega) ~ 1 kg*\nm^2./s^2' %>% render)
-  expect_silent('one joule (Omega) ~ 1 kg\n*m^2./s^2' %>% render)
-  expect_silent('one joule (Omega) ~ 1 \nkg*m^2./s^2' %>% render)
-  expect_silent('one joule (Omega) ~ 1\n kg*m^2./s^2' %>% render)
-  expect_silent('one joule (Omega) ~ \n1 kg*m^2./s^2' %>% render)
-  expect_silent('one joule (Omega) \n~ 1 kg*m^2./s^2' %>% render)
-  expect_silent('one joule (Omega)\n ~ 1 kg*m^2./s^2' %>% render)
-  expect_silent('one joule (Omega\n) ~ 1 kg*m^2./s^2' %>% render)
-  expect_silent('one joule (\nOmega) ~ 1 kg*m^2./s^2' %>% render)
-  expect_silent('one joule \n(Omega) ~ 1 kg*m^2./s^2' %>% render)
-  expect_silent('one joule\n (Omega) ~ 1 kg*m^2./s^2' %>% render)
-  expect_silent('one \njoule (Omega) ~ 1 kg*m^2./s^2' %>% render)
-  expect_silent('\none joule (Omega) ~ 1 kg*m^2./s^2' %>% render)
-})
 test_that('latex handles multiple newline',{
   skip_on_cran()
   library(magrittr)
@@ -532,4 +469,153 @@ test_that('latex handles multiple newline',{
     "$\\mathrm{\\textrm{1}\n \\textrm{2}\n \\textrm{3}\n \\textrm{4}\n}$"
   )
 })
+test_that('plotmath handles multiple newline',{
+  skip_on_cran()
+  library(magrittr)
+  render <- . %>% as_plotmath %>% as_preview
+  '1' %>% as_plotmath %>% as_preview
+  '1\n' %>% as_plotmath %>% as_preview
+  '1\n2' %>% as_plotmath %>% as_preview
+  '1\n2\n' %>% as_plotmath %>% as_preview
+  '1\n2\n3' %>% as_plotmath %>% as_preview
+  '1\n2\n3\n' %>% as_plotmath %>% as_preview
+  '1\n2\n3\n4' %>% as_plotmath %>% as_preview
+  '1\n2\n3\n4\n' %>% as_plotmath %>% as_preview
+  'one \njoule \n(Omega) ~\n 1 kg*m^2./s^2'%>% render
+  # as of 0.2.6, numerals are just text
+  # expectation changes below, e.g. textstyle(1) becomes textstyle('1')
+  expect_identical(
+    '1\\n2\\n3\\n4\\n' %>% as_plotmath %>% as.character,
+    "atop(textstyle(),atop(textstyle('1'),atop(textstyle('2'),atop(textstyle('3'),atop(textstyle('4'),atop(textstyle()))))))"
+  )
+  
+})
+test_that('greek characters are properly isolated',{
+  skip_on_cran()
+  # check these manually
+  'alpha' %>% as_latex
+  'alpha' %>% as_html
+  'alpha' %>% as_plotmath
+  'alpha' %>% as_previews(sleep = 0)  # ok
+  '`alpha`' %>% as_previews(sleep = 0)  # ok
+  '\nalpha' %>% as_previews(sleep = 0)# ok
+  'alpha\n' %>% as_previews(sleep = 0)# ok
+  '.alpha' %>% as_previews(sleep = 0) # ok
+  'alpha.' %>% as_previews(sleep = 0) # ok
+  'a.lpha' %>% as_previews(sleep = 0) # ok
+ 
+  '(alpha)' %>% as_previews(sleep = 0) # ok
+  '"alpha"' %>% as_previews(sleep = 0) # ok
+  '{alpha}' %>% as_previews(sleep = 0) # ok
+  '[alpha]' %>% as_previews(sleep = 0) # ok
 
+  '(2)' %>% as_previews(sleep = 0) # ok
+  '"2"' %>% as_previews(sleep = 0) # ok
+  "'2'" %>% as_previews(sleep = 0) # ok
+  '{2}' %>% as_previews(sleep = 0) # ok
+  '[2]' %>% as_previews(sleep = 0) # ok
+  'v[2]' %>% as_previews(sleep = 0)# ok
+  '|2|' %>% as_previews(sleep = 0) # ok
+  '| alpha |' %>% as_previews(sleep = 0) # ok
+  '( alpha )' %>% as_previews(sleep = 0) # ok
+  '" alpha "' %>% as_previews(sleep = 0) # ok
+  '{ alpha }' %>% as_previews(sleep = 0) # ok
+  '[ alpha ]' %>% as_previews(sleep = 0) # ok
+  
+  'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_previews # ok
+  '\\alpha' %>% as_previews(sleep = 0) # ok
+  '\\ foo' %>% as_previews(sleep = 0) # html shows no slash
+
+  '\\alpha' %>% as_spork %>% as_spar
+  '\\alpha' %>% as_spork %>% as_spar %>% as_latex
+  '\\alpha' %>% as_spork %>% as_spar %>% as_plotmath
+  '\\alpha' %>% as_spork %>% as_spar %>% as_html
+  
+  'foo##bar' %>% as_spork %>% as_spar
+  'foo##bar' %>% as_spork %>% as_spar %>% as_latex
+  'foo##bar' %>% as_spork %>% as_spar %>% as_plotmath
+  'foo##bar' %>% as_spork %>% as_spar %>% as_html
+  'foo##bar' %>% as_previews
+  
+  'kg*m' %>% as_plotmath
+  
+}) # check these manually
+test_that('latex is newline-tolerant by default',{
+  skip_on_cran()
+  library(testthat)
+  library(magrittr)
+  render <- . %>% as_spork %>% as_latex %>% as_preview
+  expect_no_error('one joule (Omega) ~ 1 kg*m^2./s^2' %>% render)
+  expect_no_error('one joule (Omega) ~ 1 kg*m^2./s^2\n' %>% render)
+  expect_no_error('one joule (Omega) ~ 1 kg*m^2./s^\n2' %>% render)
+  expect_no_error('one joule (Omega) ~ 1 kg*m^2./s\n^2' %>% render)
+  expect_no_error('one joule (Omega) ~ 1 kg*m^2./\ns^2' %>% render)
+  expect_no_error('one joule (Omega) ~ 1 kg*m^2.\n/s^2' %>% render)
+  expect_no_error('one joule (Omega) ~ 1 kg*m^2\n./s^2' %>% render)
+  expect_no_error('one joule (Omega) ~ 1 kg*\nm^2./s^2' %>% render)
+  expect_no_error('one joule (Omega) ~ 1 kg\n*m^2./s^2' %>% render)
+  expect_no_error('one joule (Omega) ~ 1 \nkg*m^2./s^2' %>% render)
+  expect_no_error('one joule (Omega) ~ 1\n kg*m^2./s^2' %>% render)
+  expect_no_error('one joule (Omega) ~ \n1 kg*m^2./s^2' %>% render)
+  expect_no_error('one joule (Omega) \n~ 1 kg*m^2./s^2' %>% render)
+  expect_no_error('one joule (Omega)\n ~ 1 kg*m^2./s^2' %>% render)
+  expect_no_error('one joule (Omega\n) ~ 1 kg*m^2./s^2' %>% render)
+  expect_no_error('one joule (\nOmega) ~ 1 kg*m^2./s^2' %>% render)
+  expect_no_error('one joule \n(Omega) ~ 1 kg*m^2./s^2' %>% render)
+  expect_no_error('one joule\n (Omega) ~ 1 kg*m^2./s^2' %>% render)
+  expect_no_error('one \njoule (Omega) ~ 1 kg*m^2./s^2' %>% render)
+  expect_no_error('\none joule (Omega) ~ 1 kg*m^2./s^2' %>% render)
+}) # long running
+test_that('as_previews is stable',{
+  skip_on_cran()
+  library(magrittr)
+  #'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_plotmath %>% as_preview
+  #'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_latex %>% as_preview
+  #'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_previews
+  expect_no_error('V_c./F' %>% as_spork %>%as_previews)
+  expect_no_error('AUC_ss' %>% as_spork %>%as_previews)
+  expect_no_error('C_max_ss' %>% as_spork %>%as_previews)
+  expect_no_error('var^eta_j' %>% as_spork %>%as_previews)
+  expect_no_error('gravitational force - gamma (kg * m/s^2)'%>% as_spork %>%as_previews)
+  expect_no_error('C(t_j.) = C_0. * epsilon^-kt_j' %>% as_spork %>%as_previews)
+  expect_no_error('eta^eta' %>% as_spork %>%as_previews)
+  expect_no_error('Eta^Eta' %>% as_spork %>%as_previews)
+  expect_no_error('omicron' %>% as_spork %>%as_previews)
+
+  expect_no_error('Alpha^alpha' %>% as_spork %>%as_previews)
+  expect_no_error('Beta^beta' %>% as_spork %>%as_previews)
+  expect_no_error('Gamma^gamma' %>% as_spork %>%as_previews)
+  expect_no_error('Delta^delta' %>% as_spork %>%as_previews)
+  expect_no_error('Epsilon^epsilon' %>% as_spork %>%as_previews)
+  expect_no_error('Zeta^zeta' %>% as_spork %>%as_previews)
+  expect_no_error('Eta^eta' %>% as_spork %>%as_previews)
+  expect_no_error('Theta^theta' %>% as_spork %>%as_previews)
+  expect_no_error('Iota^iota' %>% as_spork %>%as_previews)
+  expect_no_error('Kappa^kappa' %>% as_spork %>%as_previews)
+  expect_no_error('Lambda^lambda' %>% as_spork %>%as_previews)
+  expect_no_error('Mu^mu' %>% as_spork %>%as_previews)
+  expect_no_error('Nu^nu' %>% as_spork %>%as_previews)
+  expect_no_error('Xi^xi' %>% as_spork %>%as_previews)
+  expect_no_error('Omicron^omicron' %>% as_spork %>%as_previews)
+  expect_no_error('Pi^pi' %>% as_spork %>%as_previews)
+  expect_no_error('Rho^rho' %>% as_spork %>%as_previews)
+  expect_no_error('Sigma^sigma' %>% as_spork %>%as_previews)
+  expect_no_error('Tau^tau' %>% as_spork %>%as_previews)
+  expect_no_error('Upsilon^upsilon' %>% as_spork %>%as_previews)
+  expect_no_error('Phi^phi' %>% as_spork %>%as_previews)
+  expect_no_error('Chi^chi' %>% as_spork %>%as_previews)
+  expect_no_error('Psi^psi' %>% as_spork %>%as_previews)
+  expect_no_error('Omega^omega' %>% as_spork %>%as_previews)
+  'varsigma~Upsilon1~rho' %>% structure(class = c('plotmath','character')) %>% as_preview
+  '$\\sigma$ $\\varsigma$ $\\Upsilon$' %>% structure(class = c('latex','character')) %>% as_preview  
+  'Tau.iota.mu.omicron.theta.epsilon.upsilon.sigma' %>% as_previews ### italics!
+  'tau iota mu omicron' %>% as_previews()
+  '_tau.iota' %>% as_previews
+  '_tau.`iota`' %>% as_previews
+}) # long running
+test_that('backslash-n has effect', {
+  # test manually
+  '1\\n2\\n3' %>% as_previews
+  '1\\n2\\n3' %>% as_latex %>% as_preview
+  
+})

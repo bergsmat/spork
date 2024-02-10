@@ -4,7 +4,7 @@
 \alias{as_previews.spork}
 \title{Compare Previews of Spork}
 \usage{
-\method{as_previews}{spork}(x, wide = 70, long = 20, width = 3, height = 1, ...)
+\method{as_previews}{spork}(x, wide = 70, long = 20, width = 3, height = 1, sleep = 1, ...)
 }
 \arguments{
 \item{x}{length-one spork}
@@ -16,6 +16,8 @@
 \item{width}{width (default: inches) of the plotmath image}
 
 \item{height}{height (default: inches) of the plotmath image}
+
+\item{sleep}{how long to pause after html before latex/plotmath}
 
 \item{...}{passed arguments}
 }
@@ -50,8 +52,10 @@ specials <- '& \% $ # \\\\_ { } ~ \\\\^ \\\\'
 Other preview: 
 \code{\link{as.png.plotmath}()},
 \code{\link{as.png.spork}()},
+\code{\link{as_preview.html}()},
 \code{\link{as_preview.latex}()},
 \code{\link{as_preview.plotmath}()},
+\code{\link{as_previews.default}()},
 \code{\link{as_previews}()},
 \code{\link{as_preview}()},
 \code{\link{ggplot.plotmath}()},
@@ -61,7 +65,6 @@ Other interface:
 \code{\link{as.expression.plotmath}()},
 \code{\link{as_html.spar}()},
 \code{\link{as_html.spork}()},
-\code{\link{as_latex.default}()},
 \code{\link{as_latex.spar}()},
 \code{\link{as_latex.spork}()},
 \code{\link{as_plotmath.spar}()},
@@ -77,15 +80,16 @@ Other spork:
 \code{\link{as.list.spork}()},
 \code{\link{as.png.spork}()},
 \code{\link{as_html.spork}()},
-\code{\link{as_latex.default}()},
 \code{\link{as_latex.spork}()},
 \code{\link{as_plotmath.spork}()},
+\code{\link{as_spar.default}()},
 \code{\link{as_spar.spork}()},
 \code{\link{as_spork.character}()},
 \code{\link{as_spork.factor}()},
 \code{\link{as_spork.spork}()},
 \code{\link{as_spork}()},
-\code{\link{ggplot.spork}()}
+\code{\link{ggplot.spork}()},
+\code{\link{greek}()}
 }
 \concept{interface}
 \concept{preview}

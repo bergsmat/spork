@@ -55,7 +55,9 @@ conversion from pdf using \code{\link[latexpdf]{ghostconvert}}.
 Other preview: 
 \code{\link{as.png.plotmath}()},
 \code{\link{as.png.spork}()},
+\code{\link{as_preview.html}()},
 \code{\link{as_preview.plotmath}()},
+\code{\link{as_previews.default}()},
 \code{\link{as_previews.spork}()},
 \code{\link{as_previews}()},
 \code{\link{as_preview}()},

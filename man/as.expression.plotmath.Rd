@@ -44,7 +44,6 @@ library(magrittr)
 Other interface: 
 \code{\link{as_html.spar}()},
 \code{\link{as_html.spork}()},
-\code{\link{as_latex.default}()},
 \code{\link{as_latex.spar}()},
 \code{\link{as_latex.spork}()},
 \code{\link{as_plotmath.spar}()},
@@ -59,6 +58,8 @@ Other plotmath:
 \code{\link{[.plotmath}()},
 \code{\link{[[.plotmath}()},
 \code{\link{as.png.plotmath}()},
+\code{\link{as_plotmath.default}()},
+\code{\link{as_plotmath.greek}()},
 \code{\link{as_plotmath.spar}()},
 \code{\link{as_plotmath.spork}()},
 \code{\link{as_plotmath}()},

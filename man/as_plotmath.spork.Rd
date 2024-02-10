@@ -20,11 +20,11 @@ Vectorized version of \code{\link{as_plotmath.spar}}.
 }
 \examples{
 library(magrittr)
-'V_c./F' \%>\% as_spork \%>\% as_plotmath
-'AUC_ss' \%>\% as_spork \%>\% as_plotmath
-'C_max_ss' \%>\% as_spork \%>\% as_plotmath
-'var^eta_j' \%>\% as_spork \%>\% as_plotmath
-'one joule (Omega) ~ 1 kg*m^2./s^2' \%>\% as_spork \%>\% as_plotmath
+'V_c./F' \%>\% as_plotmath
+'AUC_ss' \%>\% as_plotmath
+'C_max_ss' \%>\% as_plotmath
+'var^eta_j' \%>\% as_plotmath
+'one joule (Omega) ~ 1 kg*m^2./s^2' \%>\% as_plotmath
 }
 \seealso{
 Other plotmath: 
@@ -32,6 +32,8 @@ Other plotmath:
 \code{\link{[[.plotmath}()},
 \code{\link{as.expression.plotmath}()},
 \code{\link{as.png.plotmath}()},
+\code{\link{as_plotmath.default}()},
+\code{\link{as_plotmath.greek}()},
 \code{\link{as_plotmath.spar}()},
 \code{\link{as_plotmath}()},
 \code{\link{concatenate.plotmath}()},
@@ -45,21 +47,21 @@ Other spork:
 \code{\link{as.list.spork}()},
 \code{\link{as.png.spork}()},
 \code{\link{as_html.spork}()},
-\code{\link{as_latex.default}()},
 \code{\link{as_latex.spork}()},
 \code{\link{as_previews.spork}()},
+\code{\link{as_spar.default}()},
 \code{\link{as_spar.spork}()},
 \code{\link{as_spork.character}()},
 \code{\link{as_spork.factor}()},
 \code{\link{as_spork.spork}()},
 \code{\link{as_spork}()},
-\code{\link{ggplot.spork}()}
+\code{\link{ggplot.spork}()},
+\code{\link{greek}()}
 
 Other interface: 
 \code{\link{as.expression.plotmath}()},
 \code{\link{as_html.spar}()},
 \code{\link{as_html.spork}()},
-\code{\link{as_latex.default}()},
 \code{\link{as_latex.spar}()},
 \code{\link{as_latex.spork}()},
 \code{\link{as_plotmath.spar}()},

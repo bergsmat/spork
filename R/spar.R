@@ -13,6 +13,22 @@
 #' # see methods
 as_spar <- function(x, ...)UseMethod('as_spar')
 
+#' Parse Spork by Default
+#' 
+#' Parses spork by default. Coerces input with \code{as_spork()}.
+#' @param x length-one character using spork syntax
+#' @param ... ignored arguments
+#' @export
+#' @keywords internal
+#' @return spar (character vector)
+#' @family spar
+#' @family spork
+as_spar.default <- function(x, ...){
+  x <- as_spork(x, ...)
+  x <- as_spar(x, ...)
+  x
+}
+
 #' Parse Spork
 #'
 #' Parses spork.  Converts length-one character
@@ -20,11 +36,16 @@ as_spar <- function(x, ...)UseMethod('as_spar')
 #' \code{*._^} and any of these escaped with
 #' backslash, e.g. \code{'\\*'}.
 #' Backslash-n is an explicit token (\code{'\\n'}).
+#' Backslash-backtick is an explicit token (\code{'\\`'}).
 #' One or more consecutive whitespace characters are a single token,
 #' as are one or more consecutive octothorpes (\code{#}).
 #' Any string of characters delimited by
 #' one or more of the above is implicitly
-#' a token as well.
+#' a token as well. As of version 0.2.6,
+#' supported names of Greek letters are 
+#' tokens (see \code{\link{greek}}) possibly
+#' bounded by backticks (to be interpreted literally).
+#' 
 #'
 #' @param x length-one character using spork syntax
 #' @param ... ignored arguments
@@ -35,6 +56,8 @@ as_spar <- function(x, ...)UseMethod('as_spar')
 #' @family spork
 #' @examples
 #' as_spar(as_spork('one joule (Omega) ~ 1 kg*m^2./s^2'))
+#' as_spar(as_spork('one joule (`Omega`) ~ 1 kg*m^2./s^2'))
+#' as_spar(as_spork('one joule (\\`Omega\\`) ~ 1 kg*m^2./s^2'))
 
 as_spar.spork <- function(x, ...){
   if(length(x) == 0) {
@@ -50,10 +73,14 @@ as_spar.spork <- function(x, ...){
   }
   input <- x
   output <- character(0)
+  greek <- as.character(greek())
+  ungreek <- paste0('`', greek, '`')
+  greek <- paste0('\\b', greek, '\\b') # only at boundaries
   explicit <- c(
     '[\\][n]','\\s+','#+',
     '[*]','[.]','[_]','\\^',
-    '[\\][*]','[\\][.]','[\\][_]','[\\]\\^'
+    '[\\][*]','[\\][.]','[\\][_]','[\\]\\^',
+    greek, ungreek, '[\\][`]'
   )
   while(nchar(input)){
     m <- sapply(explicit, function(pattern)position(input, pattern))
