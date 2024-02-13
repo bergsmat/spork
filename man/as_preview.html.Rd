@@ -21,6 +21,7 @@ Invokes the viewer using the print method for class 'kableExtra'.
 \examples{
 library(magrittr)
 'one joule (Omega) ~ 1 kg*m^2./s^2' \%>\% 
+as_spork \%>\%
 as_html \%>\% 
 as_preview
 }

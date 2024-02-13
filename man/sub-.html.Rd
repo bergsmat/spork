@@ -31,7 +31,6 @@ class(x[1])
 \seealso{
 Other html: 
 \code{\link{[[.html}()},
-\code{\link{as_html.default}()},
 \code{\link{as_html.greek}()},
 \code{\link{as_html.spar}()},
 \code{\link{as_html.spork}()},

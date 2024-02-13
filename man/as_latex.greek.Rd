@@ -4,18 +4,23 @@
 \alias{as_latex.greek}
 \title{Convert Greek to Latex}
 \usage{
-\method{as_latex}{greek}(x, ...)
+\method{as_latex}{greek}(x, ..., upgreek = getOption("spork_upgreek", TRUE))
 }
 \arguments{
 \item{x}{greek}
 
-\item{...}{ignored}
+\item{...}{ignored,}
+
+\item{upgreek}{if TRUE, assume latex package \code{upgreek} is available}
 }
 \value{
 latex
 }
 \description{
-Converts Greek letter names to html.
+Converts Greek letter names to latex.
+By default, assumes latex package \code{upgreek} is available
+so that lower case greek can be typeset upright, e.g. using 
+backslash-upalpha instead of backslash-alpha.
 }
 \examples{
 as_latex(greek())

@@ -50,14 +50,14 @@ test_that('as_latex is stable',{
       as_spork %>%
       as_latex %>%
       as.character,
-    "$\\mathrm{\\textrm{$\\mathrm{\\Omega}$} \\textrm{ } \\textrm{joule}^{ \\textrm{*}} \\textrm{ } \\textrm{${\\sim}$1} \\textrm{ } \\textrm{kg} {\\cdot} \\textrm{m}^{\\textrm{2}} \\textrm{/s}^{\\textrm{2}}}$"
+    "$\\mathrm{\\textrm{$\\mathrm{\\Upomega}$} \\textrm{ } \\textrm{joule}^{ \\textrm{*}} \\textrm{ } \\textrm{${\\sim}$1} \\textrm{ } \\textrm{kg} {\\cdot} \\textrm{m}^{\\textrm{2}} \\textrm{/s}^{\\textrm{2}}}$"
   )
   expect_identical(
     'gravitational force gamma (kg\\.m/s^2.)' %>% 
       as_spork %>%
       as_latex %>%
       as.character,
-    "$\\mathrm{\\textrm{gravitational} \\textrm{ } \\textrm{force} \\textrm{ } \\textrm{$\\mathrm{\\gamma}$} \\textrm{ } \\textrm{(kg} \\textrm{.} \\textrm{m/s}^{\\textrm{2}} \\textrm{)}}$"
+    "$\\mathrm{\\textrm{gravitational} \\textrm{ } \\textrm{force} \\textrm{ } \\textrm{$\\mathrm{\\upgamma}$} \\textrm{ } \\textrm{(kg} \\textrm{.} \\textrm{m/s}^{\\textrm{2}} \\textrm{)}}$"
   )
 })
 test_that('spork to plotmath is stable',{
@@ -338,7 +338,7 @@ test_that('arbitrary plotmath escapes succeed by default',{
 test_that('expressions render without error',{
   library(magrittr)
   library(testthat)
-  render <- . %>% as_plotmath %>% as.expression
+  render <- . %>% as_spork %>% as_plotmath %>% as.expression
 expect_silent( '^*' %>% render )
 expect_silent( '^\\*' %>% render )
 expect_silent( '^\\*.' %>% render )
@@ -472,20 +472,20 @@ test_that('latex handles multiple newline',{
 test_that('plotmath handles multiple newline',{
   skip_on_cran()
   library(magrittr)
-  render <- . %>% as_plotmath %>% as_preview
-  '1' %>% as_plotmath %>% as_preview
-  '1\n' %>% as_plotmath %>% as_preview
-  '1\n2' %>% as_plotmath %>% as_preview
-  '1\n2\n' %>% as_plotmath %>% as_preview
-  '1\n2\n3' %>% as_plotmath %>% as_preview
-  '1\n2\n3\n' %>% as_plotmath %>% as_preview
-  '1\n2\n3\n4' %>% as_plotmath %>% as_preview
-  '1\n2\n3\n4\n' %>% as_plotmath %>% as_preview
+  render <- . %>% as_spork %>% as_plotmath %>% as_preview
+  '1' %>% render
+  '1\n' %>% render
+  '1\n2' %>% render
+  '1\n2\n' %>% render
+  '1\n2\n3' %>% render
+  '1\n2\n3\n' %>% render
+  '1\n2\n3\n4' %>% render
+  '1\n2\n3\n4\n' %>% render
   'one \njoule \n(Omega) ~\n 1 kg*m^2./s^2'%>% render
   # as of 0.2.6, numerals are just text
   # expectation changes below, e.g. textstyle(1) becomes textstyle('1')
   expect_identical(
-    '1\\n2\\n3\\n4\\n' %>% as_plotmath %>% as.character,
+    '1\\n2\\n3\\n4\\n' %>% as_spork %>% as_plotmath %>% as.character,
     "atop(textstyle(),atop(textstyle('1'),atop(textstyle('2'),atop(textstyle('3'),atop(textstyle('4'),atop(textstyle()))))))"
   )
   
@@ -494,8 +494,8 @@ test_that('greek characters are properly isolated',{
   skip_on_cran()
   # check these manually
   'alpha' %>% as_spork %>% as_latex
-  'alpha' %>% as_html
-  'alpha' %>% as_plotmath
+  'alpha' %>% as_spork %>% as_html
+  'alpha' %>% as_spork %>% as_plotmath
   'alpha' %>% as_previews(sleep = 0)  # ok
   '`alpha`' %>% as_previews(sleep = 0)  # ok
   '\nalpha' %>% as_previews(sleep = 0)# ok
@@ -537,7 +537,7 @@ test_that('greek characters are properly isolated',{
   'foo##bar' %>% as_spork %>% as_spar %>% as_html
   'foo##bar' %>% as_previews
   
-  'kg*m' %>% as_plotmath
+  'kg*m' %>% as_spork %>% as_plotmath
   
 }) # check these manually
 test_that('latex is newline-tolerant by default',{

@@ -61,7 +61,6 @@ Other plotmath:
 \code{\link{[.plotmath}()},
 \code{\link{[[.plotmath}()},
 \code{\link{as.expression.plotmath}()},
-\code{\link{as_plotmath.default}()},
 \code{\link{as_plotmath.greek}()},
 \code{\link{as_plotmath.spar}()},
 \code{\link{as_plotmath.spork}()},

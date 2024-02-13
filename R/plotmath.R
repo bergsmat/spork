@@ -32,22 +32,6 @@ as_plotmath.greek <- function(x, ...){
   x
 }
 
-#' Convert Default to Plotmath
-#' 
-#' Coerces to spork, then to plotmath.
-#' @param x inherits character
-#' @param ... passed arguments
-#' @family plotmath
-#' @keywords internal
-#' @export
-#' @return plotmath
-#' @examples
-#' as_plotmath('anything')
-as_plotmath.default <- function(x, ...){
-  x <- as_spork(x, ...)
-  x <- as_plotmath(x, ...)
-  x
-}
 
 #' Convert One Spork to Plotmath
 #'
@@ -78,14 +62,14 @@ as_plotmath.default <- function(x, ...){
 #' @seealso plotmathToken
 #' @examples
 #' library(magrittr)
-#' 'V_c./F' %>% as_plotmath
-#' 'AUC_ss' %>% as_plotmath
-#' 'C_max_ss' %>% as_plotmath
-#' 'var^eta_j' %>% as_plotmath
-#' '& % $ # \\_ { } ~ \\^ \\' %>% as_plotmath
-#' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_plotmath
-#' 'one joule (`Omega`) ~ 1 kg*m^2./s^2' %>% as_plotmath
-#' 'one joule (\\`Omega\\`) ~ 1 kg*m^2./s^2' %>% as_plotmath
+#' 'V_c./F' %>% as_spork %>% as_plotmath
+#' 'AUC_ss' %>% as_spork %>% as_plotmath
+#' 'C_max_ss' %>% as_spork %>% as_plotmath
+#' 'var^eta_j' %>% as_spork %>% as_plotmath
+#' '& % $ # \\_ { } ~ \\^ \\' %>% as_spork %>% as_plotmath
+#' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_plotmath
+#' 'one joule (`Omega`) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_plotmath
+#' 'one joule (\\`Omega\\`) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_plotmath
 as_plotmath.spar <- function(
   x,
   unrecognized = getOption('plotmath_unrecognized',spork::plotmathToken),
@@ -435,11 +419,11 @@ plotmathToken <- function(
 #' @family interface
 #' @examples
 #' library(magrittr)
-#' 'V_c./F' %>% as_plotmath
-#' 'AUC_ss' %>% as_plotmath
-#' 'C_max_ss' %>% as_plotmath
-#' 'var^eta_j' %>% as_plotmath
-#' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_plotmath
+#' 'V_c./F' %>% as_spork %>% as_plotmath
+#' 'AUC_ss' %>% as_spork %>% as_plotmath
+#' 'C_max_ss' %>% as_spork %>% as_plotmath
+#' 'var^eta_j' %>% as_spork %>% as_plotmath
+#' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_plotmath
 as_plotmath.spork <- function(x, ...){
   y <- lapply(x, as_spar, USE.NAMES = F, ...)
   y <- sapply(y, as_plotmath, USE.NAMES = F, ...)

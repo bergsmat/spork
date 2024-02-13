@@ -52,14 +52,14 @@ html.
 }
 \examples{
 library(magrittr)
-'V_c./F' \%>\% as_html
-'AUC_ss' \%>\% as_html
-'C_max_ss' \%>\% as_html
-'var^eta_j' \%>\% as_html
-'& < \% $ # \\\\_ { } ~ \\\\^ \\\\' \%>\% as_html
-'one joule (Omega) ~ 1 kg*m^2./s^2' \%>\% as_html
-'one joule (`Omega`) ~ 1 kg*m^2./s^2' \%>\% as_html
-'one joule (\\\\`Omega\\\\`) ~ 1 kg*m^2./s^2' \%>\% as_html
+'V_c./F' \%>\% as_spork \%>\% as_html
+'AUC_ss' \%>\% as_spork \%>\% as_html
+'C_max_ss' \%>\% as_spork \%>\% as_html
+'var^eta_j' \%>\% as_spork \%>\% as_html
+'& < \% $ # \\\\_ { } ~ \\\\^ \\\\' \%>\% as_spork \%>\% as_html
+'one joule (Omega) ~ 1 kg*m^2./s^2' \%>\% as_spork \%>\% as_html
+'one joule (`Omega`) ~ 1 kg*m^2./s^2' \%>\% as_spork \%>\% as_html
+'one joule (\\\\`Omega\\\\`) ~ 1 kg*m^2./s^2' \%>\% as_spork \%>\% as_html
 }
 \seealso{
 Other interface: 
@@ -78,7 +78,6 @@ Other interface:
 Other html: 
 \code{\link{[.html}()},
 \code{\link{[[.html}()},
-\code{\link{as_html.default}()},
 \code{\link{as_html.greek}()},
 \code{\link{as_html.spork}()},
 \code{\link{as_html}()},

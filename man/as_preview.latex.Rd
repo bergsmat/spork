@@ -11,7 +11,8 @@
   stem = "latex_preview",
   dir = tempdir(),
   gs_cmd = getOption("gs_cmd", "mgs"),
-  preamble = "\\\\usePackage{amsmath}\\\\n",
+  morePreamble = ifelse(getOption("spork_upgreek", TRUE), "\\\\usepackage{upgreek}\\n",
+    NULL),
   prolog = "\\\\begin{center}",
   epilog = "\\\\end{center}",
   ...
@@ -27,6 +28,8 @@
 \item{dir}{a working directory; see \code{\link[latexpdf]{as.pdf}}}
 
 \item{gs_cmd}{ghostscript command; see \code{\link[latexpdf]{ghostconvert}}}
+
+\item{morePreamble}{additional text to insert in preamble; passed to \code{\link[latexpdf]{as.pdf}}}
 
 \item{prolog}{passed to \code{\link[latexpdf]{as.document}}}
 

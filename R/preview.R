@@ -32,6 +32,7 @@ as_preview <- function(x, ...)UseMethod('as_preview')
 #' @param long nominal page length
 #' @param dir a working directory; see \code{\link[latexpdf]{as.pdf}}
 #' @param gs_cmd ghostscript command; see \code{\link[latexpdf]{ghostconvert}}
+#' @param morePreamble additional text to insert in preamble; passed to \code{\link[latexpdf]{as.pdf}}
 #' @param prolog passed to \code{\link[latexpdf]{as.document}}
 #' @param epilog passed to \code{\link[latexpdf]{as.document}}
 #' @param ... passed arguments
@@ -60,7 +61,11 @@ as_preview.latex <- function(
   stem = 'latex_preview',
   dir = tempdir(),
   gs_cmd = getOption('gs_cmd','mgs'),
-  preamble = '\\usePackage{amsmath}\\n',
+  morePreamble = ifelse(
+    getOption('spork_upgreek', TRUE),
+    '\\usepackage{upgreek}\n',
+    NULL
+  ),
   prolog = '\\begin{center}',
   epilog = '\\end{center}',
   ...
@@ -72,7 +77,7 @@ as_preview.latex <- function(
     dir = dir,
     wide = wide,
     long = long,
-    #preamble = preamble,
+    morePreamble = morePreamble,
     prolog = prolog,
     epilog = epilog,
     ...
@@ -97,6 +102,7 @@ as_preview.latex <- function(
 #' @examples
 #' library(magrittr)
 #' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% 
+#' as_spork %>%
 #' as_html %>% 
 #' as_preview
 

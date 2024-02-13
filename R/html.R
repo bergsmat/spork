@@ -29,22 +29,6 @@ as_html.greek <- function(x, ...){
   y
 }
 
-#' Convert Default to Html
-#' 
-#' Coerces to spork, then to html.
-#' @param x inherits character
-#' @param ... passed arguments
-#' @family html
-#' @keywords internal
-#' @export
-#' @return html
-#' @examples
-#' as_html('anything')
-as_html.default <- function(x, ...){
-  x <- as_spork(x, ...)
-  x <- as_html(x, ...)
-  x
-}
 
 #' Coerce to Html
 #'
@@ -90,14 +74,14 @@ as_html <- function(x, ...)UseMethod('as_html')
 #' @param ... passed to \code{unrecognized}; see \code{\link{htmlToken}}
 #' @examples
 #' library(magrittr)
-#' 'V_c./F' %>% as_html
-#' 'AUC_ss' %>% as_html
-#' 'C_max_ss' %>% as_html
-#' 'var^eta_j' %>% as_html
-#' '& < % $ # \\_ { } ~ \\^ \\' %>% as_html
-#' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_html
-#' 'one joule (`Omega`) ~ 1 kg*m^2./s^2' %>% as_html
-#' 'one joule (\\`Omega\\`) ~ 1 kg*m^2./s^2' %>% as_html
+#' 'V_c./F' %>% as_spork %>% as_html
+#' 'AUC_ss' %>% as_spork %>% as_html
+#' 'C_max_ss' %>% as_spork %>% as_html
+#' 'var^eta_j' %>% as_spork %>% as_html
+#' '& < % $ # \\_ { } ~ \\^ \\' %>% as_spork %>% as_html
+#' 'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_html
+#' 'one joule (`Omega`) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_html
+#' 'one joule (\\`Omega\\`) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_html
 
 as_html.spar <- function(
   x,

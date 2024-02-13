@@ -1,18 +1,43 @@
 #' Convert Greek to Latex
 #' 
-#' Converts Greek letter names to html.
+#' Converts Greek letter names to latex.
+#' By default, assumes latex package \code{upgreek} is available
+#' so that lower case greek can be typeset upright, e.g. using 
+#' backslash-upalpha instead of backslash-alpha.
+#' 
 #' @param x greek
-#' @param ... ignored
+#' @param ... ignored,
+#' @param upgreek if TRUE, assume latex package \code{upgreek} is available
 #' @family latex
 #' @keywords internal
 #' @export
 #' @return latex
 #' @examples
 #' as_latex(greek())
-as_latex.greek <- function(x, ...){
+as_latex.greek <- function(x, ..., upgreek = getOption('spork_upgreek', TRUE)){
   stopifnot(all(x %in% greek()))
   # https://www.overleaf.com/learn/latex/List_of_Greek_letters_and_math_symbols
-  y <- paste0('\\', x)
+
+    y <- x
+  
+  # general substitutions
+  y[y == 'Upsilon1'] <- 'Upsilon'
+  y[y == 'omega1'] <-  'varpi'
+  y[y == 'theta1'] <-  'vartheta'
+  y[y == 'phi1'] <-  'varphi'
+  y[y == 'sigma1'] <-  'varsigma'
+  y[y == 'stigma'] <-  'varsigma'
+  
+  # handle upgreek
+  prefix <- '\\'
+  stopifnot(length(upgreek) == 1, is.logical(upgreek))
+  if(upgreek){
+    prefix <- ifelse(grepl('[A-Z]', y), '\\Up', '\\up')
+    y <- tolower(x) # see documentation for upgreek, e.g. \\Gamma -> \\Upgamma
+  }
+  y <- paste0(prefix, y)
+  
+  # Roman literals not covered by upgreek
   y[x == 'omicron'] <- 'o'
   y[x == 'Alpha'] <- 'A'
   y[x == 'Beta'] <- 'B'
@@ -27,13 +52,6 @@ as_latex.greek <- function(x, ...){
   y[x == 'Rho'] <- 'P'
   y[x == 'Tau'] <- 'T'
   y[x == 'Chi'] <- 'X'
-  
-  y[x == 'Upsilon1'] <- '\\Upsilon'
-  y[x == 'omega1'] <- '\\varpi'
-  y[x == 'theta1'] <- '\\vartheta'
-  y[x == 'phi1'] <- '\\varphi'
-  y[x == 'sigma1'] <- '\\varsigma'
-  y[x == 'stigma'] <- '\\varsigma'
   
   class(y) <- c('latex','character')
   y
