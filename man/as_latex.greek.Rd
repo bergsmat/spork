@@ -20,7 +20,9 @@ latex
 Converts Greek letter names to latex.
 By default, assumes latex package \code{upgreek} is available
 so that lower case greek can be typeset upright, e.g. using 
-backslash-upalpha instead of backslash-alpha.
+backslash-upalpha instead of backslash-alpha. Do use the package
+"upgreek" in your document preamble,
+or else in your R environment set \code{options(spork_upgreek = FALSE)}.
 }
 \examples{
 as_latex(greek())

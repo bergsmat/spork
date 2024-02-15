@@ -10,8 +10,8 @@ latexToken(
   token_close = getOption("latex_token_close", "}"),
   math_open = getOption("latex_math_open", "\\\\mathrm{"),
   math_close = getOption("latex_math_close", "}"),
-  label_open = getOption("latex_label_open", "$"),
-  label_close = getOption("latex_label_close", "$"),
+  label_open = getOption("latex_label_open", "\\\\("),
+  label_close = getOption("latex_label_close", "\\\\)"),
   enforce_math = getOption("latex_enforce_math", TRUE),
   ...
 )

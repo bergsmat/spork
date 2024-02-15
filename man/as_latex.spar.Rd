@@ -12,9 +12,10 @@
   token_close = getOption("latex_token_close", "}"),
   math_open = getOption("latex_math_open", "\\\\mathrm{"),
   math_close = getOption("latex_math_close", "}"),
-  label_open = getOption("latex_label_open", "$"),
-  label_close = getOption("latex_label_close", "$"),
+  label_open = getOption("latex_label_open", "\\\\("),
+  label_close = getOption("latex_label_close", "\\\\)"),
   enforce_math = getOption("latex_enforce_math", TRUE),
+  script_size = getOption("latex_script_size", c("", "\\\\scriptsize ", "\\\\tiny ")),
   ...
 )
 }
@@ -32,6 +33,8 @@
 \item{label_open, label_close}{these wrap the entire label; defaults invoke traditional math mode}
 
 \item{enforce_math}{whether to enforce math mode for nested expression: \code{\link{latexToken}}}
+
+\item{script_size}{three character values, one of which will be appended to token_open for unnested, nested, and multiply-nested contexts}
 
 \item{...}{passed to \code{unrecognized}; see \code{\link{latexToken}}}
 }

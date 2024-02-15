@@ -3,7 +3,9 @@
 #' Converts Greek letter names to latex.
 #' By default, assumes latex package \code{upgreek} is available
 #' so that lower case greek can be typeset upright, e.g. using 
-#' backslash-upalpha instead of backslash-alpha.
+#' backslash-upalpha instead of backslash-alpha. Do use the package
+#' "upgreek" in your document preamble,
+#' or else in your R environment set \code{options(spork_upgreek = FALSE)}.
 #' 
 #' @param x greek
 #' @param ... ignored,
@@ -103,6 +105,7 @@ as_latex <- function(x, ...)UseMethod('as_latex')
 #' @param math_open,math_close these wrap math-like portions of the label;  the defaults try to give upright characters (non-italic) which may not work for Greek symbols; also passed to \code{\link{latexToken}}
 #' @param label_open,label_close these wrap the entire label; defaults invoke traditional math mode
 #' @param enforce_math whether to enforce math mode for nested expression: \code{\link{latexToken}}
+#' @param script_size three character values, one of which will be appended to token_open for unnested, nested, and multiply-nested contexts
 #' @param ... passed to \code{unrecognized}; see \code{\link{latexToken}}
 #' @examples
 #' library(magrittr)
@@ -119,13 +122,14 @@ as_latex.spar <- function(
   x,
   newline = getOption('latex_newline','\n'),
   unrecognized = getOption('latex_unrecognized',spork::latexToken),
-  token_open = getOption('latex_token_open', '\\textrm{'),
+  token_open = getOption('latex_token_open', '\\textrm{'), ### was \\textrm
   token_close = getOption('latex_token_close','}'),
   math_open = getOption('latex_math_open', '\\mathrm{'),
   math_close = getOption('latex_math_close', '}'),
-  label_open = getOption('latex_label_open', '$'),
-  label_close = getOption('latex_label_close', '$'),
+  label_open = getOption('latex_label_open', '\\('),
+  label_close = getOption('latex_label_close', '\\)'),
   enforce_math = getOption('latex_enforce_math',TRUE),
+  script_size = getOption('latex_script_size', c('','\\scriptsize ','\\tiny ')),
   ...
 ){
   # the latex of a spork is the sequential
@@ -138,8 +142,22 @@ as_latex.spar <- function(
   # which escapes metacharacters and
   # names of Greek letters, but renders other
   # tokens literally.
-
+  
+  stopifnot(is.character(script_size), length(script_size) == 3)
   closers <- character(0)
+  
+  # appends appropriate script size to token_open
+  tokenOpen <- function(token_open, closers, script_size){
+    stopifnot(is.character(token_open), length(token_open) == 1)
+    stopifnot(is.character(closers))
+    stopifnot(is.character(script_size), length(script_size) == 3)
+    level <- length(closers) + 1
+    if(level > 3) level <- 3
+    style <- script_size[[level]]
+    x <- paste0(token_open, style)
+    return(x)
+  }
+  
   active <- FALSE
   if(length(x)==0)return(structure(x, class = union('latex', class(x))))
   if(identical(x, ''))return(structure(x, class = union('latex', class(x))))
@@ -161,7 +179,7 @@ as_latex.spar <- function(
       token <- fun(
         token,
         unrecognized = unrecognized,
-        token_open = token_open,
+        token_open = tokenOpen(token_open, closers, script_size),
         token_close = token_close,
         math_open = math_open,
         math_close = math_close,
@@ -191,7 +209,7 @@ as_latex.spar <- function(
           base <- paste0(base, newline)
       }
       if(p == '\\s+'){
-        token <- paste0(token_open,token,token_close)
+        token <- paste0(tokenOpen(token_open, closers, script_size),token,token_close)
         if(active){
           base <- paste0(base, ' ', token)
         }else{
@@ -206,7 +224,7 @@ as_latex.spar <- function(
       }
       if(p == '#+'){
         token <- gsub('#','\\\\#',token)
-        token <- paste0(token_open,token,token_close)
+        token <- paste0(tokenOpen(token_open, closers, script_size),token,token_close)
         if(active){
           base <- paste0(base, ' ', token)
         }else{
@@ -220,7 +238,7 @@ as_latex.spar <- function(
         }
       }
       if(p == '[\\][*]'){
-        token <- paste0(token_open, '*', token_close)
+        token <- paste0(tokenOpen(token_open, closers, script_size), '*', token_close)
         if(active){
           base <- paste0(base, ' ', token)
         }else{
@@ -229,7 +247,7 @@ as_latex.spar <- function(
         }
       }
       if(p == '[\\][.]'){
-        token <- paste0(token_open, '.', token_close)
+        token <- paste0(tokenOpen(token_open, closers, script_size), '.', token_close)
         if(active){
           base <- paste0(base, ' ', token)
         }else{
@@ -238,7 +256,7 @@ as_latex.spar <- function(
         }
       }
       if(p == '[\\][_]'){
-        token <- paste0(token_open, '\\_', token_close)
+        token <- paste0(tokenOpen(token_open, closers, script_size), '\\_', token_close)
         if(active){
           base <- paste0(base, ' ', token)
         }else{
@@ -247,7 +265,7 @@ as_latex.spar <- function(
         }
       }
       if(p == '[\\]\\^'){
-        token <- paste0(token_open,"{\\textasciicircum}",token_close)
+        token <- paste0(tokenOpen(token_open, closers, script_size),"{\\textasciicircum}",token_close)
         if(active){
           base <- paste0(base, ' ', token)
         }else{
@@ -335,7 +353,7 @@ as_latex.spar <- function(
         token <- as_latex(as_greek(token))
         
         token <- paste0(
-          token_open, 
+          tokenOpen(token_open, closers, script_size), 
             mathopen,
               token, 
             mathclose,
@@ -350,7 +368,7 @@ as_latex.spar <- function(
       }
       if(p %in% ungreek){
         token <- gsub('`','',token)
-        token <- paste0(token_open, token, token_close)
+        token <- paste0(tokenOpen(token_open, closers, script_size), token, token_close)
         if(active){
           base <- paste0(base, token)
         }else{
@@ -359,7 +377,7 @@ as_latex.spar <- function(
         }
       }
       if(p == '[\\][`]'){
-        token <- paste0(token_open, '`', token_close)
+        token <- paste0(tokenOpen(token_open, closers, script_size), '`', token_close)
         if(active){
           base <- paste0(base, ' ', token)
         }else{
@@ -415,17 +433,17 @@ as_latex.spar <- function(
 latexToken <- function(
   x,
   #unrecognized = latexToken,
-  token_open = getOption('latex_token_open', '\\textrm{'),
+  token_open = getOption('latex_token_open', '\\textrm{'), ### was \\textrm
   token_close = getOption('latex_token_close','}'),
   math_open = getOption('latex_math_open', '\\mathrm{'),
   math_close = getOption('latex_math_close', '}'),
-  label_open = getOption('latex_label_open', '$'),
-  label_close = getOption('latex_label_close', '$'),
+  label_open = getOption('latex_label_open', '\\('),
+  label_close = getOption('latex_label_close', '\\)'),
   enforce_math = getOption('latex_enforce_math',TRUE),
   ...
 ){
-  special <- c(  '&',  '%',  '$',  '#',  '_',  '{',  '}','~',                '^',               '\\'             ) # special in latex
-  replace <- c('\\&','\\%','\\$','\\#','\\_','\\{','\\}','${\\sim}$','{\\textasciicircum}','{\\textbackslash}')      # use in latex
+  special <- c(  '&',  '%',  '$',  '#',  '_',  '{',  '}','~', '^','\\') # special in latex
+  replace <- c('\\&','\\%','\\$','\\#','\\_','\\{','\\}','\\({\\sim}\\)','{\\textasciicircum}','{\\textbackslash}')      # use in latex
   # greek <- c(
   #   'alpha','beta','gamma','delta',
   #   'epsilon','zeta','eta','theta',

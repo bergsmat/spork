@@ -50,14 +50,14 @@ test_that('as_latex is stable',{
       as_spork %>%
       as_latex %>%
       as.character,
-    "$\\mathrm{\\textrm{$\\mathrm{\\Upomega}$} \\textrm{ } \\textrm{joule}^{ \\textrm{*}} \\textrm{ } \\textrm{${\\sim}$1} \\textrm{ } \\textrm{kg} {\\cdot} \\textrm{m}^{\\textrm{2}} \\textrm{/s}^{\\textrm{2}}}$"
+    "\\(\\mathrm{\\textrm{\\(\\mathrm{\\Upomega}\\)} \\textrm{ } \\textrm{joule}^{ \\textrm{\\scriptsize *}} \\textrm{ } \\textrm{\\({\\sim}\\)1} \\textrm{ } \\textrm{kg} {\\cdot} \\textrm{m}^{\\textrm{\\scriptsize 2}} \\textrm{/s}^{\\textrm{\\scriptsize 2}}}\\)"
   )
   expect_identical(
     'gravitational force gamma (kg\\.m/s^2.)' %>% 
       as_spork %>%
       as_latex %>%
       as.character,
-    "$\\mathrm{\\textrm{gravitational} \\textrm{ } \\textrm{force} \\textrm{ } \\textrm{$\\mathrm{\\upgamma}$} \\textrm{ } \\textrm{(kg} \\textrm{.} \\textrm{m/s}^{\\textrm{2}} \\textrm{)}}$"
+    "\\(\\mathrm{\\textrm{gravitational} \\textrm{ } \\textrm{force} \\textrm{ } \\textrm{\\(\\mathrm{\\upgamma}\\)} \\textrm{ } \\textrm{(kg} \\textrm{.} \\textrm{m/s}^{\\textrm{\\scriptsize 2}} \\textrm{)}}\\)"
   )
 })
 test_that('spork to plotmath is stable',{
@@ -297,10 +297,6 @@ expect_identical(f, g)
 structure("'H'['b'^{'A'}*''['1'^{'c'}]]" , class = 'plotmath') %>% as_preview()
 structure("'H'['b'^{'A'}['1'^{'c'}]]", class = 'plotmath') %>% as_preview()
 
-
-
-
-
 })
 test_that('extreme juxtapostion without escape succeeds',{
   library(magrittr)
@@ -386,7 +382,7 @@ test_that('latexToken() responds to top-level arguments',{
   library(magrittr)
   expect_identical(
     '\n' %>% as_spork %>% as_latex(math_open = '\\textrm{') %>% as.character,
-    "$\\textrm{\\textrm{\n}}$" #"$\\textrm{\n}$"
+    "\\(\\textrm{\\textrm{\n}}\\)"
   )
 })
 test_that('plotmathToken() responds to top-level arguments',{
@@ -466,7 +462,7 @@ test_that('latex handles multiple newline',{
   'one \njoule \n(Omega) ~\n 1 kg*m^2./s^2'%>% render
   expect_identical(
     '1\\n2\\n3\\n4\\n' %>% as_spork %>% as_latex %>% as.character,
-    "$\\mathrm{\\textrm{1}\n \\textrm{2}\n \\textrm{3}\n \\textrm{4}\n}$"
+    "\\(\\mathrm{\\textrm{1}\n \\textrm{2}\n \\textrm{3}\n \\textrm{4}\n}\\)"
   )
 })
 test_that('plotmath handles multiple newline',{
@@ -549,6 +545,7 @@ test_that('latex is newline-tolerant by default',{
   expect_no_error('one joule (Omega) ~ 1 kg*m^2./s^2\n' %>% render)
   expect_no_error('one joule (Omega) ~ 1 kg*m^2./s^\n2' %>% render)
   expect_no_error('one joule (Omega) ~ 1 kg*m^2./s\n^2' %>% render)
+  expect_no_error('one joule (Omega) ~ 1 kg*m^2./s^2' %>% render)
   expect_no_error('one joule (Omega) ~ 1 kg*m^2./\ns^2' %>% render)
   expect_no_error('one joule (Omega) ~ 1 kg*m^2.\n/s^2' %>% render)
   expect_no_error('one joule (Omega) ~ 1 kg*m^2\n./s^2' %>% render)
@@ -576,7 +573,8 @@ test_that('as_previews is stable',{
   expect_no_error('AUC_ss' %>% as_spork %>%as_previews)
   expect_no_error('C_max_ss' %>% as_spork %>%as_previews)
   expect_no_error('var^eta_j' %>% as_spork %>%as_previews)
-  expect_no_error('gravitational force - gamma (kg * m/s^2)'%>% as_spork %>%as_previews)
+  
+  expect_no_error('gravitational force - gamma (kg * m/s^2.)'%>% as_spork %>%as_previews)
   expect_no_error('C(t_j.) = C_0. * epsilon^-kt_j' %>% as_spork %>%as_previews)
   expect_no_error('eta^eta' %>% as_spork %>%as_previews)
   expect_no_error('Eta^Eta' %>% as_spork %>%as_previews)
@@ -618,4 +616,33 @@ test_that('backslash-n has effect', {
   '1\\n2\\n3' %>% as_previews
   '1\\n2\\n3' %>% as_spork %>% as_latex %>% as_preview
   
+})
+test_that('sub/super are written smaller', {
+  # test manually
+  'AUC_ss_tau' %>% as_previews
+  'a^b^c' %>% as_previews
+  '1^2^3' %>% as_previews
+  'M_2' %>% as_previews
+  'AUC_SS' %>% as_previews
+  '1_2_3_4' %>% as_previews
+  '1_2_3._4' %>% as_previews
+  '1_2._3_4' %>% as_previews
+  '1^2^3^4' %>% as_previews
+  '1_2^3_4' %>% as_previews
+  '1^2_3^4' %>% as_previews
+  'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_latex
+  'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_previews
+  
+  
+  
+  "\\(\\mathrm{\\textrm{one} \\textrm{ } \\textrm{joule} \\textrm{ } \\textrm{(} \\textrm{\\(\\mathrm{\\Upomega}\\)} \\textrm{)} \\textrm{ } \\textrm{\\({\\sim}\\)} \\textrm{ } \\textrm{1} \\textrm{ } \\textrm{kg} {\\cdot} \\textrm{m}^{\\textrm{\\scriptsize 2}} \\textrm{/s}^{\\textrm{\\scriptsize 2}}}\\)" %>%
+    structure(class = c('latex','character')) %>% as_preview
+
+  
+  
+  
+  expect_identical(
+    'Hb^a_1^c' %>% as_spork %>% as_latex %>% as.character,
+    "\\(\\mathrm{\\textrm{Hb}^{\\textrm{\\scriptsize a}_{\\textrm{\\tiny 1}^{\\textrm{\\tiny c}}}}}\\)"
+  )
 })
