@@ -303,29 +303,29 @@ as_latex.spar <- function(
       if(p == '[_]'){
         closers <- c('}', closers)
         if(active){
-          base <- paste0(base,"_{")
+          base <- paste0(base,"{}_{")
           active <- FALSE
         }else{
           if(!grepl('[]}]$', base)){
             # must have something to subscript
             # https://en.wikipedia.org/wiki/Whitespace_character
-            base <- paste0(base, "\\,_{")  # 0.2.6 formerly ~_{
+            base <- paste0(base, "{}_{")  # 0.2.6 formerly ~_{ then \\,_{
           }else{
-            base <- paste0(base, "\\,_{")  # 0.2.6 formerly ~_{
+            base <- paste0(base, "{}_{")  # 0.2.6 formerly ~_{ then \\,_{
           }
         }
       }
       if(p == '\\^'){
         closers <- c('}', closers)
         if(active){
-          base <- paste0(base, "^{")
+          base <- paste0(base, "{}^{")  # 0.3.0 was "^{"
           active <- FALSE
         }else{
           if(!grepl('[]}]$', base)){
             # must have something to superscript
-            base <- paste0(base, "\\,^{") # 0.2.6 formerly ~^{
+            base <- paste0(base, "{}^{") # 0.2.6 formerly ~^{ then \\,{
           }else{
-            base <- paste0(base, "\\,^{") # 0.2.6 formerly ~^{
+            base <- paste0(base, "{}^{") # 0.2.6 formerly ~^{ then \\,{
           }
         }
       }

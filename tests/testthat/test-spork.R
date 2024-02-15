@@ -50,14 +50,14 @@ test_that('as_latex is stable',{
       as_spork %>%
       as_latex %>%
       as.character,
-    "\\(\\mathrm{\\textrm{\\(\\mathrm{\\Upomega}\\)} \\textrm{ } \\textrm{joule}^{ \\textrm{\\scriptsize *}} \\textrm{ } \\textrm{\\({\\sim}\\)1} \\textrm{ } \\textrm{kg} {\\cdot} \\textrm{m}^{\\textrm{\\scriptsize 2}} \\textrm{/s}^{\\textrm{\\scriptsize 2}}}\\)"
+    "\\(\\mathrm{\\textrm{\\(\\mathrm{\\Upomega}\\)} \\textrm{ } \\textrm{joule}{}^{ \\textrm{\\scriptsize *}} \\textrm{ } \\textrm{\\({\\sim}\\)1} \\textrm{ } \\textrm{kg} {\\cdot} \\textrm{m}{}^{\\textrm{\\scriptsize 2}} \\textrm{/s}{}^{\\textrm{\\scriptsize 2}}}\\)"
   )
   expect_identical(
     'gravitational force gamma (kg\\.m/s^2.)' %>% 
       as_spork %>%
       as_latex %>%
       as.character,
-    "\\(\\mathrm{\\textrm{gravitational} \\textrm{ } \\textrm{force} \\textrm{ } \\textrm{\\(\\mathrm{\\upgamma}\\)} \\textrm{ } \\textrm{(kg} \\textrm{.} \\textrm{m/s}^{\\textrm{\\scriptsize 2}} \\textrm{)}}\\)"
+    "\\(\\mathrm{\\textrm{gravitational} \\textrm{ } \\textrm{force} \\textrm{ } \\textrm{\\(\\mathrm{\\upgamma}\\)} \\textrm{ } \\textrm{(kg} \\textrm{.} \\textrm{m/s}{}^{\\textrm{\\scriptsize 2}} \\textrm{)}}\\)"
   )
 })
 test_that('spork to plotmath is stable',{
@@ -493,7 +493,7 @@ test_that('greek characters are properly isolated',{
   'alpha' %>% as_spork %>% as_html
   'alpha' %>% as_spork %>% as_plotmath
   'alpha' %>% as_previews(sleep = 0)  # ok
-  '`alpha`' %>% as_previews(sleep = 0)  # ok
+  '`alpha`' %>% as_previews()  # ok
   '\nalpha' %>% as_previews(sleep = 0)# ok
   'alpha\n' %>% as_previews(sleep = 0)# ok
   '.alpha' %>% as_previews(sleep = 0) # ok
@@ -633,16 +633,9 @@ test_that('sub/super are written smaller', {
   'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_spork %>% as_latex
   'one joule (Omega) ~ 1 kg*m^2./s^2' %>% as_previews
   
-  
-  
-  "\\(\\mathrm{\\textrm{one} \\textrm{ } \\textrm{joule} \\textrm{ } \\textrm{(} \\textrm{\\(\\mathrm{\\Upomega}\\)} \\textrm{)} \\textrm{ } \\textrm{\\({\\sim}\\)} \\textrm{ } \\textrm{1} \\textrm{ } \\textrm{kg} {\\cdot} \\textrm{m}^{\\textrm{\\scriptsize 2}} \\textrm{/s}^{\\textrm{\\scriptsize 2}}}\\)" %>%
-    structure(class = c('latex','character')) %>% as_preview
-
-  
-  
-  
-  expect_identical(
+   expect_identical(
     'Hb^a_1^c' %>% as_spork %>% as_latex %>% as.character,
-    "\\(\\mathrm{\\textrm{Hb}^{\\textrm{\\scriptsize a}_{\\textrm{\\tiny 1}^{\\textrm{\\tiny c}}}}}\\)"
+    "\\(\\mathrm{\\textrm{Hb}{}^{\\textrm{\\scriptsize a}{}_{\\textrm{\\tiny 1}{}^{\\textrm{\\tiny c}}}}}\\)"
   )
+  
 })

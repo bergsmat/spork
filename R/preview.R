@@ -220,7 +220,7 @@ as_previews.default <- function(x, ...){
 #' # 'omega.omega1.pi.varpi' %>% as_spork %>% as_previews
 #' }
 
-as_previews.spork <- function(x, wide = 70, long = 20, width = 3, height = 1, sleep = 1, ...){
+as_previews.spork <- function(x, wide = 70, long = 20, width = 3, height = 1, sleep = 2, ...){
   stopifnot(length(x) == 1)
   stopifnot(inherits(x, 'character'))
   x <- as_spork(x)

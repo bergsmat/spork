@@ -4,7 +4,7 @@
 \alias{as_previews.spork}
 \title{Compare Previews of Spork}
 \usage{
-\method{as_previews}{spork}(x, wide = 70, long = 20, width = 3, height = 1, sleep = 1, ...)
+\method{as_previews}{spork}(x, wide = 70, long = 20, width = 3, height = 1, sleep = 2, ...)
 }
 \arguments{
 \item{x}{length-one spork}
