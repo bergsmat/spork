@@ -612,6 +612,7 @@ test_that('as_previews is stable',{
   '_tau.`iota`' %>% as_previews
 }) # long running
 test_that('backslash-n has effect', {
+  skip_on_cran()
   # test manually
   '1\\n2\\n3' %>% as_previews
   '1\\n2\\n3' %>% as_spork %>% as_latex %>% as_preview
@@ -619,6 +620,7 @@ test_that('backslash-n has effect', {
 })
 test_that('sub/super are written smaller', {
   # test manually
+  skip_on_cran()
   'AUC_ss_tau' %>% as_previews
   'a^b^c' %>% as_previews
   '1^2^3' %>% as_previews
