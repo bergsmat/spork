@@ -143,6 +143,7 @@ as_latex.spar <- function(
   # names of Greek letters, but renders other
   # tokens literally.
   
+  
   stopifnot(is.character(script_size), length(script_size) == 3)
   closers <- character(0)
   
@@ -591,16 +592,29 @@ latexToken <- function(
 #' @examples
 #' x <- c(
 #'   'V_c./F',
-#'   'AUC_ss',
-#'   'C_max_ss',
-#'   'var^eta_j'
+#'   '\\nAUC_ss',
+#'   'C_max_ss\\n',
+#'   'var^eta_j\\nrecords'
 #' )
 #' x <- as_spork(x)
+#' writeLines(as_latex(x))
+#' x <- as_spork('gravitational force\\n (kg\\.m/s^2.)')
+#' explicit(x)
 #' as_latex(x)
-#' as_latex(as_spork('gravitational force (kg\\.m/s^2.)'))
 as_latex.spork <- function(x, ...){
-  y <- lapply(x, as_spar, USE.NAMES = F, ...)
-  y <- sapply(y, as_latex, USE.NAMES = F, ...)
+  # as of 0.3.3, make spork explicit before converting to latex.
+  # supports piece-wise math mode between linebreaks,
+  # since linebreaks cannot occur in math mode.
+  y <- explicit(x)
+  y <- strsplit(y, '\\\\n')
+  for(i in seq_along(y)){
+    y[[i]] <- lapply(y[[i]], as_spar, USE.NAMES = F, ...)
+    y[[i]] <- sapply(y[[i]], as_latex, USE.NAMES = F, ...)
+  }
+  y <- lapply(y, paste, collapse = ' \\\\ ')
+  tail <- grepl('\\\\n$', x)
+  tail <- ifelse(tail, ' \\\\ ', '')
+  y <- paste0(y, tail)
   if(length(y) == 0) y <- character(0)
   class(y) <- union('latex', class(y))
   y

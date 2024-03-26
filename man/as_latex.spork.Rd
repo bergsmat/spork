@@ -21,13 +21,15 @@ Vectorized version of \code{\link{as_latex.spar}}.
 \examples{
 x <- c(
   'V_c./F',
-  'AUC_ss',
-  'C_max_ss',
-  'var^eta_j'
+  '\\\\nAUC_ss',
+  'C_max_ss\\\\n',
+  'var^eta_j\\\\nrecords'
 )
 x <- as_spork(x)
+writeLines(as_latex(x))
+x <- as_spork('gravitational force\\\\n (kg\\\\.m/s^2.)')
+explicit(x)
 as_latex(x)
-as_latex(as_spork('gravitational force (kg\\\\.m/s^2.)'))
 }
 \seealso{
 Other latex: 

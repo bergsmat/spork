@@ -462,7 +462,7 @@ test_that('latex handles multiple newline',{
   'one \njoule \n(Omega) ~\n 1 kg*m^2./s^2'%>% render
   expect_identical(
     '1\\n2\\n3\\n4\\n' %>% as_spork %>% as_latex %>% as.character,
-    "\\(\\mathrm{\\textrm{1}\n \\textrm{2}\n \\textrm{3}\n \\textrm{4}\n}\\)"
+    "\\(\\mathrm{\\textrm{1}}\\) \\\\ \\(\\mathrm{\\textrm{2}}\\) \\\\ \\(\\mathrm{\\textrm{3}}\\) \\\\ \\(\\mathrm{\\textrm{4}}\\) \\\\ "
   )
 })
 test_that('plotmath handles multiple newline',{
@@ -640,4 +640,7 @@ test_that('sub/super are written smaller', {
     "\\(\\mathrm{\\textrm{Hb}{}^{\\textrm{\\scriptsize a}{}_{\\textrm{\\tiny 1}{}^{\\textrm{\\tiny c}}}}}\\)"
   )
   
+})
+test_that('explicit is stable', {
+  expect_equal_to_reference(file = '001.rds', explicit(as_spork('AUC_inf\\nx^y\\n')))
 })
