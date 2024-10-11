@@ -29,12 +29,12 @@ as_preview
 Other preview: 
 \code{\link{as.png.plotmath}()},
 \code{\link{as.png.spork}()},
+\code{\link{as_preview}()},
 \code{\link{as_preview.latex}()},
 \code{\link{as_preview.plotmath}()},
+\code{\link{as_previews}()},
 \code{\link{as_previews.default}()},
 \code{\link{as_previews.spork}()},
-\code{\link{as_previews}()},
-\code{\link{as_preview}()},
 \code{\link{ggplot.plotmath}()},
 \code{\link{ggplot.spork}()}
 }

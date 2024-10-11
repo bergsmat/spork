@@ -43,10 +43,10 @@ htmlToken('Alpha')
 Other html: 
 \code{\link{[.html}()},
 \code{\link{[[.html}()},
+\code{\link{as_html}()},
 \code{\link{as_html.greek}()},
 \code{\link{as_html.spar}()},
 \code{\link{as_html.spork}()},
-\code{\link{as_html}()},
 \code{\link{html2xml}()}
 
 Other interface: 

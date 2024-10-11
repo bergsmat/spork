@@ -31,13 +31,13 @@ library(magrittr)
 Other preview: 
 \code{\link{as.png.plotmath}()},
 \code{\link{as.png.spork}()},
+\code{\link{as_preview}()},
 \code{\link{as_preview.html}()},
 \code{\link{as_preview.latex}()},
 \code{\link{as_preview.plotmath}()},
+\code{\link{as_previews}()},
 \code{\link{as_previews.default}()},
 \code{\link{as_previews.spork}()},
-\code{\link{as_previews}()},
-\code{\link{as_preview}()},
 \code{\link{ggplot.plotmath}()}
 
 Other ggplot: 
@@ -54,10 +54,10 @@ Other spork:
 \code{\link{as_previews.spork}()},
 \code{\link{as_spar.default}()},
 \code{\link{as_spar.spork}()},
+\code{\link{as_spork}()},
 \code{\link{as_spork.character}()},
 \code{\link{as_spork.factor}()},
 \code{\link{as_spork.spork}()},
-\code{\link{as_spork}()},
 \code{\link{greek}()}
 }
 \concept{ggplot}

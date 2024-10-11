@@ -22,10 +22,10 @@ concatenate(NULL)
 }
 \seealso{
 Other concatenate: 
+\code{\link{concatenate}()},
 \code{\link{concatenate.character}()},
 \code{\link{concatenate.latex}()},
-\code{\link{concatenate.plotmath}()},
-\code{\link{concatenate}()}
+\code{\link{concatenate.plotmath}()}
 }
 \concept{concatenate}
 \keyword{internal}

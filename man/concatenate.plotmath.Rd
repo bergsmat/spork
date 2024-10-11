@@ -24,20 +24,20 @@ concatenate(as_plotmath(as_spork(c('BMI_i','kg/m^2'))))
 }
 \seealso{
 Other concatenate: 
+\code{\link{concatenate}()},
 \code{\link{concatenate.NULL}()},
 \code{\link{concatenate.character}()},
-\code{\link{concatenate.latex}()},
-\code{\link{concatenate}()}
+\code{\link{concatenate.latex}()}
 
 Other plotmath: 
 \code{\link{[.plotmath}()},
 \code{\link{[[.plotmath}()},
 \code{\link{as.expression.plotmath}()},
 \code{\link{as.png.plotmath}()},
+\code{\link{as_plotmath}()},
 \code{\link{as_plotmath.greek}()},
 \code{\link{as_plotmath.spar}()},
 \code{\link{as_plotmath.spork}()},
-\code{\link{as_plotmath}()},
 \code{\link{ggplot.plotmath}()},
 \code{\link{goodToken}()},
 \code{\link{plotmathToken}()}

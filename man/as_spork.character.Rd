@@ -33,9 +33,9 @@ Other spork:
 \code{\link{as_previews.spork}()},
 \code{\link{as_spar.default}()},
 \code{\link{as_spar.spork}()},
+\code{\link{as_spork}()},
 \code{\link{as_spork.factor}()},
 \code{\link{as_spork.spork}()},
-\code{\link{as_spork}()},
 \code{\link{ggplot.spork}()},
 \code{\link{greek}()}
 

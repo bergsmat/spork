@@ -44,13 +44,13 @@ file
 \seealso{
 Other preview: 
 \code{\link{as.png.spork}()},
+\code{\link{as_preview}()},
 \code{\link{as_preview.html}()},
 \code{\link{as_preview.latex}()},
 \code{\link{as_preview.plotmath}()},
+\code{\link{as_previews}()},
 \code{\link{as_previews.default}()},
 \code{\link{as_previews.spork}()},
-\code{\link{as_previews}()},
-\code{\link{as_preview}()},
 \code{\link{ggplot.plotmath}()},
 \code{\link{ggplot.spork}()}
 
@@ -61,10 +61,10 @@ Other plotmath:
 \code{\link{[.plotmath}()},
 \code{\link{[[.plotmath}()},
 \code{\link{as.expression.plotmath}()},
+\code{\link{as_plotmath}()},
 \code{\link{as_plotmath.greek}()},
 \code{\link{as_plotmath.spar}()},
 \code{\link{as_plotmath.spork}()},
-\code{\link{as_plotmath}()},
 \code{\link{concatenate.plotmath}()},
 \code{\link{ggplot.plotmath}()},
 \code{\link{goodToken}()},

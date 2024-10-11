@@ -46,10 +46,12 @@ latexToken('Alpha')
 Other latex: 
 \code{\link{[.latex}()},
 \code{\link{[[.latex}()},
+\code{\link{as_latex}()},
+\code{\link{as_latex.default}()},
 \code{\link{as_latex.greek}()},
+\code{\link{as_latex.latex}()},
 \code{\link{as_latex.spar}()},
 \code{\link{as_latex.spork}()},
-\code{\link{as_latex}()},
 \code{\link{concatenate.latex}()}
 
 Other interface: 

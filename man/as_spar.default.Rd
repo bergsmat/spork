@@ -20,8 +20,8 @@ Parses spork by default. Coerces input with \code{as_spork()}.
 \seealso{
 Other spar: 
 \code{\link{as_plotmath.spar}()},
-\code{\link{as_spar.spork}()},
-\code{\link{as_spar}()}
+\code{\link{as_spar}()},
+\code{\link{as_spar.spork}()}
 
 Other spork: 
 \code{\link{[.spork}()},
@@ -33,10 +33,10 @@ Other spork:
 \code{\link{as_plotmath.spork}()},
 \code{\link{as_previews.spork}()},
 \code{\link{as_spar.spork}()},
+\code{\link{as_spork}()},
 \code{\link{as_spork.character}()},
 \code{\link{as_spork.factor}()},
 \code{\link{as_spork.spork}()},
-\code{\link{as_spork}()},
 \code{\link{ggplot.spork}()},
 \code{\link{greek}()}
 }

@@ -35,9 +35,11 @@ as_latex(x)
 Other latex: 
 \code{\link{[.latex}()},
 \code{\link{[[.latex}()},
-\code{\link{as_latex.greek}()},
-\code{\link{as_latex.spar}()},
 \code{\link{as_latex}()},
+\code{\link{as_latex.default}()},
+\code{\link{as_latex.greek}()},
+\code{\link{as_latex.latex}()},
+\code{\link{as_latex.spar}()},
 \code{\link{concatenate.latex}()},
 \code{\link{latexToken}()}
 
@@ -51,10 +53,10 @@ Other spork:
 \code{\link{as_previews.spork}()},
 \code{\link{as_spar.default}()},
 \code{\link{as_spar.spork}()},
+\code{\link{as_spork}()},
 \code{\link{as_spork.character}()},
 \code{\link{as_spork.factor}()},
 \code{\link{as_spork.spork}()},
-\code{\link{as_spork}()},
 \code{\link{ggplot.spork}()},
 \code{\link{greek}()}
 

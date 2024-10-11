@@ -70,18 +70,18 @@ Other plotmath:
 \code{\link{[[.plotmath}()},
 \code{\link{as.expression.plotmath}()},
 \code{\link{as.png.plotmath}()},
+\code{\link{as_plotmath}()},
 \code{\link{as_plotmath.greek}()},
 \code{\link{as_plotmath.spork}()},
-\code{\link{as_plotmath}()},
 \code{\link{concatenate.plotmath}()},
 \code{\link{ggplot.plotmath}()},
 \code{\link{goodToken}()},
 \code{\link{plotmathToken}()}
 
 Other spar: 
+\code{\link{as_spar}()},
 \code{\link{as_spar.default}()},
-\code{\link{as_spar.spork}()},
-\code{\link{as_spar}()}
+\code{\link{as_spar.spork}()}
 }
 \concept{interface}
 \concept{plotmath}

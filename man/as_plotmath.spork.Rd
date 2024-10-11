@@ -32,9 +32,9 @@ Other plotmath:
 \code{\link{[[.plotmath}()},
 \code{\link{as.expression.plotmath}()},
 \code{\link{as.png.plotmath}()},
+\code{\link{as_plotmath}()},
 \code{\link{as_plotmath.greek}()},
 \code{\link{as_plotmath.spar}()},
-\code{\link{as_plotmath}()},
 \code{\link{concatenate.plotmath}()},
 \code{\link{ggplot.plotmath}()},
 \code{\link{goodToken}()},
@@ -50,10 +50,10 @@ Other spork:
 \code{\link{as_previews.spork}()},
 \code{\link{as_spar.default}()},
 \code{\link{as_spar.spork}()},
+\code{\link{as_spork}()},
 \code{\link{as_spork.character}()},
 \code{\link{as_spork.factor}()},
 \code{\link{as_spork.spork}()},
-\code{\link{as_spork}()},
 \code{\link{ggplot.spork}()},
 \code{\link{greek}()}
 

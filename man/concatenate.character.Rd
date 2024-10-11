@@ -24,10 +24,10 @@ concatenate(letters)
 }
 \seealso{
 Other concatenate: 
+\code{\link{concatenate}()},
 \code{\link{concatenate.NULL}()},
 \code{\link{concatenate.latex}()},
-\code{\link{concatenate.plotmath}()},
-\code{\link{concatenate}()}
+\code{\link{concatenate.plotmath}()}
 
 Other character: 
 \code{\link{as_spork.character}()}

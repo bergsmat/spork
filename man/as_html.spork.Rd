@@ -33,9 +33,9 @@ as_html(as_spork('gravitational force (kg\\\\.m/s^2.)'))
 Other html: 
 \code{\link{[.html}()},
 \code{\link{[[.html}()},
+\code{\link{as_html}()},
 \code{\link{as_html.greek}()},
 \code{\link{as_html.spar}()},
-\code{\link{as_html}()},
 \code{\link{html2xml}()},
 \code{\link{htmlToken}()}
 
@@ -49,10 +49,10 @@ Other spork:
 \code{\link{as_previews.spork}()},
 \code{\link{as_spar.default}()},
 \code{\link{as_spar.spork}()},
+\code{\link{as_spork}()},
 \code{\link{as_spork.character}()},
 \code{\link{as_spork.factor}()},
 \code{\link{as_spork.spork}()},
-\code{\link{as_spork}()},
 \code{\link{ggplot.spork}()},
 \code{\link{greek}()}
 
